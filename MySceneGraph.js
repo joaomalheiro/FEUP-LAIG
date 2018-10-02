@@ -1,12 +1,15 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 
 // Order of the groups in the XML document.
-var INITIALS_INDEX = 0;
-var ILLUMINATION_INDEX = 1;
-var LIGHTS_INDEX = 2;
-var TEXTURES_INDEX = 3;
-var MATERIALS_INDEX = 4;
-var NODES_INDEX = 5;
+var SCENE_INDEX = 0;
+var VIEWS_INDEX = 1;
+var AMBIENT_INDEX = 2;
+var LIGHTS_INDEX = 3;
+var TEXTURES_INDEX = 4;
+var MATERIALS_INDEX = 5;
+var TRANSFORMATIONS_INDEX = 6;
+var PRIMITIVES_INDEX = 7;
+var COMPONENTS_INDEX = 8;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -70,8 +73,8 @@ class MySceneGraph {
      * @param {XML root element} rootElement
      */
     parseXMLFile(rootElement) {
-        if (rootElement.nodeName != "SCENE")
-            return "root tag <SCENE> missing";
+        if (rootElement.nodeName != "yas")
+            return "root tag <yas> missing";
 
         var nodes = rootElement.children;
 
@@ -86,28 +89,42 @@ class MySceneGraph {
 
         // Processes each node, verifying errors.
 
-        // <INITIALS>
+        // <SCENE>
         var index;
-        if ((index = nodeNames.indexOf("INITIALS")) == -1)
-            return "tag <INITIALS> missing";
+        if ((index = nodeNames.indexOf("SCENE")) == -1)
+            return "tag <SCENE> missing";
         else {
-            if (index != INITIALS_INDEX)
-                this.onXMLMinorError("tag <INITIALS> out of order");
+            if (index != SCENE_INDEX)
+                this.onXMLMinorError("tag <SCENE> out of order");
 
-            //Parse INITIAL block
-            if ((error = this.parseInitials(nodes[index])) != null)
+            //Parse SCENE block
+            if ((error = this.parseScene(nodes[index])) != null)
                 return error;
         }
 
-        // <ILLUMINATION>
-        if ((index = nodeNames.indexOf("ILLUMINATION")) == -1)
-            return "tag <ILLUMINATION> missing";
+        // <VIEWS>
+        var index;
+        if ((index = nodeNames.indexOf("VIEWS")) == -1)
+            return "tag <VIEWS> missing";
         else {
-            if (index != ILLUMINATION_INDEX)
-                this.onXMLMinorError("tag <ILLUMINATION> out of order");
+            if (index != VIEWS_INDEX)
+                this.onXMLMinorError("tag <VIEWS> out of order");
 
-            //Parse ILLUMINATION block
-            if ((error = this.parseIllumination(nodes[index])) != null)
+            //Parse VIEWS block
+            if ((error = this.parseViews(nodes[index])) != null)
+                return error;
+        }
+
+        //<AMBIENT>
+        var index;
+        if ((index = nodeNames.indexOf("AMBIENT")) == -1)
+            return "tag <AMBIENT> missing";
+        else {
+            if (index != AMBIENT_INDEX)
+                this.onXMLMinorError("tag <AMBIENT> out of order");
+
+            //Parse VIEWS block
+            if ((error = this.parseAmbient(nodes[index])) != null)
                 return error;
         }
 
@@ -147,15 +164,39 @@ class MySceneGraph {
                 return error;
         }
 
-        // <NODES>
-        if ((index = nodeNames.indexOf("NODES")) == -1)
-            return "tag <NODES> missing";
+        // <TRANSFORMATIONS>
+        if ((index = nodeNames.indexOf("TRANSFORMATIONS")) == -1)
+            return "tag <TRANSFORMATIONS> missing";
         else {
-            if (index != NODES_INDEX)
-                this.onXMLMinorError("tag <NODES> out of order");
+            if (index != TRANSFORMATIONS_INDEX)
+                this.onXMLMinorError("tag <TRANSFORMATIONS> out of order");
 
-            //Parse NODES block
-            if ((error = this.parseNodes(nodes[index])) != null)
+            //Parse TRANSFORMATIONS block
+            if ((error = this.parseTransformations(nodes[index])) != null)
+                return error;
+        }
+
+        // <PRIMITIVES>
+        if ((index = nodeNames.indexOf("PRIMITIVES")) == -1)
+            return "tag <PRIMITIVES> missing";
+        else {
+            if (index != PRIMITIVES_INDEX)
+                this.onXMLMinorError("tag <PRIMITIVES> out of order");
+
+            //Parse PRIMITIVES block
+            if ((error = this.parsePrimitives(nodes[index])) != null)
+                return error;
+        }
+
+        // <COMPONENTS>
+        if ((index = nodeNames.indexOf("COMPONENTS")) == -1)
+            return "tag <COMPONENTS> missing";
+        else {
+            if (index != COMPONENTS_INDEX)
+                this.onXMLMinorError("tag <COMPONENTS> out of order");
+
+            //Parse COMPONENTS block
+            if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
     }
@@ -440,6 +481,9 @@ class MySceneGraph {
      */
     parseNodes(nodesNode) {
         // TODO: Parse block
+
+        var children = nodesNode.children;
+
         this.log("Parsed nodes");
         return null;
     }
@@ -477,4 +521,6 @@ class MySceneGraph {
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
     }
+
+
 }
