@@ -111,8 +111,8 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <views> out of order");
 
             //Parse VIEWS block
-            if ((error = this.parseViews(nodes[index])) != null)
-                return error;
+            //if ((error = this.parseViews(nodes[index])) != null)
+              //  return error;
         }
 
         //<AMBIENT>
@@ -123,7 +123,7 @@ class MySceneGraph {
             if (index != AMBIENT_INDEX)
                 this.onXMLMinorError("tag <ambient> out of order");
 
-            //Parse VIEWS block
+            //Parse AMBIENT block
             if ((error = this.parseAmbient(nodes[index])) != null)
                 return error;
         }
@@ -202,7 +202,7 @@ class MySceneGraph {
     }
     
     /**
-    * Parses the <SCENE> block
+    * Parses the <scene> block
     */
     parseScene(sceneNode) {
 
@@ -223,95 +223,61 @@ class MySceneGraph {
     }
 
     /**
-     * Parses the <INITIALS> block.
-     */
-    parseInitials(initialsNode) {
+    * Parses the <views> block
+    */
 
-        var children = initialsNode.children;
+    parseViews(viewsNode) {
+    
 
-        var nodeNames = [];
+    }
 
-        for (var i = 0; i < children.length; i++)
-            nodeNames.push(children[i].nodeName);
+    /**
+    * Parses the <ambient> block
+    */
 
-        // Frustum planes
-        // (default values)
-        this.near = 0.1;
-        this.far = 500;
-        var indexFrustum = nodeNames.indexOf("frustum");
-        if (indexFrustum == -1) {
-            this.onXMLMinorError("frustum planes missing; assuming 'near = 0.1' and 'far = 500'");
+    parseAmbient(ambientNode) {
+        
+        var children = ambientNode.children;
+        var ambient = children[0];
+        var background = children[1];
+
+        this.ambientR = this.reader.getFloat(ambient,"r");
+        this.ambientG = this.reader.getFloat(ambient,"g");
+        this.ambientB = this.reader.getFloat(ambient,"b");
+        this.ambientA = this.reader.getFloat(ambient,"a");
+
+        this.backgroundR = this.reader.getFloat(background,"r");
+        this.backgroundG = this.reader.getFloat(background,"g");
+        this.backgroundB = this.reader.getFloat(background,"b");
+        this.backgroundA = this.reader.getFloat(background,"a");
+
+        if (!(this.ambientR != null && !isNaN(this.ambientR))) {
+            this.onXMLMinorError("unable to parse red component of ambient illumination");
         }
-        else {
-            this.near = this.reader.getFloat(children[indexFrustum], 'near');
-            this.far = this.reader.getFloat(children[indexFrustum], 'far');
-
-            if (!(this.near != null && !isNaN(this.near))) {
-                this.near = 0.1;
-                this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0.1'");
-            }
-            else if (!(this.far != null && !isNaN(this.far))) {
-                this.far = 500;
-                this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 500'");
-            }
-
-            if (this.near >= this.far)
-                return "'near' must be smaller than 'far'";
+        if (!(this.ambientG != null && !isNaN(this.ambientG))) {
+            this.onXMLMinorError("unable to parse green component of ambient illumination");
         }
-
-        // Checks if at most one translation, three rotations, and one scaling are defined.
-        if (initialsNode.getElementsByTagName('translation').length > 1)
-            return "no more than one initial translation may be defined";
-
-        if (initialsNode.getElementsByTagName('rotation').length > 3)
-            return "no more than three initial rotations may be defined";
-
-        if (initialsNode.getElementsByTagName('scale').length > 1)
-            return "no more than one scaling may be defined";
-
-        // Initial transforms.
-        this.initialTranslate = [];
-        this.initialScaling = [];
-        this.initialRotations = [];
-
-        // Gets indices of each element.
-        var translationIndex = nodeNames.indexOf("translation");
-        var thirdRotationIndex = nodeNames.indexOf("rotation");
-        var secondRotationIndex = nodeNames.indexOf("rotation", thirdRotationIndex + 1);
-        var firstRotationIndex = nodeNames.lastIndexOf("rotation");
-        var scalingIndex = nodeNames.indexOf("scale");
-
-        // Checks if the indices are valid and in the expected order.
-        // Translation.
-        this.initialTransforms = mat4.create();
-        mat4.identity(this.initialTransforms);
-
-        if (translationIndex == -1)
-            this.onXMLMinorError("initial translation undefined; assuming T = (0, 0, 0)");
-        else {
-            var tx = this.reader.getFloat(children[translationIndex], 'x');
-            var ty = this.reader.getFloat(children[translationIndex], 'y');
-            var tz = this.reader.getFloat(children[translationIndex], 'z');
-
-            if (tx == null || ty == null || tz == null) {
-                tx = 0;
-                ty = 0;
-                tz = 0;
-                this.onXMLMinorError("failed to parse coordinates of initial translation; assuming zero");
-            }
-
-            //TODO: Save translation data
+        if (!(this.ambientB != null && !isNaN(this.ambientB))) {
+            this.onXMLMinorError("unable to parse blue component of ambient illumination");
+        }
+        if (!(this.ambientA != null && !isNaN(this.ambientA))) {
+            this.onXMLMinorError("unable to parse alpha component of ambient illumination");
         }
 
-        //TODO: Parse Rotations
+        if (!(this.backgroundR != null && !isNaN(this.backgroundR))) {
+            this.onXMLMinorError("unable to parse red component of background illumination");
+        }
+        if (!(this.backgroundG != null && !isNaN(this.backgroundG))) {
+            this.onXMLMinorError("unable to parse green component of background illumination");
+        }
+        if (!(this.backgroundB != null && !isNaN(this.backgroundB))) {
+            this.onXMLMinorError("unable to parse blue component of background illumination");
+        }
+        if (!(this.backgroundA != null && !isNaN(this.backgroundA))) {
+            this.onXMLMinorError("unable to parse alpha component of background illumination");
+        }
 
-        //TODO: Parse Scaling
-
-        //TODO: Parse Reference length
-
-        this.log("Parsed initials");
-
-        return null;
+        console.log("Parsed ambient block!");
     }
 
     /**
