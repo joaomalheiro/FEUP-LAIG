@@ -1,5 +1,5 @@
 <yas>
-    <scene root="triangulo_movido" axis_lenght="4.0"/>
+    <scene root="triangulo_movido" axis_length="4.0"/>
 
     <views default="default">
         <perspective id = "default" near="1" angle="0">
