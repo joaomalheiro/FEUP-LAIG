@@ -91,11 +91,11 @@ class MySceneGraph {
 
         // <SCENE>
         var index;
-        if ((index = nodeNames.indexOf("SCENE")) == -1)
-            return "tag <SCENE> missing";
+        if ((index = nodeNames.indexOf("scene")) == -1)
+            return "tag <scene> missing";
         else {
             if (index != SCENE_INDEX)
-                this.onXMLMinorError("tag <SCENE> out of order");
+                //this.onXMLMinorError("tag <scene> out of order");
 
             //Parse SCENE block
             if ((error = this.parseScene(nodes[index])) != null)
@@ -104,11 +104,11 @@ class MySceneGraph {
 
         // <VIEWS>
         var index;
-        if ((index = nodeNames.indexOf("VIEWS")) == -1)
-            return "tag <VIEWS> missing";
+        if ((index = nodeNames.indexOf("views")) == -1)
+            return "tag <views> missing";
         else {
             if (index != VIEWS_INDEX)
-                this.onXMLMinorError("tag <VIEWS> out of order");
+                this.onXMLMinorError("tag <views> out of order");
 
             //Parse VIEWS block
             if ((error = this.parseViews(nodes[index])) != null)
@@ -117,11 +117,11 @@ class MySceneGraph {
 
         //<AMBIENT>
         var index;
-        if ((index = nodeNames.indexOf("AMBIENT")) == -1)
-            return "tag <AMBIENT> missing";
+        if ((index = nodeNames.indexOf("ambient")) == -1)
+            return "tag <ambient> missing";
         else {
             if (index != AMBIENT_INDEX)
-                this.onXMLMinorError("tag <AMBIENT> out of order");
+                this.onXMLMinorError("tag <ambient> out of order");
 
             //Parse VIEWS block
             if ((error = this.parseAmbient(nodes[index])) != null)
@@ -129,11 +129,11 @@ class MySceneGraph {
         }
 
         // <LIGHTS>
-        if ((index = nodeNames.indexOf("LIGHTS")) == -1)
-            return "tag <LIGHTS> missing";
+        if ((index = nodeNames.indexOf("lights")) == -1)
+            return "tag <lights> missing";
         else {
             if (index != LIGHTS_INDEX)
-                this.onXMLMinorError("tag <LIGHTS> out of order");
+                this.onXMLMinorError("tag <lights> out of order");
 
             //Parse LIGHTS block
             if ((error = this.parseLights(nodes[index])) != null)
@@ -141,11 +141,11 @@ class MySceneGraph {
         }
 
         // <TEXTURES>
-        if ((index = nodeNames.indexOf("TEXTURES")) == -1)
-            return "tag <TEXTURES> missing";
+        if ((index = nodeNames.indexOf("textures")) == -1)
+            return "tag <textures> missing";
         else {
             if (index != TEXTURES_INDEX)
-                this.onXMLMinorError("tag <TEXTURES> out of order");
+                this.onXMLMinorError("tag <textures> out of order");
 
             //Parse TEXTURES block
             if ((error = this.parseTextures(nodes[index])) != null)
@@ -153,11 +153,11 @@ class MySceneGraph {
         }
 
         // <MATERIALS>
-        if ((index = nodeNames.indexOf("MATERIALS")) == -1)
-            return "tag <MATERIALS> missing";
+        if ((index = nodeNames.indexOf("materials")) == -1)
+            return "tag <materials> missing";
         else {
             if (index != MATERIALS_INDEX)
-                this.onXMLMinorError("tag <MATERIALS> out of order");
+                this.onXMLMinorError("tag <materials> out of order");
 
             //Parse MATERIALS block
             if ((error = this.parseMaterials(nodes[index])) != null)
@@ -165,11 +165,11 @@ class MySceneGraph {
         }
 
         // <TRANSFORMATIONS>
-        if ((index = nodeNames.indexOf("TRANSFORMATIONS")) == -1)
-            return "tag <TRANSFORMATIONS> missing";
+        if ((index = nodeNames.indexOf("transformations")) == -1)
+            return "tag <transformations> missing";
         else {
             if (index != TRANSFORMATIONS_INDEX)
-                this.onXMLMinorError("tag <TRANSFORMATIONS> out of order");
+                this.onXMLMinorError("tag <transformations> out of order");
 
             //Parse TRANSFORMATIONS block
             if ((error = this.parseTransformations(nodes[index])) != null)
@@ -177,11 +177,11 @@ class MySceneGraph {
         }
 
         // <PRIMITIVES>
-        if ((index = nodeNames.indexOf("PRIMITIVES")) == -1)
-            return "tag <PRIMITIVES> missing";
+        if ((index = nodeNames.indexOf("primitives")) == -1)
+            return "tag <primitives> missing";
         else {
             if (index != PRIMITIVES_INDEX)
-                this.onXMLMinorError("tag <PRIMITIVES> out of order");
+                this.onXMLMinorError("tag <primitives> out of order");
 
             //Parse PRIMITIVES block
             if ((error = this.parsePrimitives(nodes[index])) != null)
@@ -189,16 +189,37 @@ class MySceneGraph {
         }
 
         // <COMPONENTS>
-        if ((index = nodeNames.indexOf("COMPONENTS")) == -1)
-            return "tag <COMPONENTS> missing";
+        if ((index = nodeNames.indexOf("components")) == -1)
+            return "tag <components> missing";
         else {
             if (index != COMPONENTS_INDEX)
-                this.onXMLMinorError("tag <COMPONENTS> out of order");
+                this.onXMLMinorError("tag <components> out of order");
 
             //Parse COMPONENTS block
             if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
+    }
+    
+    /**
+    * Parses the <SCENE> block
+    */
+    parseScene(sceneNode) {
+
+        this.root = this.reader.getString(sceneNode, 'root');
+        this.axisLength = this.reader.getFloat(sceneNode, 'axis_length');
+
+        if (this.root == null) {
+            this.root = 1;
+            this.onXMLMinorError("unable to parse value for root; assuming 'root = 1'");
+            }
+
+         if (!(this.axisLength != null && !isNaN(this.axisLength))) {
+            this.axisLength = 1;
+            this.onXMLMinorError("unable to parse value for axisLength; assuming 'axisLength = 1'");
+            }
+         
+        console.log("Parsed scene");
     }
 
     /**
@@ -501,7 +522,7 @@ class MySceneGraph {
      * Callback to be executed on any minor error, showing a warning on the console.
      * @param {string} message
      */
-    onXMLMinorErro(message) {
+    onXMLMinorError(message) {
         console.warn("Warning: " + message);
     }
 
