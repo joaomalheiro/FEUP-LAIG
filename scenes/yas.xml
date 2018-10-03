@@ -35,6 +35,8 @@
 
     <textures>
         <texture id="texture" file="file" />
+        <texture id="grass" file="grass.jpg" />
+        <texture id="texture" file="file" />
     </textures>
 
     <materials>

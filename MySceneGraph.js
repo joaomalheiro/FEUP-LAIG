@@ -135,8 +135,8 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <lights> out of order");
 
             //Parse LIGHTS block
-            if ((error = this.parseLights(nodes[index])) != null)
-                return error;
+            //if ((error = this.parseLights(nodes[index])) != null)
+              //  return error;
         }
 
         // <TEXTURES>
@@ -326,19 +326,6 @@ class MySceneGraph {
     }
 
     /**
-     * Parses the <ILLUMINATION> block.
-     * @param {illumination block element} illuminationNode
-     */
-    parseIllumination(illuminationNode) {
-        // TODO: Parse Illumination node
-
-        this.log("Parsed illumination");
-
-        return null;
-    }
-
-
-    /**
      * Parses the <LIGHTS> node.
      * @param {lights block element} lightsNode
      */
@@ -489,9 +476,27 @@ class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
-        // TODO: Parse block
+        
+        var children = texturesNode.children;
+        this.textures = [];
 
-        console.log("Parsed textures");
+        var sameID;
+        
+        for(var i = 0; i < children.length; i++){
+
+            sameID = false;
+            let texture = {id:this.reader.getString(children[i],'id'),file:this.reader.getString(children[i],'file')};
+            //console.log(this.textures);
+            
+            for(var j = 0; j < this.textures.length; j++){
+                if (texture.id == this.textures[j].id)
+                sameID = true;
+            }
+            if (!sameID)
+                this.textures.push(texture);
+        }
+        
+        console.log("Parsed textures !");
 
         return null;
     }
@@ -501,7 +506,17 @@ class MySceneGraph {
      * @param {materials block element} materialsNode
      */
     parseMaterials(materialsNode) {
-        // TODO: Parse block
+        
+        var children = materialsNode.children;
+        this.materials = [];
+        
+        for(var i = 0; i < children.length; i++){
+
+            var grandChildren = children[i].children;
+
+            
+        } 
+
         this.log("Parsed materials");
         return null;
 
