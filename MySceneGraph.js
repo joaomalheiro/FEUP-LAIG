@@ -91,11 +91,12 @@ class MySceneGraph {
 
         // <SCENE>
         var index;
+
         if ((index = nodeNames.indexOf("scene")) == -1)
             return "tag <scene> missing";
         else {
             if (index != SCENE_INDEX)
-                //this.onXMLMinorError("tag <scene> out of order");
+                this.onXMLMinorError("tag <scene> out of order");
 
             //Parse SCENE block
             if ((error = this.parseScene(nodes[index])) != null)
@@ -103,7 +104,6 @@ class MySceneGraph {
         }
 
         // <VIEWS>
-        var index;
         if ((index = nodeNames.indexOf("views")) == -1)
             return "tag <views> missing";
         else {
@@ -116,7 +116,6 @@ class MySceneGraph {
         }
 
         //<AMBIENT>
-        var index;
         if ((index = nodeNames.indexOf("ambient")) == -1)
             return "tag <ambient> missing";
         else {
@@ -230,7 +229,8 @@ class MySceneGraph {
     
         var children = viewsNode.children;
         var nodeNames = [];
-        this.views = [];
+        this.perspectives = [];
+        this.orthos = [];
 
         for(var i = 0; i < children.length; i++){
             if(children[i].nodeName === 'perspective' || children[i].nodeName === 'ortho')
@@ -238,38 +238,41 @@ class MySceneGraph {
             else  this.onXMLMinorError("unable to parse the type of the view, not perspective or ortho");
         }
         
-        console.log(nodeNames[0]);
         for(var j = 0; j < children.length; j++) {
             
-            //this.views[j].type = nodeNames[j];
             // Gets indices of each element.
-            view.name = this.reader.getString(children[j], 'id');
-            view.near = this.reader.getFloat(children[j], 'near');
-            view.far = this.reader.getFloat(children[j], 'far');
+            var view = [];
+            view.push(this.reader.getString(children[j], 'id'));
+            view.push(this.reader.getFloat(children[j], 'near'));
        
             if(nodeNames[j] === 'perspective'){
                 
-                this.views[j].angle = this.reader.getFloat(children[j], 'angle');
-    //improvement is possible down here..
-                this.views[j].fromX = this.reader.getFloat(children[j].children[0],'x');
-                this.views[j].fromY = this.reader.getFloat(children[j].children[0],'y');
-                this.views[j].fromZ = this.reader.getFloat(children[j].children[0],'z');
+                view.push(this.reader.getFloat(children[j], 'angle'));
+                view.push(this.reader.getFloat(children[j].children[0],'x'));
+                view.push(this.reader.getFloat(children[j].children[0],'y'));
+                view.push(this.reader.getFloat(children[j].children[0],'z'));
 
-                this.views[j].toX = this.reader.getFloat(children[j].children[1],'x');
-                this.views[j].toY = this.reader.getFloat(children[j].children[1],'y');
-                this.views[j].toZ = this.reader.getFloat(children[j].children[1],'z');
+                view.push(this.reader.getFloat(children[j].children[1],'x'));
+                view.push(this.reader.getFloat(children[j].children[1],'y'));
+                view.push(this.reader.getFloat(children[j].children[1],'z'));
+
+                this.perspectives.push(view);
 
             } else if (nodeNames[j] === 'ortho'){
-                    
-                this.views[j].left = this.reader.getFloat(children[j],'left');
-                this.views[j].right = this.reader.getFloat(children[j],'right');
-                this.views[j].top = this.reader.getFloat(children[j],'top');
-                this.views[j].bottom = this.reader.getFloat(children[j],'bottom');
-            }
+                
+                view.push(this.reader.getFloat(children[j], 'far'));
+                view.push(this.reader.getFloat(children[j],'left'));
+                view.push(this.reader.getFloat(children[j],'right'));
+                view.push(this.reader.getFloat(children[j],'top'));
+                view.push(this.reader.getFloat(children[j],'bottom'));
 
+                this.orthos.push(view);
+            }
+        
         }
 
-        console.log(this.views[1].left);
+        console.log(this.orthos[0][2]); //left value
+        console.log("Parsed views !");
 
     }
 

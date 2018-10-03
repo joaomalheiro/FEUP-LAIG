@@ -34,7 +34,7 @@
     </lights>
 
     <textures>
-        <texture id="texture" file="file">
+        <texture id="texture" file="file" />
     </textures>
 
     <materials>
