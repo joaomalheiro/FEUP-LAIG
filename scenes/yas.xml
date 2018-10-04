@@ -1,44 +1,42 @@
 <yas>
     <scene root="triangulo_movido" axis_length="4.0"/>
-
+ 
     <views default="default">
         <perspective id = "default" near="1" angle="0">
             <from x="4" y="0" z="4"/>
             <to x="10" y="5" z="10"/>
         </perspective>
-
+ 
         <ortho id="ortho" near="0" far ="10"
                           left="4" right="4" top="6" bottom="0"/>
     </views>
-
+ 
     <ambient>
         <ambient r="10" g="24" b="35" a="56"/>
         <background r="40" g="45" b="65" a="78"/>
     </ambient>
-
+ 
     <lights>
         <omni id="omni" enabled="0">
             <location x="0" y="0" z="0" w="0"/>
-            <ambient r="10" g="24" b="35" a="56"/>
-            <diffuse r="10" g="24" b="35" a="56"/>
-            <specular r="10" g="24" b="35" a="56"/>
+            <ambient r="0.1" g="0" b="0" a="0"/>
+            <diffuse r="0" g="0" b="0" a="0"/>
+            <specular r="0" g="0" b="0" a="0"/>
         </omni>
-
+ 
         <spot id="spot" enabled ="0" angle="0" exponent="0">
             <location x="1" y="1" z="1" w="0" />
             <target x="4" y="4" z="4" />
-            <ambient r="42" g="25" b="100" a="4" />
-            <diffuse r="56" g="120" b="34" a="10" />
-            <specular r="78" g="100" b="100" a="30" />
+            <ambient r="0" g="0" b="0" a="0" />
+            <diffuse r="0" g="0" b="0" a="0" />
+            <specular r="0" g="0" b="0" a="0" />
         </spot>
     </lights>
-
+ 
     <textures>
-        <texture id="texture" file="file" />
-        <texture id="grass" file="grass.jpg" />
-        <texture id="texture" file="file" />
+        <texture id="texture" file="file"/>
     </textures>
-
+ 
     <materials>
         <material id="material" shininess = "0" >
             <emission r="30" g="30" b="30" a="30" />
@@ -47,7 +45,7 @@
             <specular r="30" g="30" b="30" a="30" />
         </material>
     </materials>
-
+ 
     <transformations>
         <transformation id="translateX">
             <translate x="2" y="0" z="0"/>
@@ -55,8 +53,8 @@
             <scale x="1" y="1" z="1"/>
         </transformation>
     </transformations>
-
-
+ 
+ 
     <primitives>
         <primitive id="triangle">
             <triangle x1="2" y1="0" z1="12"
@@ -64,24 +62,22 @@
                       x3="0" y3="0" z3="0" />
         </primitive >
     </primitives >
-
+ 
     <components>
        <component id = "triangulo_movido">
             <transformation>
                 <transformationref id="translateX"/>
             </transformation>
-
+ 
             <materials>
                 <material id="material"/>
             </materials>
-
+ 
             <texture id="none" lenght_s="3" length_t="1"/>
-
+ 
             <children>
                 <primitiveref id="triangle"/>
             </children>
         </component>
     </components>
 </yas>
-
-
