@@ -195,8 +195,8 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <components> out of order");
 
             //Parse COMPONENTS block
-            if ((error = this.parseComponents(nodes[index])) != null)
-                return error;
+            //if ((error = this.parseComponents(nodes[index])) != null)
+               // return error;
         }
     }
     
@@ -907,7 +907,17 @@ class MySceneGraph {
     displayScene() {
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
+
+        for(var i = 0; i < this.primitives.length; i++){
+
+          if(this.primitives[i].triangle != null){
+            this.displayPrimitive(this.primitives[i]);
+          }
+        }
+        return null;
     }
 
-
+  displayPrimitive(primitive){
+    primitive.triangle.display();
+  }
 }
