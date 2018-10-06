@@ -244,6 +244,7 @@ class MySceneGraph {
             var view = [];
             view.push(this.reader.getString(children[j], 'id'));
             view.push(this.reader.getFloat(children[j], 'near'));
+            view.push(this.reader.getFloat(children[j], 'far'));
        
             if(nodeNames[j] === 'perspective'){
                 
@@ -260,7 +261,6 @@ class MySceneGraph {
 
             } else if (nodeNames[j] === 'ortho'){
                 
-                view.push(this.reader.getFloat(children[j], 'far'));
                 view.push(this.reader.getFloat(children[j],'left'));
                 view.push(this.reader.getFloat(children[j],'right'));
                 view.push(this.reader.getFloat(children[j],'top'));

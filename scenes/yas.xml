@@ -2,7 +2,7 @@
     <scene root="triangulo_movido" axis_length="10.0"/>
  
     <views default="camera-perspective-0">
-        <perspective id = "camera-perspective-0" near="100" angle="30">
+        <perspective id = "camera-perspective-0" near="100" far="100" angle="30">
             <from x="4" y="0" z="4"/>
             <to x="10" y="5" z="10"/>
         </perspective>
@@ -77,7 +77,7 @@
                 <material id="inherit"/>
             </materials>
  
-            <texture id="none" lenght_s="3" length_t="1"/>
+            <texture id="none" length_s="3" length_t="1"/>
  
             <children>
                 <primitiveref id="triangle"/>
