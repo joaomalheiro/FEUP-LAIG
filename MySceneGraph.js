@@ -171,8 +171,8 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <transformations> out of order");
 
             //Parse TRANSFORMATIONS block
-            //if ((error = this.parseTransformations(nodes[index])) != null)
-              //  return error;
+            if ((error = this.parseTransformations(nodes[index])) != null)
+               return error;
         }
 
         // <PRIMITIVES>
@@ -823,6 +823,57 @@ class MySceneGraph {
         
         console.log(this.materials["material-1"]);
         console.log("Parsed materials");
+        return null;
+
+    }
+       /**
+     * Parses the <Transformations> node.
+     * @param {transformations block element} transformationsNode
+     */
+    parseTransformations(transformationsNode) {
+        var children = transformationsNode.children;
+        this.transformations = [];
+        
+        for(var i = 0; i < children.length; i++){
+
+            var grandChildren = children[i].children;
+
+            let transfor = {id: "", translate:[],rotate:[],scale:[]};
+
+            transfor.id = this.reader.getString(children[i],'id');
+
+            for(var j = 0; j < grandChildren.length ; j++) {
+              
+              var arr = [];
+              if(grandChildren[j].nodeName == "translate"){
+                arr.push(this.reader.getFloat(grandChildren[j],'x'));
+                arr.push(this.reader.getFloat(grandChildren[j],'y'));
+                arr.push(this.reader.getFloat(grandChildren[j],'z'));
+                transfor.translate = arr;
+              } 
+              else if (grandChildren[j].nodeName == "rotate"){
+                arr.push(this.reader.getString(grandChildren[j],'axis'));
+                arr.push(this.reader.getFloat(grandChildren[j],'angle'));
+                transfor.rotate = arr;
+              }
+              else if (grandChildren[j].nodeName == "scale"){
+                arr.push(this.reader.getFloat(grandChildren[j],'x'));
+                arr.push(this.reader.getFloat(grandChildren[j],'y'));
+                arr.push(this.reader.getFloat(grandChildren[j],'z'));
+                transfor.scale = arr;
+              } else
+                    this.onXMLMinorError("Not a valid transformation tag");
+
+            }
+
+        if (this.transformations[transfor.id] == null)
+          this.transformations[transfor.id] = transfor;
+          else this.onXMLMinorError("at least two transformations with the same id, only the first was parsed and loaded");
+           
+        } 
+        
+        console.log(this.transformations["translateX"]);
+        console.log("Parsed transformations");
         return null;
 
     }
