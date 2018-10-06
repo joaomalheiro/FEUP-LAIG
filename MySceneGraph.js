@@ -761,23 +761,16 @@ class MySceneGraph {
         
         var children = texturesNode.children;
         this.textures = [];
-
-        var sameID;
         
         for(var i = 0; i < children.length; i++){
 
-            sameID = false;
             let texture = {id:this.reader.getString(children[i],'id'),file:this.reader.getString(children[i],'file')};
-            //console.log(this.textures);
-            
-            for(var j = 0; j < this.textures.length; j++){
-                if (texture.id == this.textures[j].id)
-                sameID = true;
-            }
-            if (!sameID)
-                this.textures.push(texture);
+                
+            if (this.textures[texture.id] == null)
+              this.textures[texture.id] = texture;
+            else this.onXMLMinorError("at least two textures with the same id, only the first was parsed and loaded");
+
         }
-        
         console.log("Parsed textures !");
 
         return null;
