@@ -796,9 +796,39 @@ class MySceneGraph {
 
             var grandChildren = children[i].children;
 
-            
-        } 
+            let mat = {id: "", shininess:0, emission:[],ambient:[],difuse:[],specular:[]};
 
+            mat.id = this.reader.getString(children[i],'id');
+            mat.shininess = this.reader.getFloat(children[i],'shininess');
+
+            for(var j = 0; j < grandChildren.length ; j++) {
+              
+              var arr = [];
+              arr.push(this.reader.getFloat(grandChildren[i],'r'));
+              arr.push(this.reader.getFloat(grandChildren[i],'g'));
+              arr.push(this.reader.getFloat(grandChildren[i],'b'));
+              arr.push(this.reader.getFloat(grandChildren[i],'a'));
+
+              switch(j){
+                case 0: mat.emission = arr;
+                break;
+                case 1: mat.ambient = arr;
+                break;
+                case 2: mat.difuse = arr;
+                break;
+                case 3: mat.specular = arr;
+                break;
+              }
+
+            }
+
+        if (this.materials[mat.id] == null)
+          this.materials[mat.id] = mat;
+          else this.onXMLMinorError("at least two materials with the same id, only the first was parsed and loaded");
+           
+        } 
+        
+        console.log(this.materials["material-1"]);
         console.log("Parsed materials");
         return null;
 
