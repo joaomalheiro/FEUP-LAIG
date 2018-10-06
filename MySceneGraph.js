@@ -135,8 +135,8 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <lights> out of order");
 
             //Parse LIGHTS block
-            //if ((error = this.parseLights(nodes[index])) != null)
-              //  return error;
+            if ((error = this.parseLights(nodes[index])) != null)
+                return error;
         }
 
         // <TEXTURES>
@@ -342,7 +342,7 @@ class MySceneGraph {
         // Any number of lights.
         for (var i = 0; i < children.length; i++) {
  
-            if ((this.reader.getString(children[i], 'id') != "omni") && (this.reader.getString(children[i], 'id') != "spot") ){
+            if (children[i].nodeName == 'omni' && children[i].nodeName === 'spot'){
                 this.onXMLMinorError("unknown tag <" + this.reader.getString(children[i], 'id') + ">");
                 continue;
             }
@@ -363,7 +363,7 @@ class MySceneGraph {
             for (var j = 0; j < grandChildren.length; j++) {
                 nodeNames.push(grandChildren[j].nodeName);
             }
-            if(this.reader.getString(children[i], 'id') == "omni"){
+            if(children[i].nodeName == 'omni'){
                 // Gets indices of each element.
                 var locationIndex = nodeNames.indexOf("location");
                 var ambientIndex = nodeNames.indexOf("ambient");
@@ -530,7 +530,7 @@ class MySceneGraph {
         numLights++;
  
             }
-        else if(this.reader.getString(children[i], 'id') == "spot"){
+        else if(children[i].nodeName == 'spot'){
              // Gets indices of each element.
                 var locationIndex = nodeNames.indexOf("location");
                 var ambientIndex = nodeNames.indexOf("ambient");
