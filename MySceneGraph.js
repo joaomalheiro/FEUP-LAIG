@@ -820,46 +820,40 @@ class MySceneGraph {
 
         for(var i = 0; i < children.length; i++) {
             
-            grandChildren = children[i].children;
+          let prim = {};
+          var grandChildren = children[i].children[0];
 
-            for(var j = 0; j < grandChildren.length; j++){
-                if(grandChildren[i].nodeName == 'rectangle' || grandChildren[i].nodeName == 'triangle' || grandChildren[i].nodeName == 'cylinder' || grandChildren[i].nodeName == 'sphere' || grandChildren[i].nodeName == 'thorus')
-                    nodeNames.push(grandChildren[i].nodeName);
-                else  this.onXMLMinorError("unable to parse the primitive, not an accepted primitive type");
+          for(var j = 0; j < grandChildren.length; j++){
+            if(!(grandChildren[j].nodeName == 'rectangle' || grandChildren[j].nodeName == 'triangle' || grandChildren[j].nodeName == 'cylinder' || grandChildren[j].nodeName == 'sphere' || grandChildren[j].nodeName == 'thorus'))
+              this.onXMLMinorError("unable to parse the primitive, not an accepted primitive type");
             }
+            
+            
+          switch(grandChildren.nodeName){
 
-            for(var k = 0; k < nodeNames.length; k++){
-                
-                let prim = {};
+              case 'rectangle': 
+                prim = new MyRectangle(this.scene,this.reader.getFloat(grandChildren,'x1'),this.reader.getFloat(grandChildren,'y1'),this.reader.getFloat(grandChildren,'x2'),this.reader.getFloat(grandChildren,'y2'));
+              break;
 
-                switch(nodeNames[k]){
-                    
-                    case 'rectangle': 
-                      var rect = new MyRectangle(this.scene,this.reader.getFloat(grandChildren[k],'x1'),this.reader.getFloat(grandChildren[k],'x2'),this.reader.getFloat(grandChildren[k],'x3'),this.reader.getFloat(grandChildren[k],'x4'));
-                      prim.rectangle = rect;  
-                    break;
+              case 'triangle':
+                prim = new MyTriangle(this.scene,this.reader.getFloat(grandChildren,'x1'),this.reader.getFloat(grandChildren,'y1'),this.reader.getFloat(grandChildren,'z1'),this.reader.getFloat(grandChildren,'x2'),this.reader.getFloat(grandChildren,'y2'),this.reader.getFloat(grandChildren,'z2'),this.reader.getFloat(grandChildren,'x3'),this.reader.getFloat(grandChildren,'y3'),this.reader.getFloat(grandChildren,'z3'));
+                break;
 
-                    case 'triangle':
-                      var tri = new MyTriangle(this.scene,this.reader.getFloat(grandChildren[k],'x1'),this.reader.getFloat(grandChildren[k],'y1'),this.reader.getFloat(grandChildren[k],'z1'),this.reader.getFloat(grandChildren[k],'x2'),this.reader.getFloat(grandChildren[k],'y2'),this.reader.getFloat(grandChildren[k],'z2'),this.reader.getFloat(grandChildren[k],'x3'),this.reader.getFloat(grandChildren[k],'y3'),this.reader.getFloat(grandChildren[k],'z3'));
-                      prim.triangle = tri;
-                      break;
-                     
-                    case 'sphere':
-                      var sphere = new MySphere(this.scene,this.reader.getFloat(grandChildren[k],'radius'),this.reader.getFloat(grandChildren[k],'slices'),this.reader.getFloat(grandChildren[k],'stacks'));
-                      prim.sphere = sphere;
-                    break;
+              case 'sphere':
+                prim = new MySphere(this.scene,this.reader.getFloat(grandChildren,'radius'),this.reader.getFloat(grandChildren,'slices'),this.reader.getFloat(grandChildren,'stacks'));
+              break;
 
-                    case 'cylinder':
-                      var cylinder = new MyCylinder(this.scene,this.reader.getFloat(grandChildren[k],'height'),this.reader.getFloat(grandChildren[k],'height'),this.reader.getFloat(grandChildren[k],'base'),this.reader.getFloat(grandChildren[k],'top'),this.reader.getFloat(grandChildren[k],'stacks'),this.reader.getFloat(grandChildren[k],'slices'),1,1);
-                      prim.cylinder = cylinder;
-                    break;
-                }
-            this.primitives.push(prim);
-            }
-        }
-       
-        console.log("Parsed primitives");
-        return null;
+              case 'cylinder':
+                prim = new MyCylinder(this.scene,this.reader.getFloat(grandChildren,'height'),this.reader.getFloat(grandChildren,'height'),this.reader.getFloat(grandChildren,'base'),this.reader.getFloat(grandChildren,'top'),this.reader.getFloat(grandChildren,'stacks'),this.reader.getFloat(grandChildren,'slices'),1,1);
+              break;
+          }
+
+      this.primitives.push(prim);
+
+      }
+        
+    console.log("Parsed primitives");
+    return null;
     }
 
     /**
@@ -910,14 +904,14 @@ class MySceneGraph {
 
         for(var i = 0; i < this.primitives.length; i++){
 
-          if(this.primitives[i].triangle != null){
+          //if(this.primitives[i] != null){
             this.displayPrimitive(this.primitives[i]);
-          }
+          //}
         }
         return null;
     }
 
   displayPrimitive(primitive){
-    primitive.triangle.display();
+    primitive.display();
   }
 }
