@@ -359,7 +359,7 @@
             <material id="material-2"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
 
           <children>
             <primitiveref id="cylinder"/>
@@ -375,7 +375,7 @@
             <material id="material-2"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
 
           <children>
             <primitiveref id="cylinder"/>
@@ -391,7 +391,7 @@
             <material id="material-2"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
 
           <children>
             <primitiveref id="cylinder"/>
@@ -408,7 +408,7 @@
             <material id="material-2"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
 
           <children>
             <primitiveref id="cylinder"/>
