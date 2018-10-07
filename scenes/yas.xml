@@ -1,14 +1,14 @@
 <yas>
-    <scene root="triangulo_movido" axis_length="10.0"/>
+    <scene root="room" axis_length="10.0"/>
  
     <views default="camera-perspective-0">
-        <perspective id = "camera-perspective-0" near="100" far="100" angle="30">
-            <from x="4" y="0" z="4"/>
-            <to x="10" y="5" z="10"/>
+       <perspective id="camera-perspective-0" near="0.5" far="300" angle="30">
+            <from x="20.0" y="20.0" z="20.0"/>
+            <to x="0.0" y="0.0" z="0.0"/>
         </perspective>
  
-        <ortho id="camera-ortho-0" near="0" far ="10"
-                          left="4" right="4" top="6" bottom="0"/>
+        <ortho id="camera-ortho-0" near="0.5" far ="100"
+                          left="1" right="3" top="1" bottom="7"/>
     </views>
  
     <ambient>
@@ -19,7 +19,7 @@
     <lights>
         <omni id="omni-light-0" enabled="1">
             <location x="0" y="0" z="0" w="0"/>
-            <ambient r="0.1" g="0" b="0" a="0"/>
+            <ambient r="0.5" g="0.5" b="0-3" a="1"/>
             <diffuse r="0" g="0" b="0" a="0"/>
             <specular r="0" g="0" b="0" a="0"/>
         </omni>
@@ -34,24 +34,83 @@
     </lights>
  
     <textures>
-        <texture id="texture" file="file"/>
+        <texture id="tex-wall" file="images/wall.jpg"/>
+        <texture id="tex-floor" file="images/floor.jpg"/>
+        <texture id="tex-vidral" file="images/vidral.jpg"/>
+        <texture id="tex-door" file="images/door.jpg"/>
+        <texture id="tex-metalKnob" file="images/metal-knob.jpg"/>
+        <texture id="tex-exitSign" file="images/exitSign.jpg"/>
+        <texture id="tex-painting" file="images/painting1.jpg"/>
+        <texture id="tex-wood" file="images/wood.jpg"/>
     </textures>
  
     <materials>
-        <material id="material-1" shininess = "4" >
+        <material id="material-1" shininess = "10.0" >
+            <emission r="0.5" g="0.5" b="0" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+            <specular r="0.5" g="0.5" b="0.5" a="1" />
+        </material>
+
+        <material id="material-2" shininess = "10" >
             <emission r="0" g="0" b="0" a="0" />
-            <ambient r="0.125" g="0.4" b="0.375" a="1" />
-            <diffuse r="0.3" g="0.6" b="0.5" a="1" />
+            <ambient r="0.6" g="0.4" b="0.6" a="1" />
+            <diffuse r="0.3" g="0.2" b="0.5" a="1" />
             <specular r="0.1" g="0.225" b="0.3" a="1" />
         </material>
     </materials>
  
     <transformations>
-        <transformation id="translateX">
-            <translate x="2" y="0" z="0"/>
-            <rotate axis="z" angle="0"/>
+       
+        <transformation id="scale10">
+            <translate x="0" y="0" z="0"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="10" y="10" z="1"/>
+        </transformation>
+
+        <transformation id="rotateWallY">
+            <translate x="0" y="0" z="0"/>
+            <rotate axis="y" angle="-90"/>
+            <scale x="10" y="10" z="1"/>
+        </transformation>
+
+        <transformation id="rotateWallX">
+            <translate x="0" y="0" z="0"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="10" y="10" z="1"/>
+        </transformation>
+
+        <transformation id="doorKnob">
+            <translate x="0.3" y="2" z="0"/>
+            <rotate axis="x" angle="0"/>
+            <scale x="0.1" y="0.1" z="0.1"/>
+        </transformation>
+
+        <transformation id="woodDoor">
+            <translate x="0" y="0" z="0"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="2" y="4" z="1"/>
+        </transformation>
+
+        <transformation id="doorSign">
+            <translate x="0" y="4.2" z="0"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="2" y="0.8" z="0.1"/>
+        </transformation>
+
+         <transformation id="doorT">
+            <translate x="7" y="0" z="0.05"/>
+            <rotate axis="y" angle="0"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
+
+         <transformation id="paintingT">
+            <translate x="0.05" y="3" z="7.8"/>
+            <rotate axis="y" angle="90"/>
+            <scale x="6" y="3" z="1"/>
+        </transformation>
+
+
     </transformations>
  
  
@@ -62,26 +121,165 @@
                       x3="0" y3="0" z3="2" />
         </primitive >
         <primitive id="rectangle">
-          <rectangle x1="3" y1="4"
-                     x2="6" y2="2" />
+          <rectangle x1="0" y1="0"
+                     x2="1" y2="1" />
+        </primitive >
+        <primitive id="sphere">
+          <sphere radius="1" slices="10"
+                    stacks="10" />
         </primitive >
     </primitives >
  
     <components>
-       <component id = "triangulo_movido">
+       
+        <component id = "room">
             <transformation>
-                <transformationref id="translateX"/>
             </transformation>
  
             <materials>
-                <material id="inherit"/>
+                <material id="material-1"/>
             </materials>
  
-            <texture id="none" length_s="3" length_t="1"/>
+            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
  
             <children>
-                <primitiveref id="triangle"/>
+                <componentref id="side1"/>
+                <componentref id="side2"/>
+                <componentref id="side3"/>
+                <componentref id="door"/>
+                <componentref id="painting"/>
             </children>
         </component>
+
+        <component id = "side1">
+          <transformation>
+            <transformationref id="scale10"/>
+          </transformation>
+
+          <materials>
+            <material id="material-1"/>
+          </materials>
+
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="rectangle"/>
+          </children>
+       </component>
+
+        <component id = "side2">
+          <transformation>
+            <transformationref id="rotateWallY"/>
+          </transformation>
+
+          <materials>
+            <material id="material-1"/>
+          </materials>
+
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="rectangle"/>
+          </children>
+       </component>
+
+       <component id = "side3">
+          <transformation>
+            <transformationref id="rotateWallX"/>
+          </transformation>
+
+          <materials>
+            <material id="material-1"/>
+          </materials>
+
+          <texture id="tex-floor" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="rectangle"/>
+          </children>
+       </component>
+
+       <component id = "door">
+          <transformation>
+             <transformationref id="doorT"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-vidral" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <componentref id="doorKnob"/>
+            <componentref id="doorWood"/>
+            <componentref id="doorSign"/>
+          </children>
+       </component>
+
+       <component id = "doorKnob">
+          <transformation>
+             <transformationref id="doorKnob"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-metalKnob" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="sphere"/>
+          </children>
+       </component>
+
+       <component id = "doorWood">
+          <transformation>
+            <transformationref id="woodDoor"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-door" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="rectangle"/>
+          </children>
+       </component>
+
+       <component id = "doorSign">
+          <transformation>
+            <transformationref id="doorSign"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-exitSign" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="rectangle"/>
+          </children>
+       </component>
+
+        <component id = "painting">
+          <transformation>
+            <transformationref id="paintingT"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="rectangle"/>
+          </children>
+       </component>
+
     </components>
 </yas>
