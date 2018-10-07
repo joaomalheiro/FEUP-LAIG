@@ -38,6 +38,7 @@
         <texture id="tex-floor" file="images/floor.jpg"/>
         <texture id="tex-vidral" file="images/vidral.jpg"/>
         <texture id="tex-door" file="images/door.jpg"/>
+        <texture id="tex-green" file="images/green.jpg"/>
         <texture id="tex-metalKnob" file="images/metal-knob.jpg"/>
         <texture id="tex-exitSign" file="images/exitSign.jpg"/>
         <texture id="tex-painting" file="images/painting1.jpg"/>
@@ -61,23 +62,17 @@
     </materials>
  
     <transformations>
-       
-        <transformation id="scale10">
-            <translate x="0" y="0" z="0"/>
-            <rotate axis="y" angle="0"/>
-            <scale x="10" y="10" z="1"/>
-        </transformation>
-
-        <transformation id="rotateWallY">
+    
+        <transformation id="rotateSide2">
             <translate x="0" y="0" z="0"/>
             <rotate axis="y" angle="-90"/>
-            <scale x="10" y="10" z="1"/>
+            <scale x="1" y="1" z="1"/>
         </transformation>
 
-        <transformation id="rotateWallX">
+        <transformation id="rotateSide3">
             <translate x="0" y="0" z="0"/>
             <rotate axis="x" angle="90"/>
-            <scale x="10" y="10" z="1"/>
+            <scale x="1" y="1" z="1"/>
         </transformation>
 
         <transformation id="doorKnob">
@@ -110,6 +105,41 @@
             <scale x="6" y="3" z="1"/>
         </transformation>
 
+         <transformation id="scaleWalls">
+            <translate x="0" y="0" z="0"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="10" y="10" z="10"/>
+        </transformation>
+
+        <transformation id="leg2T">
+            <translate x="3" y="0" z="0"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="leg3T">
+            <translate x="3" y="0" z="3.5"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="leg4T">
+            <translate x="0" y="0" z="3.5"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+         <transformation id="topTableT">
+            <translate x="1.5" y="2" z="2"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="12" y="0.15" z="20"/>
+        </transformation>
+        
+        <transformation id="tableT">
+            <translate x="3.5" y="0" z="3.5"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
 
     </transformations>
  
@@ -128,6 +158,10 @@
           <sphere radius="1" slices="10"
                     stacks="10" />
         </primitive >
+        <primitive id="cylinder">
+          <cylinder base="0.2" top="0.2"
+                    height="2" slices="30" stacks="10" />
+        </primitive >
     </primitives >
  
     <components>
@@ -143,17 +177,33 @@
             <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
  
             <children>
+                <componentref id="walls"/>
+                <componentref id="door"/>
+                <componentref id="painting"/>
+                <componentref id="table"/>
+            </children>
+        </component>
+
+        <component id = "walls">
+            <transformation>
+              <transformationref id="scaleWalls"/>
+            </transformation>
+ 
+            <materials>
+                <material id="material-1"/>
+            </materials>
+ 
+            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+            <children>
                 <componentref id="side1"/>
                 <componentref id="side2"/>
                 <componentref id="side3"/>
-                <componentref id="door"/>
-                <componentref id="painting"/>
             </children>
         </component>
 
         <component id = "side1">
           <transformation>
-            <transformationref id="scale10"/>
           </transformation>
 
           <materials>
@@ -169,7 +219,7 @@
 
         <component id = "side2">
           <transformation>
-            <transformationref id="rotateWallY"/>
+            <transformationref id="rotateSide2"/>
           </transformation>
 
           <materials>
@@ -185,7 +235,7 @@
 
        <component id = "side3">
           <transformation>
-            <transformationref id="rotateWallX"/>
+            <transformationref id="rotateSide3"/>
           </transformation>
 
           <materials>
@@ -262,6 +312,106 @@
 
           <children>
             <primitiveref id="rectangle"/>
+          </children>
+       </component>
+
+        <component id = "table">
+            <transformation>
+              <transformationref id="tableT"/>
+            </transformation>
+ 
+            <materials>
+                <material id="material-1"/>
+            </materials>
+ 
+            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+            <children>
+                <componentref id="leg1"/>
+                <componentref id="leg2"/>
+                <componentref id="leg3"/>
+                <componentref id="leg4"/>
+                <componentref id="top"/>
+            </children>
+        </component>
+
+        <component id = "top">
+          <transformation>
+            <transformationref id="topTableT"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-green" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="cylinder"/>
+          </children>
+       </component>
+
+         <component id = "leg1">
+          <transformation>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="cylinder"/>
+          </children>
+       </component>
+
+       <component id = "leg2">
+          <transformation>
+            <transformationref id="leg2T"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="cylinder"/>
+          </children>
+       </component>
+
+       <component id = "leg3">
+          <transformation>
+            <transformationref id="leg3T"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="cylinder"/>
+          </children>
+       </component>
+       
+
+        <component id = "leg4">
+          <transformation>
+            <transformationref id="leg4T"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="cylinder"/>
           </children>
        </component>
 
