@@ -195,8 +195,8 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <components> out of order");
 
             //Parse COMPONENTS block
-            if ((error = this.parseComponents(nodes[index])) != null)
-                return error;
+            //if ((error = this.parseComponents(nodes[index])) != null)
+              //  return error;
         }
     }
     
@@ -239,39 +239,51 @@ class MySceneGraph {
         }
         
         for(var j = 0; j < children.length; j++) {
-            
-            // Gets indices of each element.
-            var view = [];
-            view.push(this.reader.getString(children[j], 'id'));
-            view.push(this.reader.getFloat(children[j], 'near'));
-            view.push(this.reader.getFloat(children[j], 'far'));
-       
+           
             if(nodeNames[j] === 'perspective'){
+
+                let perspective = { id:"",near:0 ,far:0,angle:0,from:[],to:[]};
                 
-                view.push(this.reader.getFloat(children[j], 'angle'));
-                view.push(this.reader.getFloat(children[j].children[0],'x'));
-                view.push(this.reader.getFloat(children[j].children[0],'y'));
-                view.push(this.reader.getFloat(children[j].children[0],'z'));
+                perspective.id = this.reader.getString(children[j], 'id');
+                perspective.near = this.reader.getFloat(children[j], 'near');
+                perspective.far = this.reader.getFloat(children[j], 'far');
+                perspective.angle =this.reader.getFloat(children[j], 'angle');
+               
+                perspective.from.push(this.reader.getFloat(children[j].children[0],'x'));
+                perspective.from.push(this.reader.getFloat(children[j].children[0],'y'));
+                perspective.from.push(this.reader.getFloat(children[j].children[0],'z'));
 
-                view.push(this.reader.getFloat(children[j].children[1],'x'));
-                view.push(this.reader.getFloat(children[j].children[1],'y'));
-                view.push(this.reader.getFloat(children[j].children[1],'z'));
+                perspective.to.push(this.reader.getFloat(children[j].children[1],'x'));
+                perspective.to.push(this.reader.getFloat(children[j].children[1],'y'));
+                perspective.to.push(this.reader.getFloat(children[j].children[1],'z'));
 
-                this.perspectives.push(view);
+                this.perspectives.push(perspective);
 
             } else if (nodeNames[j] === 'ortho'){
-                
-                view.push(this.reader.getFloat(children[j],'left'));
-                view.push(this.reader.getFloat(children[j],'right'));
-                view.push(this.reader.getFloat(children[j],'top'));
-                view.push(this.reader.getFloat(children[j],'bottom'));
 
-                this.orthos.push(view);
+                let ortho = {id:"",near:0,far:0,left:0,right:0,top:0,bottom:0,from:[],to:[]};
+                
+                ortho.id = this.reader.getString(children[j], 'id');
+                ortho.near = this.reader.getFloat(children[j], 'near');
+                ortho.far = this.reader.getFloat(children[j], 'far');
+                ortho.left = this.reader.getFloat(children[j],'left');
+                ortho.right = this.reader.getFloat(children[j],'right');
+                ortho.top = this.reader.getFloat(children[j],'top');
+                ortho.bottom = this.reader.getFloat(children[j],'bottom');
+
+                ortho.from.push(this.reader.getFloat(children[j].children[0],'x'));
+                ortho.from.push(this.reader.getFloat(children[j].children[0],'y'));
+                ortho.from.push(this.reader.getFloat(children[j].children[0],'z'));
+
+                ortho.to.push(this.reader.getFloat(children[j].children[1],'x'));
+                ortho.to.push(this.reader.getFloat(children[j].children[1],'y'));
+                ortho.to.push(this.reader.getFloat(children[j].children[1],'z'));
+
+                this.orthos.push(ortho);
             }
         
         }
 
-        console.log(this.orthos[0][2]); //left value
         console.log("Parsed views !");
 
     }
@@ -940,7 +952,7 @@ class MySceneGraph {
         this.components = [];
 
         for(var i = 0; i < this.children.length; i++){
-            let component = {id: "", transformation: "", materials:[] ,texture:"",componentref:[],primitiveref:[]};
+            let component = {id: "", transformation: "", materials:[] ,tex_id:"",tex_length_s:0,tex_length_t:0,componentref:[],primitiveref:[]};
 
             component.id = this.reader.getString(this.children[i],'id');
 
@@ -948,26 +960,29 @@ class MySceneGraph {
             if(this.componentInfo.length != 4){
                 this.onXMLError("Component does not have all required attributes");
             } else {
-               if(this.reader.getString(this.componentInfo[0],'transformation') != null){
-                 component.transformation = this.reader.getString(this.componentInfo[0],'transformation'); 
-               }
+                if(this.componentInfo[0].children.length != 0){
+                 component.transformation = this.reader.getString(this.componentInfo[0].children[0],'id'); 
+                }
 
                 var materials = this.componentInfo[1].children;
-                for(var j = 0; j < this.materials.length; j++){
-                    component.materials.push(this.reader.getString(this.materials[j],'id'));
+                for(var j = 0; j < materials.length; j++){
+                    component.materials.push(this.reader.getString(materials[j],'id'));
                 }
                 component.materials = materials;
 
-                component.texture = this.reader.getString(this.componentInfo[2],'transformation');
+                component.tex_id = this.reader.getString(this.componentInfo[2],'id');
+                component.tex_length_s = this.reader.getString(this.componentInfo[2],'length_s');
+                component.tex_length_t = this.reader.getString(this.componentInfo[2],'length_t');
 
-                var componentChildren = this.children[3].children;
+                var componentChildren = this.componentInfo[3].children;
 
                 for(var j = 0; j < componentChildren.length; j++){
-                    if(componentChildren.nodeName == "componentref"){
-                        component.componentref.push(this.reader.getString(this.componentChildren[j],'id'));
-                    } else if(componentChildren.nodeName == "primitiveref"){
-                        component.componentref.push(this.reader.getString(this.componentChildren[j],'id'));
+                    if(componentChildren[j].nodeName == "componentref"){
+                        component.componentref.push(this.reader.getString(componentChildren[j],'id'));
+                    } else if(componentChildren[j].nodeName == "primitiveref"){
+                        component.primitiveref.push(this.reader.getString(componentChildren[j],'id'));
                     } else {
+                        console.log(componentChildren[j].nodeName);
                         this.onXMLError("Unidentified tag name");
                     }
                 }
@@ -981,7 +996,7 @@ class MySceneGraph {
 
 
 
-        this.log("Parsed nodes");
+        this.log("Parsed components");
         return null;
     }
 

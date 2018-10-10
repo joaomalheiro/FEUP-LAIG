@@ -40,6 +40,13 @@ class XMLscene extends CGFscene {
      * Initializes the scene cameras.
      */
     initCameras() {
+            
+        /*this.perpectives = [];
+        for(let perpective_model of this.graph.perpectives){
+
+            this.perpectives.push(new CFGcamera(perpective_model.angle,perpective_model.near,perpective_model.far))
+        }
+        */
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
 
@@ -55,7 +62,12 @@ class XMLscene extends CGFscene {
             this.materials[material_model.id] = new CFGappearance(this);
             this.materials[material_model.id].setAmbient(material_model.ambient[0],material_model.ambient[1],material_model.ambient[2],material_model.ambient[3]);
             this.materials[material_model.id].setSpecular(material_model.specular[0],material_model.specular[1],material_model.specular[2],material_model.specular[3]);                
+            this.materials[material_model.id].setDiffuse(material_model.diffuse[0],material_model.specular[1],material_model.diffuse[2],material_model.diffuse[3]);
+            this.materials[material_model.id].setEmission(material_model.emission[0],material_model.emission[1],material_model.emission[2],material_model.emission[3]);
+            this.materials[material_model.id].setShininess(material_model.shininess);
         }
+
+        console.log("Materials created !")
     }
 
     /**
@@ -65,13 +77,12 @@ class XMLscene extends CGFscene {
 
         this.textures = [];
 
-        for(var i = 0; i < this.graph.textures.length; i++){
+        for(let texture_model of this.graph.textures){
             
-            var texture = this.graph.textures.pop;
-            this.textures[texture.id] = new CFGtexture(this,texture.file);        
+            this.textures[texture_model.id] = new CFGtexture(this,texture.file);        
         }
 
-        console.log("Textures created and inited")
+        console.log("Textures created !")
     }
     /**
      * Initializes the scene lights with the values read from the XML file.
@@ -119,7 +130,9 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this, this.graph.axisLength);
     
         // TODO: Change ambient and background details according to parsed graph
-
+        
+        this.initMaterials();
+        this.initTextures();
         this.initLights();
 
         this.setGlobalAmbientLight(this.graph.ambientR,this.graph.ambientG,this.graph.ambientB,this.graph.ambientA);
