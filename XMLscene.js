@@ -42,6 +42,37 @@ class XMLscene extends CGFscene {
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
+
+    /**
+    * Initializes the scene materials
+    */
+    initMaterials() {
+
+        this.materials = [];
+
+        for(let material_model of this.graph.materials) {
+            
+            this.materials[material_model.id] = new CFGappearance(this);
+            this.materials[material_model.id].setAmbient(material_model.ambient[0],material_model.ambient[1],material_model.ambient[2],material_model.ambient[3]);
+            this.materials[material_model.id].setSpecular(material_model.specular[0],material_model.specular[1],material_model.specular[2],material_model.specular[3]);                
+        }
+    }
+
+    /**
+    * Initializes the scene textures
+    */
+    initTextures() {
+
+        this.textures = [];
+
+        for(var i = 0; i < this.graph.textures.length; i++){
+            
+            var texture = this.graph.textures.pop;
+            this.textures[texture.id] = new CFGtexture(this,texture.file);        
+        }
+
+        console.log("Textures created and inited")
+    }
     /**
      * Initializes the scene lights with the values read from the XML file.
      */

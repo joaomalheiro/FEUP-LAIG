@@ -195,8 +195,8 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <components> out of order");
 
             //Parse COMPONENTS block
-            //if ((error = this.parseComponents(nodes[index])) != null)
-               // return error;
+            if ((error = this.parseComponents(nodes[index])) != null)
+                return error;
         }
     }
     
@@ -771,6 +771,8 @@ class MySceneGraph {
             else this.onXMLMinorError("at least two textures with the same id, only the first was parsed and loaded");
 
         }
+
+        console.log(this.textures);
         console.log("Parsed textures !");
 
         return null;
@@ -807,7 +809,7 @@ class MySceneGraph {
                 break;
                 case 1: mat.ambient = arr;
                 break;
-                case 2: mat.difuse = arr;
+                case 2: mat.diffuse = arr;
                 break;
                 case 3: mat.specular = arr;
                 break;
@@ -872,7 +874,6 @@ class MySceneGraph {
            
         } 
         
-        console.log(this.transformations["translateX"]);
         console.log("Parsed transformations");
         return null;
 
@@ -918,7 +919,7 @@ class MySceneGraph {
               break;
 
               case 'cylinder':
-                prim = new MyCylinder(this.scene,this.reader.getFloat(grandChildren,'height'),this.reader.getFloat(grandChildren,'height'),this.reader.getFloat(grandChildren,'base'),this.reader.getFloat(grandChildren,'top'),this.reader.getFloat(grandChildren,'stacks'),this.reader.getFloat(grandChildren,'slices'),1,1);
+                prim = new MyCylinder(this.scene,this.reader.getFloat(grandChildren,'height'),this.reader.getFloat(grandChildren,'base'),this.reader.getFloat(grandChildren,'top'),this.reader.getFloat(grandChildren,'stacks'),this.reader.getFloat(grandChildren,'slices'),1,1);
               break;
           }
 
@@ -930,14 +931,55 @@ class MySceneGraph {
     return null;
     }
 
-    /**
-     * Parses the <NODES> block.
-     * @param {nodes block element} nodesNode
+  /**
+     * Parses the <components> block.
+     * @param {components block element} nodesNode
      */
-    parseNodes(nodesNode) {
-        // TODO: Parse block
+    parseComponents(nodesNode) {
+        this.children = nodesNode.children;
+        this.components = [];
 
-        var children = nodesNode.children;
+        for(var i = 0; i < this.children.length; i++){
+            let component = {id: "", transformation: "", materials:[] ,texture:"",componentref:[],primitiveref:[]};
+
+            component.id = this.reader.getString(this.children[i],'id');
+
+            this.componentInfo = this.children[i].children;
+            if(this.componentInfo.length != 4){
+                this.onXMLError("Component does not have all required attributes");
+            } else {
+               if(this.reader.getString(this.componentInfo[0],'transformation') != null){
+                 component.transformation = this.reader.getString(this.componentInfo[0],'transformation'); 
+               }
+
+                var materials = this.componentInfo[1].children;
+                for(var j = 0; j < this.materials.length; j++){
+                    component.materials.push(this.reader.getString(this.materials[j],'id'));
+                }
+                component.materials = materials;
+
+                component.texture = this.reader.getString(this.componentInfo[2],'transformation');
+
+                var componentChildren = this.children[3].children;
+
+                for(var j = 0; j < componentChildren.length; j++){
+                    if(componentChildren.nodeName == "componentref"){
+                        component.componentref.push(this.reader.getString(this.componentChildren[j],'id'));
+                    } else if(componentChildren.nodeName == "primitiveref"){
+                        component.componentref.push(this.reader.getString(this.componentChildren[j],'id'));
+                    } else {
+                        this.onXMLError("Unidentified tag name");
+                    }
+                }
+
+                this.components[component.id] = component;
+                console.log(component);
+
+            }
+
+        }
+
+
 
         this.log("Parsed nodes");
         return null;
@@ -978,9 +1020,8 @@ class MySceneGraph {
 
         for(var i = 0; i < this.primitives.length; i++){
 
-          //if(this.primitives[i] != null){
+          if(this.primitives[i] != null)
             this.displayPrimitive(this.primitives[i]);
-          //}
         }
         return null;
     }
