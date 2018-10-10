@@ -100,7 +100,7 @@
         </transformation>
 
          <transformation id="paintingT">
-            <translate x="0.05" y="3" z="7.8"/>
+            <translate x="0.05" y="3" z="8.8"/>
             <rotate axis="y" angle="90"/>
             <scale x="6" y="3" z="1"/>
         </transformation>
@@ -108,7 +108,7 @@
          <transformation id="scaleWalls">
             <translate x="0" y="0" z="0"/>
             <rotate axis="y" angle="0"/>
-            <scale x="10" y="10" z="10"/>
+            <scale x="12" y="12" z="12"/>
         </transformation>
 
         <transformation id="leg2T">
@@ -130,23 +130,123 @@
         </transformation>
 
          <transformation id="topTableT">
-            <translate x="1.5" y="2" z="2"/>
+            <translate x="1.5" y="2" z="1.67"/>
             <rotate axis="y" angle="0"/>
             <scale x="12" y="0.15" z="20"/>
         </transformation>
         
         <transformation id="tableT">
-            <translate x="3.5" y="0" z="3.5"/>
+            <translate x="3.5" y="0" z="4"/>
             <rotate axis="y" angle="0"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
+
+        <transformation id="chair-1T">
+            <translate x="1.4" y="0" z="5.5"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="chair-2T">
+            <translate x="2.6" y="0" z="9"/>
+            <rotate axis="y" angle="30"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="chair-3T">
+            <translate x="2.7" y="0" z="2"/>
+            <rotate axis="y" angle="-30"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="chair-4T">
+            <translate x="8.3" y="0" z="5.5"/>
+            <rotate axis="y" angle="180"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="chair-5T">
+            <translate x="7" y="0" z="2"/>
+            <rotate axis="y" angle="210"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="chair-6T">
+            <translate x="7" y="0" z="9"/>
+            <rotate axis="y" angle="150"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="leg-chair">
+            <translate x="0" y="0" z="0"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="0.5" y="0.75" z="0.5"/>
+        </transformation>
+
+        <transformation id="leg-chair-1T">
+            <translate x="0" y="0" z="0"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="leg-chair-2T">
+            <translate x="1" y="0" z="0"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="leg-chair-3T">
+            <translate x="1" y="0" z="1"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="leg-chair-4T">
+            <translate x="0" y="0" z="1"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="sit-chair">
+            <translate x="-.1" y="1.5" z="-0.1"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="1.2" y="1.2" z="1.2"/>
+        </transformation>
+
+        <transformation id="back-chair">
+            <translate x="-.1" y="1.5" z="-0.1"/>
+            <rotate axis="y" angle="270"/>
+            <scale x="1.2" y="1.6" z="1.2"/>
+        </transformation>
+
+        <transformation id="center-chairT">
+            <translate x="-0.5" y="0" z="-0.5"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+        
+        
 
     </transformations>
  
  
     <primitives>
+        <primitive id="triangle">
+            <triangle x1="1" y1="0" z1="0"
+                      x2="0" y2="1" z2="0"
+                      x3="0" y3="0" z3="2" />
+        </primitive >
+        <primitive id="rectangle">
+          <rectangle x1="0" y1="0"
+                     x2="1" y2="1" />
+        </primitive >
         <primitive id="sphere">
-          <sphere radius="1" slices="5000" stacks="10" />
+          <sphere radius="1" slices="10"
+                    stacks="10" />
+        </primitive >
+        <primitive id="cylinder">
+          <cylinder base="0.2" top="0.2"
+                    height="2" slices="30" stacks="10" />
         </primitive >
     </primitives >
  
@@ -166,7 +266,7 @@
                 <componentref id="walls"/>
                 <componentref id="door"/>
                 <componentref id="painting"/>
-                <componentref id="table"/>
+                <componentref id="game"/>
             </children>
         </component>
 
@@ -301,9 +401,8 @@
           </children>
        </component>
 
-        <component id = "table">
+        <component id = "game">
             <transformation>
-              <transformationref id="tableT"/>
             </transformation>
  
             <materials>
@@ -313,6 +412,279 @@
             <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
  
             <children>
+                <componentref id="table"/>
+                <componentref id="chairs"/>
+            </children>
+        </component>
+
+        <component id = "chairs">
+            <transformation>
+            </transformation>
+ 
+            <materials>
+                <material id="material-1"/>
+            </materials>
+ 
+            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+            <children>
+                <componentref id="chair1"/>
+                <componentref id="chair2"/>
+                <componentref id="chair3"/>
+                <componentref id="chair4"/>
+                <componentref id="chair5"/>
+                <componentref id="chair6"/>
+            </children>
+        </component>
+
+        <component id = "chair1">
+            <transformation>
+              <transformationref id="chair-1T"/>
+            </transformation>
+ 
+            <materials>
+                <material id="material-1"/>
+            </materials>
+ 
+            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+            <children>
+                <componentref id="chair"/>
+            </children>
+
+        </component>
+
+        <component id = "chair2">
+            <transformation>
+              <transformationref id="chair-2T"/>
+            </transformation>
+ 
+            <materials>
+                <material id="material-1"/>
+            </materials>
+ 
+            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+            <children>
+                <componentref id="chair"/>
+            </children>
+
+        </component>
+
+         <component id = "chair3">
+            <transformation>
+              <transformationref id="chair-3T"/>
+            </transformation>
+ 
+            <materials>
+                <material id="material-1"/>
+            </materials>
+ 
+            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+            <children>
+                <componentref id="chair"/>
+            </children>
+
+        </component>
+
+         <component id = "chair4">
+            <transformation>
+              <transformationref id="chair-4T"/>
+            </transformation>
+ 
+            <materials>
+                <material id="material-1"/>
+            </materials>
+ 
+            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+            <children>
+                <componentref id="chair"/>
+            </children>
+
+        </component>
+
+        <component id = "chair5">
+            <transformation>
+              <transformationref id="chair-5T"/>
+            </transformation>
+ 
+            <materials>
+                <material id="material-1"/>
+            </materials>
+ 
+            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+            <children>
+                <componentref id="chair"/>
+            </children>
+
+        </component>
+
+        <component id = "chair6">
+            <transformation>
+              <transformationref id="chair-6T"/>
+            </transformation>
+ 
+            <materials>
+                <material id="material-1"/>
+            </materials>
+ 
+            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+            <children>
+                <componentref id="chair"/>
+            </children>
+
+        </component>
+
+
+        <component id = "chair">
+          <transformation>
+            <transformationref id="center-chairT"/>
+          </transformation>
+ 
+          <materials>
+            <material id="material-1"/>
+          </materials>
+ 
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+          <children>
+              <componentref id="leg-chair1"/>
+              <componentref id="leg-chair2"/>
+              <componentref id="leg-chair3"/>
+              <componentref id="leg-chair4"/>
+              <componentref id="sit-chair"/>
+              <componentref id="back-chair"/>
+          </children>
+        </component>
+
+        <component id = "leg-chair1">
+          <transformation>
+            <transformationref id="leg-chair-1T"/>
+          </transformation>
+ 
+          <materials>
+            <material id="material-1"/>
+          </materials>
+ 
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+          <children>
+            <componentref id="leg-chair"/>
+          </children>
+        </component>
+
+        <component id = "leg-chair2">
+          <transformation>
+            <transformationref id="leg-chair-2T"/>
+          </transformation>
+ 
+          <materials>
+            <material id="material-1"/>
+          </materials>
+ 
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+          <children>
+            <componentref id="leg-chair"/>
+          </children>
+        </component>
+
+        <component id = "leg-chair3">
+          <transformation>
+            <transformationref id="leg-chair-3T"/>
+          </transformation>
+ 
+          <materials>
+            <material id="material-1"/>
+          </materials>
+ 
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+          <children>
+            <componentref id="leg-chair"/>
+          </children>
+        </component>
+
+        <component id = "leg-chair4">
+          <transformation>
+            <transformationref id="leg-chair-4T"/>
+          </transformation>
+ 
+          <materials>
+            <material id="material-1"/>
+          </materials>
+ 
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+          <children>
+            <componentref id="leg-chair"/>
+          </children>
+        </component>
+
+        <component id = "leg-chair">
+          <transformation>
+            <transformationref id="leg-chair"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="cylinder"/>
+          </children>
+        </component>
+
+        <component id = "sit-chair">
+          <transformation>
+            <transformationref id="sit-chair"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="rectangle"/>
+          </children>
+        </component>
+
+        <component id = "back-chair">
+          <transformation>
+            <transformationref id="back-chair"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="rectangle"/>
+          </children>
+        </component>
+
+        <component id = "table">
+          <transformation>
+            <transformationref id="tableT"/>
+          </transformation>
+ 
+          <materials>
+              <material id="material-1"/>
+          </materials>
+ 
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+ 
+          <children>
                 <componentref id="leg1"/>
                 <componentref id="leg2"/>
                 <componentref id="leg3"/>
@@ -337,7 +709,7 @@
           </children>
        </component>
 
-         <component id = "leg1">
+         <component id = "leg">
           <transformation>
           </transformation>
 
@@ -349,6 +721,21 @@
 
           <children>
             <primitiveref id="cylinder"/>
+          </children>
+       </component>
+
+        <component id = "leg1">
+          <transformation>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+
+          <children>
+           <componentref id="leg"/>
           </children>
        </component>
 
@@ -364,7 +751,7 @@
           <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
 
           <children>
-            <primitiveref id="cylinder"/>
+           <componentref id="leg"/>
           </children>
        </component>
 
@@ -380,7 +767,7 @@
           <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
 
           <children>
-            <primitiveref id="cylinder"/>
+            <componentref id="leg"/>
           </children>
        </component>
        
@@ -397,7 +784,7 @@
           <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
 
           <children>
-            <primitiveref id="cylinder"/>
+            <componentref id="leg"/>
           </children>
        </component>
 
