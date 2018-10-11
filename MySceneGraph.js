@@ -231,7 +231,9 @@ class MySceneGraph {
         var nodeNames = [];
         this.perspectives = [];
         this.orthos = [];
-
+        
+        this.defaultViewID = this.reader.getString(viewsNode,'default');
+        
         for(var i = 0; i < children.length; i++){
             if(children[i].nodeName === 'perspective' || children[i].nodeName === 'ortho')
             nodeNames.push(children[i].nodeName);
@@ -283,7 +285,9 @@ class MySceneGraph {
             }
         
         }
-
+        
+        console.log(this.perspectives);
+        console.log(this.orthos);
         console.log("Parsed views !");
 
     }

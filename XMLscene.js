@@ -24,7 +24,7 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = false;
 
-        this.initCameras();
+        this.initInitialCamera();
 
         this.enableTextures(true);
 
@@ -41,12 +41,24 @@ class XMLscene extends CGFscene {
      */
     initCameras() {
             
-        /*this.perpectives = [];
-        for(let perpective_model of this.graph.perpectives){
+       this.perpective = [];
+       this.ortho = [];
+      
+       for(let perpective_model of this.graph.perspectives){
 
-            this.perpectives.push(new CFGcamera(perpective_model.angle,perpective_model.near,perpective_model.far))
+            this.perpective.push(new CGFcamera(perpective_model.angle,perpective_model.near,perpective_model.far,perpective_model.from,perpective_model.to));
         }
-        */
+
+        for(let ortho_model of this.graph.orthos){
+
+            this.ortho.push(new CGFcameraOrtho(ortho_model.left,ortho_model.right,ortho_model.bottom,ortho_model.top,ortho_model.near,ortho_model.far,ortho_model.from,ortho_model.to,[0,1,0]));
+        }
+    }
+
+    /**
+    * Initializes the initial Camera
+    */
+    initInitialCamera(){
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
 
@@ -134,6 +146,7 @@ class XMLscene extends CGFscene {
         this.initMaterials();
         this.initTextures();
         this.initLights();
+        this.initCameras();
 
         this.setGlobalAmbientLight(this.graph.ambientR,this.graph.ambientG,this.graph.ambientB,this.graph.ambientA);
         this.gl.clearColor(this.graph.backgroundR,this.graph.backgroundG,this.graph.backgroundB,this.graph.backgroundA);
