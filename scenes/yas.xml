@@ -8,7 +8,10 @@
         </perspective>
  
         <ortho id="camera-ortho-0" near="0.5" far ="100"
-                          left="1" right="3" top="1" bottom="7"/>
+                          left="1" right="3" top="1" bottom="7">
+                <from x="20.0" y="20.0" z="20.0"/>
+                <to x="0.0" y="0.0" z="0.0"/>
+        </ortho>
     </views>
  
     <ambient>
