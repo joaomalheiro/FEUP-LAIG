@@ -12,6 +12,7 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
+        this.selectedCamera = 0;
         this.lightValues = {};
     }
 
@@ -41,18 +42,20 @@ class XMLscene extends CGFscene {
      */
     initCameras() {
             
-       this.perpective = [];
-       this.ortho = [];
+       this.views = [];
       
        for(let perpective_model of this.graph.perspectives){
 
-            this.perpective.push(new CGFcamera(perpective_model.angle,perpective_model.near,perpective_model.far,perpective_model.from,perpective_model.to));
+            this.views.push(new CGFcamera(perpective_model.angle,perpective_model.near,perpective_model.far,perpective_model.from,perpective_model.to));
         }
 
         for(let ortho_model of this.graph.orthos){
 
-            this.ortho.push(new CGFcameraOrtho(ortho_model.left,ortho_model.right,ortho_model.bottom,ortho_model.top,ortho_model.near,ortho_model.far,ortho_model.from,ortho_model.to,[0,1,0]));
+            this.views.push(new CGFcameraOrtho(ortho_model.left,ortho_model.right,ortho_model.bottom,ortho_model.top,ortho_model.near,ortho_model.far,ortho_model.from,ortho_model.to,[0,1,0]));
         }
+        
+        console.log(this.views);
+        console.log("Cameras Created!")
     }
 
     /**
@@ -145,18 +148,29 @@ class XMLscene extends CGFscene {
         
         this.initMaterials();
         this.initTextures();
-        this.initLights();
         this.initCameras();
 
         this.setGlobalAmbientLight(this.graph.ambientR,this.graph.ambientG,this.graph.ambientB,this.graph.ambientA);
         this.gl.clearColor(this.graph.backgroundR,this.graph.backgroundG,this.graph.backgroundB,this.graph.backgroundA);
-
+        
+        this.initLights();
         // Adds lights group.
+
         this.interface.addLightsGroup(this.graph.lights);
+
+        this.interface.addCamerasGroup(this.views);
+
+        //this.interface.addCamerasGroup(this.graph.perspective);
+        //this.interface.addCamerasGroup(this.graph.orthos);
 
         this.sceneInited = true;
     }
-
+    
+    setCamera(camera) {
+        this.camera = camera;
+        console.log('Camera has changed to');
+        console.log(camera);
+    }
 
     /**
      * Displays the scene.

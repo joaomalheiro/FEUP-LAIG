@@ -24,7 +24,7 @@ class MySceneGraph {
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
         scene.graph = this;
-
+        
         this.nodes = [];
 
         this.idRoot = null;                    // The id of the root element.
@@ -286,8 +286,6 @@ class MySceneGraph {
         
         }
         
-        console.log(this.perspectives);
-        console.log(this.orthos);
         console.log("Parsed views !");
 
     }
