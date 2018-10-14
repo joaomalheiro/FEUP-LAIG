@@ -2,9 +2,9 @@
     <scene root="room" axis_length="10.0"/>
  
     <views default="camera-perspective-0">
-       <perspective id="camera-perspective-0" near="0.5" far="300" angle="30">
-            <from x="20.0" y="20.0" z="20.0"/>
-            <to x="0.0" y="0.0" z="0.0"/>
+       <perspective id="camera-perspective-0" near="0.1" far="500" angle="0.4">
+            <from x="10" y="5.0" z="12.0"/>
+            <to x="0.0" y="1.0" z="0.0"/>
         </perspective>
  
         <ortho id="camera-ortho-0" near="0.5" far ="100"

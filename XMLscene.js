@@ -43,19 +43,33 @@ class XMLscene extends CGFscene {
     initCameras() {
             
        this.views = [];
+       var i = 0, def;
       
        for(let perpective_model of this.graph.perspectives){
-
+            
+            if(this.graph.defaultViewID == perpective_model.id)
+                def = i;
             this.views.push(new CGFcamera(perpective_model.angle,perpective_model.near,perpective_model.far,perpective_model.from,perpective_model.to));
+            i++;
         }
 
         for(let ortho_model of this.graph.orthos){
-
+            
+            if(this.graph.defaultViewID == ortho_model.id)
+                def = i;
             this.views.push(new CGFcameraOrtho(ortho_model.left,ortho_model.right,ortho_model.bottom,ortho_model.top,ortho_model.near,ortho_model.far,ortho_model.from,ortho_model.to,[0,1,0]));
+            i++;
         }
         
+        if (def != null){
+            this.camera = this.views[def];
+            this.interface.setActiveCamera(this.views[def]);
+        } else {
+            console.log('The default ID for the views did not match any parsed camera of the XML file')
+        }
+
         console.log(this.views);
-        console.log("Cameras Created!")
+        console.log('Created Cameras!');
     }
 
     /**

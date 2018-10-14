@@ -65,6 +65,7 @@ class MyInterface extends CGFinterface {
 
         views.onChange(value =>{
            this.scene.setCamera(cameras[value]);
+           this.setActiveCamera(cameras[value]);
         });
        
 
