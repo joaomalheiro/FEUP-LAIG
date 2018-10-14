@@ -195,8 +195,8 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <components> out of order");
 
             //Parse COMPONENTS block
-            //if ((error = this.parseComponents(nodes[index])) != null)
-              //  return error;
+            if ((error = this.parseComponents(nodes[index])) != null)
+               return error;
         }
     }
     
@@ -937,7 +937,7 @@ class MySceneGraph {
               break;
           }
 
-      this.primitives.push(prim);
+      this.primitives[grandChildren.nodeName] = prim;
 
       }
         
@@ -1031,19 +1031,135 @@ class MySceneGraph {
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
+     /**
+     * Displays the scene, processing each node, starting in the root node.
+     */
     displayScene() {
-        // entry point for graph rendering
-        //TODO: Render loop starting at root of graph
-
-        for(var i = 0; i < this.primitives.length; i++){
-
-          if(this.primitives[i] != null)
-            this.displayPrimitive(this.primitives[i]);
-        }
+        this.materialStack = [];
+        this.textureStack = [];
+        this.displayComponent(this.root);
         return null;
     }
+    displayComponent(componentID){
+        this.scene.pushMatrix();
+        this.materialStack.push(this.components[componentID].materials);
+        var tex = [this.components[componentID].tex_id, this.components[componentID].tex_length_s,this.components[componentID].tex_length_t];
+        this.textureStack.push(tex);
 
-  displayPrimitive(primitive){
-    primitive.display();
+
+        var matrix = this.getTransformationMatrix(componentID);
+        this.scene.multMatrix(matrix);
+        //this.applyTransformations(componentID);
+
+        if(this.components[componentID].primitiveref.length > 0){
+            for(var i = 0; i < this.components[componentID].primitiveref.length; i++){
+            this.displayPrimitive(this.components[componentID].primitiveref[i]);    
+            }
+        }
+        //Recursively displays the tree
+        for(var j = 0; j < this.components[componentID].componentref.length; j++){
+            this.displayComponent(this.components[this.components[componentID].componentref[j]].id);    
+            }
+        this.textureStack.pop();
+        this.materialStack.pop();
+        this.scene.popMatrix();
+    }
+
+    /*applyTransformations(componentID){
+
+        var transf = this.components[componentID].transformation;
+        for(var i = 0; i < Object.keys(this.transformations).length; i++){
+            if(this.transformations[transf] != null){
+                if(this.transformations[transf].translate != null) {
+                    var x = this.transformations[transf].translate[0];
+                    var y = this.transformations[transf].translate[1];
+                    var z = this.transformations[transf].translate[2];
+            
+                    this.scene.translate(x,y,z);
+                }
+
+                if(this.transformations[transf].rotate != null) {
+                    var angle = this.transformations[transf].rotate[1];
+                    switch (this.transformations[transf].rotate[0]){
+                        case "x":
+                        this.scene.rotate(angle*DEGREE_TO_RAD, 1,0,0);
+                        break;
+
+                        case "y":
+                        this.scene.rotate(angle*DEGREE_TO_RAD, 0,1,0);
+                        break;
+                        case "z": 
+                        this.scene.rotate(angle*DEGREE_TO_RAD, 0,0,1);
+                        break;
+
+                        default:
+                        break;
+                    }
+                }
+
+                if(this.transformations[transf].scale != null) {
+                    var sx = this.transformations[transf].scale[0];
+                    var sy = this.transformations[transf].scale[1];
+                    var sz = this.transformations[transf].scale[2];
+                    this.scene.scale(sx,sy,sz);
+                }
+
+            }
+        }
+
+    }*/
+    getTransformationMatrix(componentID){
+        var mat = mat4.create();
+        mat4.identity(mat);
+
+        var transf = this.components[componentID].transformation;
+        var transfor = this.transformations[transf];
+
+            if(transfor != null){
+                if(transfor.translate != null) {
+                    console.log(this.transformations);
+                    var x = transfor.translate[0];
+                    var y = transfor.translate[1];
+                    var z = transfor.translate[2];
+                    console.log(x)
+                    var vec = vec3.fromValues(x,y,z);
+                    console.log("vec: ", vec);
+                    mat4.translate(mat,mat,vec3.fromValues(x,y,z));
+                    console.log(mat);
+                }
+
+                if(transfor.rotate != null) {
+                    var angle = transfor.rotate[1];
+                    switch (transfor.rotate[0]){
+                        case "x":
+                        mat4.rotate(mat, mat, angle * DEGREE_TO_RAD,vec3.fromValues(1,0,0));
+                        break;
+
+                        case "y":
+                        mat4.rotate(mat, mat, angle * DEGREE_TO_RAD,vec3.fromValues(0,1,0));
+                        break;
+                        case "z": 
+                        mat4.rotate(mat, mat, angle * DEGREE_TO_RAD,vec3.fromValues(0,0,1));
+                        break;
+
+                        default:
+                        break;
+                    }
+                }
+
+                if(transfor.scale != null) {
+                    var sx = transfor.scale[0];
+                    var sy = transfor.scale[1];
+                    var sz = transfor.scale[2];
+
+                    mat4.scale(mat, mat, vec3.fromValues(sx,sy,sz));
+                }
+
+            }
+        return mat;
+
+    }
+    displayPrimitive(primitiveID){
+    this.primitives[primitiveID].display();
   }
 }
