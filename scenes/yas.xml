@@ -37,15 +37,15 @@
     </lights>
  
     <textures>
-        <texture id="tex-wall" file="images/wall.jpg"/>
-        <texture id="tex-floor" file="images/floor.jpg"/>
-        <texture id="tex-vidral" file="images/vidral.jpg"/>
-        <texture id="tex-door" file="images/door.jpg"/>
-        <texture id="tex-green" file="images/green.jpg"/>
-        <texture id="tex-metalKnob" file="images/metal-knob.jpg"/>
-        <texture id="tex-exitSign" file="images/exitSign.jpg"/>
-        <texture id="tex-painting" file="images/painting1.jpg"/>
-        <texture id="tex-wood" file="images/wood.jpg"/>
+        <texture id="tex-wall" file="textures/wall.jpg"/>
+        <texture id="tex-floor" file="textures/floor.jpg"/>
+        <texture id="tex-vidral" file="textures/vidral.jpg"/>
+        <texture id="tex-door" file="textures/door.jpg"/>
+        <texture id="tex-green" file="textures/green.jpg"/>
+        <texture id="tex-metalKnob" file="textures/metal-knob.jpg"/>
+        <texture id="tex-exitSign" file="textures/exitSign.jpg"/>
+        <texture id="tex-painting" file="textures/painting1.jpg"/>
+        <texture id="tex-wood" file="textures/wood.jpg"/>
     </textures>
  
     <materials>

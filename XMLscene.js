@@ -85,17 +85,18 @@ class XMLscene extends CGFscene {
     initMaterials() {
 
         this.materials = [];
-
-        for(let material_model of this.graph.materials) {
+        
+        console.log(this.graph.materials);
+        for(const [k,v] of this.graph.materials.entries()) {
             
-            this.materials[material_model.id] = new CFGappearance(this);
-            this.materials[material_model.id].setAmbient(material_model.ambient[0],material_model.ambient[1],material_model.ambient[2],material_model.ambient[3]);
-            this.materials[material_model.id].setSpecular(material_model.specular[0],material_model.specular[1],material_model.specular[2],material_model.specular[3]);                
-            this.materials[material_model.id].setDiffuse(material_model.diffuse[0],material_model.specular[1],material_model.diffuse[2],material_model.diffuse[3]);
-            this.materials[material_model.id].setEmission(material_model.emission[0],material_model.emission[1],material_model.emission[2],material_model.emission[3]);
-            this.materials[material_model.id].setShininess(material_model.shininess);
+            this.materials[k] = new CGFappearance(this);
+            this.materials[k].setAmbient(v.ambient[0],v.ambient[1],v.ambient[2],v.ambient[3]);
+            this.materials[k].setSpecular(v.specular[0],v.specular[1],v.specular[2],v.specular[3]);                
+            this.materials[k].setDiffuse(v.diffuse[0],v.specular[1],v.diffuse[2],v.diffuse[3]);
+            this.materials[k].setEmission(v.emission[0],v.emission[1],v.emission[2],v.emission[3]);
+            this.materials[k].setShininess(v.shininess);
         }
-
+        
         console.log("Materials created !")
     }
 
@@ -105,12 +106,11 @@ class XMLscene extends CGFscene {
     initTextures() {
 
         this.textures = [];
-
-        for(let texture_model of this.graph.textures){
-            
-            this.textures[texture_model.id] = new CFGtexture(this,texture.file);        
+        
+       for(const [k,v] of this.graph.textures.entries()){
+            this.textures[k] = new CGFtexture(this,v.file);        
         }
-
+        
         console.log("Textures created !")
     }
     /**

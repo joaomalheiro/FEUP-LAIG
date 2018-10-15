@@ -774,14 +774,14 @@ class MySceneGraph {
     parseTextures(texturesNode) {
         
         var children = texturesNode.children;
-        this.textures = [];
+        this.textures =new Map();
         
         for(var i = 0; i < children.length; i++){
 
             let texture = {id:this.reader.getString(children[i],'id'),file:this.reader.getString(children[i],'file')};
                 
-            if (this.textures[texture.id] == null)
-              this.textures[texture.id] = texture;
+            if (!this.textures.has(texture.id))
+              this.textures.set(texture.id,texture);
             else this.onXMLMinorError("at least two textures with the same id, only the first was parsed and loaded");
 
         }
@@ -799,7 +799,7 @@ class MySceneGraph {
     parseMaterials(materialsNode) {
         
         var children = materialsNode.children;
-        this.materials = [];
+        this.materials = new Map();
         
         for(var i = 0; i < children.length; i++){
 
@@ -831,8 +831,8 @@ class MySceneGraph {
 
             }
 
-        if (this.materials[mat.id] == null)
-          this.materials[mat.id] = mat;
+        if (!this.materials.has(mat.id))
+            this.materials.set(mat.id,mat);
           else this.onXMLMinorError("at least two materials with the same id, only the first was parsed and loaded");
            
         } 
@@ -1053,14 +1053,14 @@ class MySceneGraph {
 
         if(this.components[componentID].primitiveref.length > 0){
             for(var i = 0; i < this.components[componentID].primitiveref.length; i++){
-              /*for(var z = 0; z < this.components[componentID].materials.length;z++){
-                this.components[componentID].materials[z].apply():
-              }*/
               this.displayPrimitive(this.components[componentID].primitiveref[i]);    
             }
         }
         //Recursively displays the tree
         for(var j = 0; j < this.components[componentID].componentref.length; j++){
+            //console.log( this.scene.materials);
+          
+            this.scene.materials[this.reader.getString(this.components[componentID].materials[0],'id')].apply();
             this.displayComponent(this.components[this.components[componentID].componentref[j]].id);    
             }
         this.textureStack.pop();
