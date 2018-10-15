@@ -24,7 +24,7 @@ class MySceneGraph {
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
         scene.graph = this;
-        
+
         this.nodes = [];
 
         this.idRoot = null;                    // The id of the root element.
@@ -1053,7 +1053,10 @@ class MySceneGraph {
 
         if(this.components[componentID].primitiveref.length > 0){
             for(var i = 0; i < this.components[componentID].primitiveref.length; i++){
-            this.displayPrimitive(this.components[componentID].primitiveref[i]);    
+              /*for(var z = 0; z < this.components[componentID].materials.length;z++){
+                this.components[componentID].materials[z].apply():
+              }*/
+              this.displayPrimitive(this.components[componentID].primitiveref[i]);    
             }
         }
         //Recursively displays the tree
@@ -1117,15 +1120,15 @@ class MySceneGraph {
 
             if(transfor != null){
                 if(transfor.translate != null) {
-                    console.log(this.transformations);
+                    //console.log(this.transformations);
                     var x = transfor.translate[0];
                     var y = transfor.translate[1];
                     var z = transfor.translate[2];
-                    console.log(x)
+                    //console.log(x)
                     var vec = vec3.fromValues(x,y,z);
-                    console.log("vec: ", vec);
+                    //console.log("vec: ", vec);
                     mat4.translate(mat,mat,vec3.fromValues(x,y,z));
-                    console.log(mat);
+                    //console.log(mat);
                 }
 
                 if(transfor.rotate != null) {
