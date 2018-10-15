@@ -7,10 +7,10 @@
             <to x="0.0" y="1.0" z="0.0"/>
         </perspective>
  
-        <ortho id="camera-ortho-0" near="0.5" far ="100"
-                          left="1" right="3" top="1" bottom="7">
-                <from x="20.0" y="20.0" z="20.0"/>
-                <to x="0.0" y="0.0" z="0.0"/>
+        <ortho id="camera-ortho-0" near="0.1" far ="40"
+                          left="-10" right="10" top="5" bottom="-5">
+                <from x="10.0" y="5.0" z="5.0"/>
+                <to x="0.0" y="5.0" z="5.0"/>
         </ortho>
     </views>
  
