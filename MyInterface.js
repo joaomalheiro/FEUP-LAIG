@@ -36,13 +36,14 @@ class MyInterface extends CGFinterface {
 
         // add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
         // e.g. this.option1=true; this.option2=false;
-
+        
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
                 this.scene.lightValues[key] = lights[key][0];
                 group.add(this.scene.lightValues, key);
             }
         }
+        console.log(group);
     }
     
     /**
@@ -56,16 +57,15 @@ class MyInterface extends CGFinterface {
         
         this.camerasID = [];
 
-        for(var i=0; i< cameras.length; i++){
-            this.camerasID.push(i);
+       for(const [k,v] of cameras.entries()){
+            this.camerasID.push(k);
         }
 
-        console.log(this.camerasID);
         var views = group.add(this.scene,'selectedCamera',this.camerasID);
 
         views.onChange(value =>{
-           this.scene.setCamera(cameras[value]);
-           this.setActiveCamera(cameras[value]);
+           this.scene.setCamera(cameras.get(value));
+           this.setActiveCamera(cameras.get(value));
         });
        
 

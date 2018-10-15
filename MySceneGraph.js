@@ -837,7 +837,6 @@ class MySceneGraph {
            
         } 
         
-        console.log(this.materials["material-1"]);
         console.log("Parsed materials");
         return null;
 
@@ -1059,7 +1058,6 @@ class MySceneGraph {
         //Recursively displays the tree
         for(var j = 0; j < this.components[componentID].componentref.length; j++){
             //console.log( this.scene.materials);
-          
             this.scene.materials[this.reader.getString(this.components[componentID].materials[0],'id')].apply();
             this.displayComponent(this.components[this.components[componentID].componentref[j]].id);    
             }
