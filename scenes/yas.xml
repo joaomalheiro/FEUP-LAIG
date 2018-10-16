@@ -357,7 +357,7 @@
           </transformation>
 
           <materials>
-            <material id="material-2"/>
+            <material id="material-1"/>
           </materials>
 
           <texture id="tex-vidral" length_s="1.0" length_t="1.0"/>
@@ -375,7 +375,7 @@
           </transformation>
 
           <materials>
-            <material id="material-2"/>
+            <material id="inherit"/>
           </materials>
 
           <texture id="tex-metalKnob" length_s="1.0" length_t="1.0"/>
@@ -391,7 +391,7 @@
           </transformation>
 
           <materials>
-            <material id="material-2"/>
+            <material id="inherit"/>
           </materials>
 
           <texture id="tex-door" length_s="1.0" length_t="1.0"/>
@@ -407,7 +407,7 @@
           </transformation>
 
           <materials>
-            <material id="material-2"/>
+            <material id="inherit"/>
           </materials>
 
           <texture id="tex-exitSign" length_s="1.0" length_t="1.0"/>
@@ -715,7 +715,7 @@
           </transformation>
 
           <materials>
-            <material id="material-2"/>
+            <material id="material-1"/>
           </materials>
 
           <texture id="tex-green" length_s="1.0" length_t="1.0"/>

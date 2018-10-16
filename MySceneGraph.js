@@ -969,7 +969,6 @@ class MySceneGraph {
                 for(var j = 0; j < materials.length; j++){
                     component.materials.push(this.reader.getString(materials[j],'id'));
                 }
-                component.materials = materials;
 
                 component.tex_id = this.reader.getString(this.componentInfo[2],'id');
                 component.tex_length_s = this.reader.getString(this.componentInfo[2],'length_s');
@@ -1000,7 +999,6 @@ class MySceneGraph {
         this.log("Parsed components");
         return null;
     }
-
     /*
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message
@@ -1027,88 +1025,78 @@ class MySceneGraph {
         console.log("   " + message);
     }
 
-    /**
+        /**
      * Displays the scene, processing each node, starting in the root node.
      */
      /**
      * Displays the scene, processing each node, starting in the root node.
      */
-    displayScene() {
-        this.materialStack = [];
-        this.textureStack = [];
-        this.displayComponent(this.root);
-        return null;
+  displayScene() {
+    this.materialStack = [];
+    this.auxStack = [];
+    this.textureStack = [];
+    this.displayComponent(this.root);
+    return null;
+}
+
+pushMaterial(mat_id) {
+    if(mat_id === "inherit") {
+        this.materialStack.push(this.materialStack[this.materialStack.length-1]);
+        this.auxStack.push(this.auxStack[this.auxStack.length-1]);
+    } else {
+        this.materialStack.push(this.scene.materials[mat_id]);
+        this.auxStack.push(mat_id);
     }
-    displayComponent(componentID){
-        this.scene.pushMatrix();
-        this.materialStack.push(this.components[componentID].materials);
-        var tex = [this.components[componentID].tex_id, this.components[componentID].tex_length_s,this.components[componentID].tex_length_t];
-        this.textureStack.push(tex);
+}
 
+applyMaterialAndTexture() {
+    //setTexture before, here
 
-        var matrix = this.getTransformationMatrix(componentID);
-        this.scene.multMatrix(matrix);
-        //this.applyTransformations(componentID);
+    this.materialStack[this.materialStack.length-1].apply();
+}
 
-        if(this.components[componentID].primitiveref.length > 0){
-            for(var i = 0; i < this.components[componentID].primitiveref.length; i++){
-              this.displayPrimitive(this.components[componentID].primitiveref[i]);    
-            }
-        }
-        //Recursively displays the tree
-        for(var j = 0; j < this.components[componentID].componentref.length; j++){
-            //console.log( this.scene.materials);
-            this.scene.materials[this.reader.getString(this.components[componentID].materials[0],'id')].apply();
-            this.displayComponent(this.components[this.components[componentID].componentref[j]].id);    
-            }
-        this.textureStack.pop();
-        this.materialStack.pop();
-        this.scene.popMatrix();
+popMaterial() {
+    this.materialStack.pop();
+}
+
+applyTransformations(componentID) {
+    const matrix = this.getTransformationMatrix(componentID);
+    this.scene.multMatrix(matrix);
+}
+
+displayComponent(componentID) {
+    //console.log(`For material with id ${componentID} the stack is `, this.auxStack);
+
+    const current_component = this.components[componentID];
+
+    this.scene.pushMatrix();
+    //TODO: Change 0 to a variable, for m-key functionality
+    let current_material_id = current_component.materials[0];
+    this.pushMaterial(current_material_id);
+    //push texs
+
+    this.applyMaterialAndTexture();
+    this.applyTransformations(componentID);
+
+    /*
+    for(const primitive of current_component.primitiveref) {
+        this.displayPrimitive(primitive);
+    }
+    */
+
+    for(let i = 0; i < current_component.primitiveref.length; i++) {
+        this.displayPrimitive(current_component.primitiveref[i]);
     }
 
-    /*applyTransformations(componentID){
+    //Recursively displays the tree
+    for(let i = 0; i < current_component.componentref.length; i++) {
+        this.displayComponent(this.components[current_component.componentref[i]].id);    
+    }
 
-        var transf = this.components[componentID].transformation;
-        for(var i = 0; i < Object.keys(this.transformations).length; i++){
-            if(this.transformations[transf] != null){
-                if(this.transformations[transf].translate != null) {
-                    var x = this.transformations[transf].translate[0];
-                    var y = this.transformations[transf].translate[1];
-                    var z = this.transformations[transf].translate[2];
-            
-                    this.scene.translate(x,y,z);
-                }
+    this.scene.popMatrix();
+    this.popMaterial();
+}
 
-                if(this.transformations[transf].rotate != null) {
-                    var angle = this.transformations[transf].rotate[1];
-                    switch (this.transformations[transf].rotate[0]){
-                        case "x":
-                        this.scene.rotate(angle*DEGREE_TO_RAD, 1,0,0);
-                        break;
-
-                        case "y":
-                        this.scene.rotate(angle*DEGREE_TO_RAD, 0,1,0);
-                        break;
-                        case "z": 
-                        this.scene.rotate(angle*DEGREE_TO_RAD, 0,0,1);
-                        break;
-
-                        default:
-                        break;
-                    }
-                }
-
-                if(this.transformations[transf].scale != null) {
-                    var sx = this.transformations[transf].scale[0];
-                    var sy = this.transformations[transf].scale[1];
-                    var sz = this.transformations[transf].scale[2];
-                    this.scene.scale(sx,sy,sz);
-                }
-
-            }
-        }
-
-    }*/
     getTransformationMatrix(componentID){
         var mat = mat4.create();
         mat4.identity(mat);
