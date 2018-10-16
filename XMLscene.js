@@ -182,8 +182,20 @@ class XMLscene extends CGFscene {
     
     setCamera(camera) {
         this.camera = camera;
+        this.interface.setActiveCamera(camera);
         console.log('Camera has changed to');
         console.log(camera);
+    }
+
+
+    checkKeys(){
+        /*if (this.interface.isKeyPressed("KeyC")){
+            console.log("C WAS PRESSED!");
+            if(this.selectedCamera == this.views.size()-1)
+                setCamera(this.views.get(this.interface.camerasID[0]));
+            else 
+            console.log(this.selectedCamera);
+        }*/
     }
 
     /**
@@ -191,7 +203,7 @@ class XMLscene extends CGFscene {
      */
     display() {
         // ---- BEGIN Background, camera and axis setup
-
+        
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -202,12 +214,14 @@ class XMLscene extends CGFscene {
 
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
-
+        
         this.pushMatrix();
 
         if (this.sceneInited) {
             // Draw axis
             this.axis.display();
+
+            this.checkKeys();
 
             var i = 0;
             for (var key in this.lightValues) {
@@ -237,3 +251,4 @@ class XMLscene extends CGFscene {
         // ---- END Background, camera and axis setup
     }
 }
+  

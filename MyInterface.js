@@ -20,10 +20,26 @@ class MyInterface extends CGFinterface {
 
         this.gui = new dat.GUI();
 
+       this.initKeys();
+
         // add a group of controls (and open/expand by defult)
 
         return true;
     }
+    initKeys() {
+		this.scene.gui=this;
+		this.processKeyboard=function(){};
+		this.activeKeys={};
+	};
+	processKeyDown(event) {
+		this.activeKeys[event.code]=true;
+	};
+	processKeyUp(event) {
+		this.activeKeys[event.code]=false;
+	};
+	isKeyPressed(keyCode) {
+		return this.activeKeys[keyCode] || false;
+	};
 
     /**
      * Adds a folder containing the IDs of the lights passed as parameter.
@@ -65,7 +81,6 @@ class MyInterface extends CGFinterface {
 
         views.onChange(value =>{
            this.scene.setCamera(cameras.get(value));
-           this.setActiveCamera(cameras.get(value));
         });
        
 

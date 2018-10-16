@@ -1018,6 +1018,12 @@ class MySceneGraph {
         console.warn("Warning: " + message);
     }
 
+    parserFloatMinorError(value, section, text) {
+       if (!(value != null && !isNaN(value))) {
+            this.onXMLMinorError("unable to parse" + text + "of" +section +"section");
+        }
+    }
+
 
     /**
      * Callback to be executed on any message.
