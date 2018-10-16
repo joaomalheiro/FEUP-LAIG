@@ -35,6 +35,9 @@ class MyInterface extends CGFinterface {
 		this.activeKeys[event.code]=true;
 	};
 	processKeyUp(event) {
+        if(event.code === "KeyM"){
+            this.scene.materialCounter++;
+        }
 		this.activeKeys[event.code]=false;
 	};
 	isKeyPressed(keyCode) {

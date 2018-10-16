@@ -14,6 +14,7 @@ class XMLscene extends CGFscene {
         this.interface = myinterface;
         this.selectedCamera = 0;
         this.lightValues = {};
+        this.materialCounter = 0;
     }
 
     /**

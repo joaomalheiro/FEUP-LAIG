@@ -1077,7 +1077,8 @@ displayComponent(componentID) {
 
     this.scene.pushMatrix();
     //TODO: Change 0 to a variable, for m-key functionality
-    let current_material_id = current_component.materials[0];
+    let m_movedMaterial = this.scene.materialCounter%current_component.materials.length;
+    let current_material_id = current_component.materials[m_movedMaterial];
     this.pushMaterial(current_material_id);
     //push texs
 

@@ -716,6 +716,7 @@
 
           <materials>
             <material id="material-1"/>
+            <material id="material-2"/>
           </materials>
 
           <texture id="tex-green" length_s="1.0" length_t="1.0"/>
@@ -812,6 +813,7 @@
 
           <materials>
             <material id="material-2"/>
+            <material id="material-1"/>
           </materials>
 
           <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
