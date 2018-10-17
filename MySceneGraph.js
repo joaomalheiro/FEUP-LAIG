@@ -213,8 +213,10 @@ class MySceneGraph {
             this.onXMLMinorError("unable to parse value for root; assuming 'root = 1'");
             }
 
-         if (this.parserFloatMinorError(this.axisLength,"axisLength", "scene") != 0 )
-           this.axisLength = 1;
+         if (!(this.axisLength != null && !isNaN(this.axisLength))) {
+            this.axisLength = 1;
+            this.onXMLMinorError("unable to parse value for axisLength; assuming 'axisLength = 1'");
+            }
          
         console.log("Parsed scene");
     }
@@ -257,36 +259,6 @@ class MySceneGraph {
                 perspective.to.push(this.reader.getFloat(children[j].children[1],'y'));
                 perspective.to.push(this.reader.getFloat(children[j].children[1],'z'));
 
-                if (this.parserStringMinorError(perspective.id, "perspective_id","views") != 0)
-                  perspective.id == "def_perspective_ID"+j;
-                
-                if(this.parserFloatMinorError(perspective.near, "perspective_near","views") != 0)
-                  perspective.near = 0.2;
-                
-                if(this.parserFloatMinorError(perspective.far, "perspective_far","views") != 0)
-                  perspective.far = 500;
-
-                if(this.parserFloatMinorError(perspective.angle, "perspective_angle","views") != 0)
-                  perspective.angle = 0;
-
-                if(this.parserFloatMinorError(perspective.from[0], "perspective_from","views") != 0)
-                  perspective.from[0] = 0;
-
-                 if(this.parserFloatMinorError(perspective.from[1], "perspective_from","views") != 0)
-                  perspective.from[1] = 0;
-                
-                 if(this.parserFloatMinorError(perspective.from[2], "perspective_from","views") != 0)
-                  perspective.from[2] = 0;
-
-                 if(this.parserFloatMinorError(perspective.to[0], "perspective_to","views") != 0)
-                    perspective.to[0] = 1;
-
-                 if(this.parserFloatMinorError(perspective.to[1], "perspective_to","views") != 0)
-                  perspective.to[1] = 1;           
-
-                 if(this.parserFloatMinorError(perspective.to[2], "perspective_to","views") != 0)
-                  perspective.to[2] = 1; 
-
                 this.perspectives.push(perspective);
 
             } else if (nodeNames[j] === 'ortho'){
@@ -308,45 +280,6 @@ class MySceneGraph {
                 ortho.to.push(this.reader.getFloat(children[j].children[1],'x'));
                 ortho.to.push(this.reader.getFloat(children[j].children[1],'y'));
                 ortho.to.push(this.reader.getFloat(children[j].children[1],'z'));
-                
-                if (this.parserStringMinorError(ortho.id, "ortho_id", "views") != 0)
-                  ortho.id == "def_ortho_ID"+j;
-                
-                if(this.parserFloatMinorError(ortho.near, "ortho_near", "views") != 0)
-                  ortho.near = 0.2;
-                
-                if(this.parserFloatMinorError(ortho.far, "ortho_far", "views") != 0)
-                  ortho.far = 500;
-
-                if(this.parserFloatMinorError(ortho.left, "ortho_left", "views") != 0)
-                  ortho.left = -10;
-
-                if(this.parserFloatMinorError(ortho.right, "ortho_right", "views") != 0)
-                  ortho.right = 10;
-
-                if(this.parserFloatMinorError(ortho.top, "ortho_top", "views") != 0)
-                  ortho.top = 5;
-
-                if(this.parserFloatMinorError(ortho.bottom, "ortho_bottom", "views") != 0)
-                  ortho.bottom = -5;
-
-                if(this.parserFloatMinorError(ortho.from[0], "ortho_from", "views") != 0)
-                  ortho.from[0] = 10.0;
-
-                 if(this.parserFloatMinorError(ortho.from[1], "ortho_from", "views") != 0)
-                  ortho.from[1] = 5;
-                
-                 if(this.parserFloatMinorError(ortho.from[2], "ortho_from", "views") != 0)
-                  ortho.from[2] = 5;
-
-                 if(this.parserFloatMinorError(ortho.to[0], "ortho_to", "views") != 0)
-                    ortho.to[0] = 0;
-
-                 if(this.parserFloatMinorError(ortho.to[1], "ortho_to", "views") != 0)
-                  ortho.to[1] = 5;           
-
-                 if(this.parserFloatMinorError(ortho.to[2], "ortho_to", "views") != 0)
-                  ortho.to[2] = 5; 
 
                 this.orthos.push(ortho);
             }
@@ -372,31 +305,36 @@ class MySceneGraph {
         this.ambientB = this.reader.getFloat(ambient,"b");
         this.ambientA = this.reader.getFloat(ambient,"a");
 
-        if(this.parserFloatMinorError(this.ambientR, "ambientR", "ambient") != 0)
-          this.ambientR = 0.5;
-
-        if(this.parserFloatMinorError(this.ambientG, "ambientG", "ambient") != 0)
-          this.ambientG = 0.5;
-
-        if(this.parserFloatMinorError(this.ambientB, "ambientB", "ambient") != 0)
-          this.ambientB = 0.5;
-
-        if(this.parserFloatMinorError(this.ambientA, "ambientA", "ambient") != 0)
-          this.ambientA = 1;
-
         this.backgroundR = this.reader.getFloat(background,"r");
         this.backgroundG = this.reader.getFloat(background,"g");
         this.backgroundB = this.reader.getFloat(background,"b");
         this.backgroundA = this.reader.getFloat(background,"a");
-  
-        if(this.parserFloatMinorError(this.backgroundR, "backgroundR", "background") != 0)
-          this.backgroundR = 0.5;
-        if(this.parserFloatMinorError(this.backgroundG, "backgroundG", "background") != 0)
-          this.backgroundG = 0.5;
-        if(this.parserFloatMinorError(this.backgroundB, "backgroundB", "background") != 0)
-          this.backgroundB = 0.5;
-        if(this.parserFloatMinorError(this.backgroundA, "backgroundR", "background") != 0)
-          this.backgroundR = 1;
+
+        if (!(this.ambientR != null && !isNaN(this.ambientR))) {
+            this.onXMLMinorError("unable to parse red component of ambient illumination");
+        }
+        if (!(this.ambientG != null && !isNaN(this.ambientG))) {
+            this.onXMLMinorError("unable to parse green component of ambient illumination");
+        }
+        if (!(this.ambientB != null && !isNaN(this.ambientB))) {
+            this.onXMLMinorError("unable to parse blue component of ambient illumination");
+        }
+        if (!(this.ambientA != null && !isNaN(this.ambientA))) {
+            this.onXMLMinorError("unable to parse alpha component of ambient illumination");
+        }
+
+        if (!(this.backgroundR != null && !isNaN(this.backgroundR))) {
+            this.onXMLMinorError("unable to parse red component of background illumination");
+        }
+        if (!(this.backgroundG != null && !isNaN(this.backgroundG))) {
+            this.onXMLMinorError("unable to parse green component of background illumination");
+        }
+        if (!(this.backgroundB != null && !isNaN(this.backgroundB))) {
+            this.onXMLMinorError("unable to parse blue component of background illumination");
+        }
+        if (!(this.backgroundA != null && !isNaN(this.backgroundA))) {
+            this.onXMLMinorError("unable to parse alpha component of background illumination");
+        }
 
         console.log("Parsed ambient block!");
     }
@@ -836,11 +774,7 @@ class MySceneGraph {
         for(var i = 0; i < children.length; i++){
 
             let texture = {id:this.reader.getString(children[i],'id'),file:this.reader.getString(children[i],'file')};
-            
-            if(this.parserStringMinorError(texture.id)!=0)
-              texture.id = "def_texture_ID"+i;
-
-            //TODO
+                
             if (!this.textures.has(texture.id))
               this.textures.set(texture.id,texture);
             else this.onXMLMinorError("at least two textures with the same id, only the first was parsed and loaded");
@@ -879,18 +813,6 @@ class MySceneGraph {
               arr.push(this.reader.getFloat(grandChildren[j],'b'));
               arr.push(this.reader.getFloat(grandChildren[j],'a'));
 
-              if(this.parserFloatMinorError(arr[0],"r","materials")!=0)
-                arr[0] = 0.5;
-
-               if(this.parserFloatMinorError(arr[1],"g","materials")!=0)
-                arr[1] = 0.5;
-
-               if(this.parserFloatMinorError(arr[2],"b","materials")!=0)
-                arr[2] = 0.5;
-
-               if(this.parserFloatMinorError(arr[3],"a","materials")!=0)
-                arr[3] = 0.5 ;
-
               switch(j){
                 case 0: mat.emission = arr;
                 break;
@@ -925,68 +847,44 @@ class MySceneGraph {
 
             var grandChildren = children[i].children;
 
-            let transfor = {id: "", translate:[],rotate:[],scale:[]};
+            let transfor = [];
 
-            transfor.id = this.reader.getString(children[i],'id');
+            let id = this.reader.getString(children[i],'id');
 
             for(var j = 0; j < grandChildren.length ; j++) {
               
               var arr = [];
               if(grandChildren[j].nodeName == "translate"){
+                arr.push(grandChildren[j].nodeName);
                 arr.push(this.reader.getFloat(grandChildren[j],'x'));
                 arr.push(this.reader.getFloat(grandChildren[j],'y'));
                 arr.push(this.reader.getFloat(grandChildren[j],'z'));
-
-                if(this.parserFloatMinorError(arr[0],"translate","transformations")!=0)
-                arr[0] = 0;
-
-               if(this.parserFloatMinorError(arr[1],"translate","transformations")!=0)
-                arr[1] = 0;
-
-               if(this.parserFloatMinorError(arr[2],"translate","transformations")!=0)
-                arr[2] = 0;
-
-                transfor.translate = arr;
+                transfor.push(arr)
               } 
               else if (grandChildren[j].nodeName == "rotate"){
+                arr.push(grandChildren[j].nodeName);
                 arr.push(this.reader.getString(grandChildren[j],'axis'));
                 arr.push(this.reader.getFloat(grandChildren[j],'angle'));
-
-                if(this.parserStringMinorError(arr[0],"rotate-axis","transformations")!=0)
-                arr[0] = x;
-
-               if(this.parserFloatMinorError(arr[1],"rotate-angle","transformations")!=0)
-                arr[1] = 0;
-
-                transfor.rotate = arr;
+                transfor.push(arr);
               }
               else if (grandChildren[j].nodeName == "scale"){
+                arr.push(grandChildren[j].nodeName);
                 arr.push(this.reader.getFloat(grandChildren[j],'x'));
                 arr.push(this.reader.getFloat(grandChildren[j],'y'));
                 arr.push(this.reader.getFloat(grandChildren[j],'z'));
-
-                if(this.parserFloatMinorError(arr[0],"scale","transformations")!=0)
-                arr[0] = 1;
-
-               if(this.parserFloatMinorError(arr[1],"scale","transformations")!=0)
-                arr[1] = 1;
-
-               if(this.parserFloatMinorError(arr[2],"scale","transformations")!=0)
-                arr[2] = 1;
-
-                transfor.scale = arr;
+                transfor.push(arr);
               } else
                     this.onXMLMinorError("Not a valid transformation tag");
 
             }
 
-        if (this.transformations[transfor.id] == null)
-          this.transformations[transfor.id] = transfor;
+        if (this.transformations[id] == null)
+          this.transformations[id] = transfor;
           else this.onXMLMinorError("at least two transformations with the same id, only the first was parsed and loaded");
            
         } 
-        console.log(this.transformations);
         console.log("Parsed transformations");
+        console.log(this.transformations);
         return null;
 
     }
@@ -1019,112 +917,23 @@ class MySceneGraph {
           switch(grandChildren.nodeName){
 
               case 'rectangle': 
-                var x1 = this.reader.getFloat(grandChildren,'x1');
-                var x2 = this.reader.getFloat(grandChildren,'x2');
-                var y1 = this.reader.getFloat(grandChildren,'y1');
-                var y2 = this.reader.getFloat(grandChildren,'y2');
-                
-                if(this.parserFloatMinorError(x1,"rectangle","primitives")!=0)
-                  x1 = 0;
-
-                if(this.parserFloatMinorError(y1,"rectangle","primitives")!=0)
-                  y1 = 2;
-
-                if(this.parserFloatMinorError(x2,"rectangle","primitives")!=0)
-                  x2 = 2;
-
-                if(this.parserFloatMinorError(y2,"rectangle","primitives")!=0)
-                  y2 = 4;
-                
-                prim = new MyRectangle(this.scene,x1,y1,x2,y2);
+                prim = new MyRectangle(this.scene,this.reader.getFloat(grandChildren,'x1'),this.reader.getFloat(grandChildren,'y1'),this.reader.getFloat(grandChildren,'x2'),this.reader.getFloat(grandChildren,'y2'));
               break;
 
               case 'triangle':
-                var x1 = this.reader.getFloat(grandChildren,'x1');
-                var y1 = this.reader.getFloat(grandChildren,'y1');
-                var z1 = this.reader.getFloat(grandChildren,'z1');
-                var x2 = this.reader.getFloat(grandChildren,'x2');
-                var y2 = this.reader.getFloat(grandChildren,'y2');
-                var z2 = this.reader.getFloat(grandChildren,'z2');
-                var x3 = this.reader.getFloat(grandChildren,'x3');
-                var y3 = this.reader.getFloat(grandChildren,'y3');
-                var z3 = this.reader.getFloat(grandChildren,'z3');
-
-                if(this.parserFloatMinorError(x1,"triangle","primitives")!=0)
-                  x1 = 0;
-                if(this.parserFloatMinorError(x2,"triangle","primitives")!=0)
-                  x2 = 1;
-                if(this.parserFloatMinorError(x3,"triangle","primitives")!=0)
-                  x3 = 2;
-                if(this.parserFloatMinorError(y1,"triangle","primitives")!=0)
-                  y1 = 0;
-                if(this.parserFloatMinorError(y2,"triangle","primitives")!=0)
-                  y2 = 1;
-                if(this.parserFloatMinorError(y3,"triangle","primitives")!=0)
-                  y3 = 2;
-                 if(this.parserFloatMinorError(z1,"triangle","primitives")!=0)
-                  z1 = 0;
-                 if(this.parserFloatMinorError(z2,"triangle","primitives")!=0)
-                  z2 = 1;
-                 if(this.parserFloatMinorError(z3,"triangle","primitives")!=0)
-                  z3 = 2;
-
-                prim = new MyTriangle(this.scene,x1,y1,z1,x2,y2,z2,x3,y3,z3);
+                prim = new MyTriangle(this.scene,this.reader.getFloat(grandChildren,'x1'),this.reader.getFloat(grandChildren,'y1'),this.reader.getFloat(grandChildren,'z1'),this.reader.getFloat(grandChildren,'x2'),this.reader.getFloat(grandChildren,'y2'),this.reader.getFloat(grandChildren,'z2'),this.reader.getFloat(grandChildren,'x3'),this.reader.getFloat(grandChildren,'y3'),this.reader.getFloat(grandChildren,'z3'));
                 break;
 
               case 'sphere':
-                var radius = this.reader.getFloat(grandChildren,'radius');
-                var slices = this.reader.getFloat(grandChildren,'slices');
-                var stacks = this.reader.getFloat(grandChildren,'stacks');
-
-                if(this.parserFloatMinorError(radius,"sphere","primitives")!=0)
-                  radius = 1;
-                if(this.parserFloatMinorError(stacks,"sphere","primitives")!=0)
-                  stacks = 10;
-                if(this.parserFloatMinorError(slices,"sphere","primitives")!=0)
-                  slices = 30;
-
-                prim = new MySphere(this.scene,radius,slices,stacks);
+                prim = new MySphere(this.scene,this.reader.getFloat(grandChildren,'radius'),this.reader.getFloat(grandChildren,'slices'),this.reader.getFloat(grandChildren,'stacks'));
               break;
 
               case 'cylinder':
-
-                var height = this.reader.getFloat(grandChildren,'height');
-                var base = this.reader.getFloat(grandChildren,'base');
-                var top = this.reader.getFloat(grandChildren,'top');
-                var stacks = this.reader.getFloat(grandChildren,'stacks');
-                var slices = this.reader.getFloat(grandChildren,'slices');
-
-                if(this.parserFloatMinorError(height,"cylinder","primitives")!=0)
-                  height = 1;
-                if(this.parserFloatMinorError(base,"cylinder","primitives")!=0)
-                  base = 0.5;
-                if(this.parserFloatMinorError(top,"cylinder","primitives")!=0)
-                  top = 0.5;
-                if(this.parserFloatMinorError(stacks,"cylinder","primitives")!=0)
-                  stacks = 10;
-                if(this.parserFloatMinorError(slices,"cylinder","primitives")!=0)
-                  slices = 30;
-
-                prim = new MyCylinder(this.scene,height,base,top,stacks,slices);
+                prim = new MyCylinder(this.scene,this.reader.getFloat(grandChildren,'height'),this.reader.getFloat(grandChildren,'base'),this.reader.getFloat(grandChildren,'top'),this.reader.getFloat(grandChildren,'stacks'),this.reader.getFloat(grandChildren,'slices'));
               break;
 
               case 'torus':
-                var inner = this.reader.getFloat(grandChildren,'inner');
-                var outer = this.reader.getFloat(grandChildren,'outer');
-                var slices = this.reader.getFloat(grandChildren,'slices');
-                var loops = this.reader.getFloat(grandChildren,'loops');
-
-                if(this.parserFloatMinorError(inner,"torus","primitives")!=0)
-                  inner = 1;
-                if(this.parserFloatMinorError(outer,"torus","primitives")!=0)
-                  outer = 3;
-                if(this.parserFloatMinorError(slices,"torus","primitives")!=0)
-                  slices = 30;
-                if(this.parserFloatMinorError(loops,"torus","primitives")!=0)
-                  loops = 10;
-                  
-                prim = new MyTorus(this.scene,inner, outer ,slices, loops);
+                prim = new MyTorus(this.scene,this.reader.getFloat(grandChildren,'inner'), this.reader.getFloat(grandChildren,'outer'),this.reader.getFloat(grandChildren,'slices'),this.reader.getFloat(grandChildren,'loops'));
               break;
           }
 
@@ -1208,21 +1017,12 @@ class MySceneGraph {
         console.warn("Warning: " + message);
     }
 
-    parserFloatMinorError(value, text, section) {
+    parserFloatMinorError(value, section, text) {
        if (!(value != null && !isNaN(value))) {
-            this.onXMLMinorError("unable to parse " + text + " of " + section +" section");
-            return 1;
+            this.onXMLMinorError("unable to parse" + text + "of" +section +"section");
         }
-        return 0;
     }
-    
-    parserStringMinorError(value, text, section) {
-       if (value == null) {
-            this.onXMLMinorError("unable to parse " + text + " of " + section +" section");
-            return 1;
-        }
-        return 0;
-    }             
+
 
     /**
      * Callback to be executed on any message.
@@ -1319,47 +1119,53 @@ displayComponent(componentID) {
 
         var transf = this.components[componentID].transformation;
         var transfor = this.transformations[transf];
-
-            if(transfor != null){
-                if(transfor.translate.length !== 0) {
-                    //console.log(this.transformations);
-                    var x = transfor.translate[0];
-                    var y = transfor.translate[1];
-                    var z = transfor.translate[2];
+        if(transfor != null){
+            for(let j = 0; j < transfor.length; j++ ){
+                switch(transfor[j][0]){
+                    case "translate": 
+    
+                    var x = transfor[j][1];
+                    var y = transfor[j][2];
+                    var z = transfor[j][3];
                     //console.log(x)
                     var vec = vec3.fromValues(x,y,z);
                     //console.log("vec: ", vec);
                     mat4.translate(mat,mat,vec3.fromValues(x,y,z));
-                }
-                if(transfor.rotate.length != 0) {
-                    var angle = transfor.rotate[1];
-                    switch (transfor.rotate[0]){
+                    break;
+    
+                    case "scale":
+                    var sx = transfor[j][1];
+                    var sy = transfor[j][2];
+                    var sz = transfor[j][3];
+    
+                    mat4.scale(mat, mat, vec3.fromValues(sx,sy,sz));
+                    break;
+    
+                    case "rotate":
+                    var angle = transfor[j][2];
+                    switch (transfor[j][1]){
                         case "x":
                         mat4.rotate(mat, mat, angle * DEGREE_TO_RAD,vec3.fromValues(1,0,0));
                         break;
-
+    
                         case "y":
                         mat4.rotate(mat, mat, angle * DEGREE_TO_RAD,vec3.fromValues(0,1,0));
                         break;
                         case "z": 
                         mat4.rotate(mat, mat, angle * DEGREE_TO_RAD,vec3.fromValues(0,0,1));
                         break;
-
+    
                         default:
                         break;
                     }
+                    default:
+                    break;
+    
                 }
-
-                if(transfor.scale.length != 0) {
-                    var sx = transfor.scale[0];
-                    var sy = transfor.scale[1];
-                    var sz = transfor.scale[2];
-
-                    mat4.scale(mat, mat, vec3.fromValues(sx,sy,sz));
-                }
-
             }
+    
 
+        }
         return mat;
 
     }
