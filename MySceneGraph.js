@@ -385,15 +385,10 @@ class MySceneGraph {
                 var specularIndex = nodeNames.indexOf("specular");
  
                  // Light enable/disable
-                 var enableLight = true;
-                 var text;
-                 if (this.reader.getString(children[i], 'enabled') != 0 && (this.reader.getString(children[i], 'enabled') != 1)) {
+                 const enableLight = this.reader.getBoolean(children[i], 'enabled');    
+                 if(enableLight == null){
                      this.onXMLMinorError("enable value missing for ID = " + lightId + "; assuming 'value = 1'");
-                    }
-                    else {
-                        text = this.reader.getString(children[i], 'enabled');    
-                        enableLight = (text == "1");                  
-                    }
+                 }   
                           // Retrieves the light position.
             var locationLight = [];
             if (locationIndex != -1) {
@@ -562,15 +557,11 @@ class MySceneGraph {
                     else {
                         angleLight = this.reader.getString(children[i], 'angle');                    
                     }
-                 var enableLight = true;
-                 var text;
-                 if (this.reader.getString(children[i], 'enabled') != 0 && (this.reader.getString(children[i], 'enabled') != 1)) {
-                     this.onXMLMinorError("enable value missing for ID = " + lightId + "; assuming 'value = 1'");
-                    }
-                    else {
-                        text = this.reader.getString(children[i], 'enabled');  
-                        enableLight = (text == "1");                    
-                    }
+                const enableLight = this.reader.getBoolean(children[i], 'enabled');    
+                if(enableLight == null){
+                    this.onXMLMinorError("enable value missing for ID = " + lightId + "; assuming 'value = 1'");
+                }       
+                
                  var exponentLight;
                  if (this.reader.getFloat(children[i], 'exponent') == null || isNaN(this.reader.getFloat(children[i], 'exponent') )) {
                      this.onXMLMinorError("exponent value missing for ID = " + lightId);
