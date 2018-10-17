@@ -128,12 +128,25 @@ class XMLscene extends CGFscene {
 
             if (this.graph.lights.hasOwnProperty(key)) {
                 var light = this.graph.lights[key];
+                console.log(light);
+                //If it is an omni light
+                if(light.length == 5){
+                    this.lights[i].setPosition(light[1][0], light[1][1], light[1][2], light[1][3]);
+                    this.lights[i].setAmbient(light[2][0], light[2][1], light[2][2], light[2][3]);
+                    this.lights[i].setDiffuse(light[3][0], light[3][1], light[3][2], light[3][3]);
+                    this.lights[i].setSpecular(light[4][0], light[4][1], light[4][2], light[4][3]);
+                }
+                //If it is a spot light 
+                else if(light.length == 8){
+                    this.lights[i].setPosition(light[3][0], light[3][1], light[3][2], light[3][3]);
+                    this.lights[i].setAmbient(light[5][0], light[5][1], light[5][2], light[5][3]);
+                    this.lights[i].setDiffuse(light[6][0], light[6][1], light[6][2], light[6][3]);
+                    this.lights[i].setSpecular(light[7][0], light[7][1], light[7][2], light[7][3]);
+                    this.lights[i].setSpotCutOff(light[1]);
+                    this.lights[i].setSpotExponent(light[2]);
+                    this.lights[i].setSpotDirection(light[4][0]-light[3][0],light[4][1]-light[3][1],light[4][2]-light[3][2]);
 
-                //lights are predefined in cgfscene
-                this.lights[i].setPosition(light[1][0], light[1][1], light[1][2], light[1][3]);
-                this.lights[i].setAmbient(light[2][0], light[2][1], light[2][2], light[2][3]);
-                this.lights[i].setDiffuse(light[3][0], light[3][1], light[3][2], light[3][3]);
-                this.lights[i].setSpecular(light[4][0], light[4][1], light[4][2], light[4][3]);
+                }
 
                 this.lights[i].setVisible(true);
                 if (light[0])
@@ -229,7 +242,7 @@ class XMLscene extends CGFscene {
                 if (this.lightValues.hasOwnProperty(key)) {
                     if (this.lightValues[key]) {
                         this.lights[i].setVisible(true);
-                        this.lights[i].disable();
+                        this.lights[i].enable();
                     }
                     else {
                         this.lights[i].setVisible(false);
