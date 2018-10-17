@@ -49,7 +49,6 @@ class MyInterface extends CGFinterface {
      * @param {array} lights
      */
     addLightsGroup(lights) {
-
         var group = this.gui.addFolder("Lights");
         group.open();
 
