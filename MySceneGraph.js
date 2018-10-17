@@ -881,7 +881,7 @@ class MySceneGraph {
           else this.onXMLMinorError("at least two transformations with the same id, only the first was parsed and loaded");
            
         } 
-        
+        console.log(this.transformations);
         console.log("Parsed transformations");
         return null;
 
@@ -1082,11 +1082,10 @@ displayComponent(componentID) {
     const current_component = this.components[componentID];
 
     this.scene.pushMatrix();
-    //TODO: Change 0 to a variable, for m-key functionality
+
     let m_movedMaterial = this.scene.materialCounter%current_component.materials.length;
     let current_material_id = current_component.materials[m_movedMaterial];
     this.pushMaterial(current_material_id);
-    //push texs
     let current_texture_id = current_component.tex_id;
     this.pushTexture(current_texture_id);
 
@@ -1094,12 +1093,6 @@ displayComponent(componentID) {
 
     this.applyMaterialAndTexture();
     this.applyTransformations(componentID);
-
-    /*
-    for(const primitive of current_component.primitiveref) {
-        this.displayPrimitive(primitive);
-    }
-    */
 
     for(let i = 0; i < current_component.primitiveref.length; i++) {
         this.displayPrimitive(current_component,i);
@@ -1117,13 +1110,12 @@ displayComponent(componentID) {
 
     getTransformationMatrix(componentID){
         var mat = mat4.create();
-        mat4.identity(mat);
 
         var transf = this.components[componentID].transformation;
         var transfor = this.transformations[transf];
 
             if(transfor != null){
-                if(transfor.translate != null) {
+                if(transfor.translate.length !== 0) {
                     //console.log(this.transformations);
                     var x = transfor.translate[0];
                     var y = transfor.translate[1];
@@ -1132,10 +1124,8 @@ displayComponent(componentID) {
                     var vec = vec3.fromValues(x,y,z);
                     //console.log("vec: ", vec);
                     mat4.translate(mat,mat,vec3.fromValues(x,y,z));
-                    //console.log(mat);
                 }
-
-                if(transfor.rotate != null) {
+                if(transfor.rotate.length != 0) {
                     var angle = transfor.rotate[1];
                     switch (transfor.rotate[0]){
                         case "x":
@@ -1154,7 +1144,7 @@ displayComponent(componentID) {
                     }
                 }
 
-                if(transfor.scale != null) {
+                if(transfor.scale.length != 0) {
                     var sx = transfor.scale[0];
                     var sy = transfor.scale[1];
                     var sz = transfor.scale[2];
@@ -1163,6 +1153,7 @@ displayComponent(componentID) {
                 }
 
             }
+
         return mat;
 
     }
