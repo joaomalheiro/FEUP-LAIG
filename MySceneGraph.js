@@ -1057,12 +1057,25 @@ pushMaterial(mat_id) {
 
 applyMaterialAndTexture() {
     //setTexture before, here
-
+    
+    //console.log(this.textureStack);
+    this.materialStack[this.materialStack.length-1].setTexture(this.textureStack[this.textureStack.length-1]);
     this.materialStack[this.materialStack.length-1].apply();
+    this.materialStack[this.materialStack.length-1].setTexture(null);
 }
 
 popMaterial() {
     this.materialStack.pop();
+}
+
+pushTexture(tex_id) {
+  if(tex_id === "inherit")
+    this.textureStack.push(this.textureStack[this.textureStack.length-1]);
+  else this.textureStack .push(this.scene.textures[tex_id]);
+}
+
+popTexture(){
+  this.textureStack.pop();
 }
 
 applyTransformations(componentID) {
@@ -1081,6 +1094,10 @@ displayComponent(componentID) {
     let current_material_id = current_component.materials[m_movedMaterial];
     this.pushMaterial(current_material_id);
     //push texs
+    let current_texture_id = current_component.tex_id;
+    this.pushTexture(current_texture_id);
+
+
 
     this.applyMaterialAndTexture();
     this.applyTransformations(componentID);
@@ -1102,6 +1119,7 @@ displayComponent(componentID) {
 
     this.scene.popMatrix();
     this.popMaterial();
+    this.popTexture();
 }
 
     getTransformationMatrix(componentID){
