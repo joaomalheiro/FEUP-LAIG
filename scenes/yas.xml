@@ -147,7 +147,7 @@
          <transformation id="topTableT">
             <translate x="1.5" y="2" z="1.67"/>
             <rotate axis="y" angle="0"/>
-            <scale x="4" y="0.15" z="2"/>
+            <scale x="2" y="0.1" z="3"/>
         </transformation>
         
         <transformation id="tableT">
@@ -286,7 +286,7 @@
                      x2="1" y2="1" />
         </primitive >
         <primitive id="sphere">
-          <sphere radius="1" slices="10"
+          <sphere radius="1" slices="30"
                     stacks="10" />
         </primitive >
         <primitive id="cylinder">
@@ -759,7 +759,7 @@
           <texture id="tex-green" length_s="1.0" length_t="1.0"/>
 
           <children>
-            <primitiveref id="cylinder"/>
+            <primitiveref id="sphere"/>
           </children>
        </component>
 
