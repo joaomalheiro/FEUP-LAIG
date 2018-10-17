@@ -223,9 +223,9 @@
         </transformation>
 
         <transformation id="sit-chair">
-            <translate x="-.1" y="1.5" z="-0.1"/>
-            <rotate axis="x" angle="90"/>
-            <scale x="1.2" y="1.2" z="1.2"/>
+            <translate x="0" y="2" z="1"/>
+            <rotate axis="x" angle="0"/>
+            <scale x="1.5" y="0.25" z="1.2"/>
         </transformation>
 
         <transformation id="back-chair">
@@ -290,7 +290,7 @@
                     stacks="10" />
         </primitive >
         <primitive id="cylinder">
-          <cylinder base="0.2" top="0.2"
+          <cylinder base="0.3" top="0.3"
                     height="2" slices="30" stacks="10" />
         </primitive >
 
@@ -706,7 +706,7 @@
           <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
 
           <children>
-            <primitiveref id="rectangle"/>
+            <componentref id="unitCube"/>
           </children>
         </component>
 
