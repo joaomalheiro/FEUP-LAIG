@@ -46,6 +46,7 @@
         <texture id="tex-exitSign" file="textures/exitSign.jpg"/>
         <texture id="tex-painting" file="textures/painting1.jpg"/>
         <texture id="tex-wood" file="textures/wood.jpg"/>
+        <texture id="tex-pokerstars" file="textures/pokerstars.jpg"/>
     </textures>
  
     <materials>
@@ -147,7 +148,7 @@
          <transformation id="topTableT">
             <translate x="1.5" y="2" z="1.67"/>
             <rotate axis="y" angle="0"/>
-            <scale x="2" y="0.1" z="3"/>
+            <scale x="2" y="0.04" z="3"/>
         </transformation>
         
         <transformation id="tableT">
@@ -269,6 +270,12 @@
             <rotate axis="y" angle="90"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
+
+        <transformation id="armRestT">
+            <translate x="1.4" y="2" z="1.6"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="1" y="1.5" z="1"/>
+        </transformation>
         
         
 
@@ -295,8 +302,8 @@
         </primitive >
 
          <primitive id="torus">
-          <torus inner="0.5" outer="2"
-                 slices="40" loops="10" />
+          <torus inner="0.1" outer="2"
+                 slices="40" loops="30" />
         </primitive >
 
     </primitives >
@@ -318,7 +325,6 @@
                 <componentref id="door"/>
                 <componentref id="painting"/> 
                 <componentref id="game"/>
-                <primitiveref id="torus"/>
             </children>
         </component>
 
@@ -743,8 +749,26 @@
                 <componentref id="leg3"/>
                 <componentref id="leg4"/>
                 <componentref id="top"/>
+                <componentref id ="armRest"/>
             </children>
         </component>
+
+        <component id = "armRest">
+          <transformation>
+            <transformationref id="armRestT"/>
+          </transformation>
+
+          <materials>
+            <material id="material-1"/>
+            <material id="material-2"/>
+          </materials>
+
+          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="torus"/>
+          </children>
+       </component>
 
         <component id = "top">
           <transformation>
