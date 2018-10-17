@@ -88,11 +88,11 @@ class XMLscene extends CGFscene {
         
         console.log(this.graph.materials);
         for(const [k,v] of this.graph.materials.entries()) {
-            
+            console.log(v);
             this.materials[k] = new CGFappearance(this);
             this.materials[k].setAmbient(v.ambient[0],v.ambient[1],v.ambient[2],v.ambient[3]);
             this.materials[k].setSpecular(v.specular[0],v.specular[1],v.specular[2],v.specular[3]);                
-            this.materials[k].setDiffuse(v.diffuse[0],v.specular[1],v.diffuse[2],v.diffuse[3]);
+            this.materials[k].setDiffuse(v.diffuse[0],v.diffuse[1],v.diffuse[2],v.diffuse[3]);
             this.materials[k].setEmission(v.emission[0],v.emission[1],v.emission[2],v.emission[3]);
             this.materials[k].setShininess(v.shininess);
         }
