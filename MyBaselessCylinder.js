@@ -1,83 +1,55 @@
 class MyBaselessCylinder extends CGFobject{
 
-   constructor(scene, height, radiusBottom, radiusTop, stacks, slices) {
-  
-    super(scene);
-    this.radiusTop = radiusTop;
-    this.radiusBottom = radiusBottom;
-    this.height = height;
-    this.slices = slices;
-    this.stacks = stacks;
+   constructor(scene, height, baseRadius, topRadius, stacks, slices) {
 
-    this.initBuffers();
-  }
+        super(scene);
 
-   initBuffers(){
-    this.vertices = [];
-    this.indices = [];
-    this.normals = [];
-    this.texCoords = [];
+        this.height = height;
+        this.baseRadius = baseRadius;
+        this.topRadius = topRadius;
+        this.stacks = stacks;
+        this.slices = slices;
 
-    var r = this.radiusBottom;
-    var delta_r = (this.radiusTop - this.radiusBottom) / this.stacks;
-    var delta_rad = 2 * Math.PI / this.slices;
-    var delta_z = this.height / this.stacks;
-    var m = this.height / (this.radiusBottom - this.radiusTop);
-    var maxheight;
-    if (this.radiusBottom > this.radiusTop)
-      maxheight = this.radiusTop * m + this.height;
-    else maxheight = this.radiusBottom * m + this.height;
-    var indice = 0;
+        this.initBuffers();
+    };
 
-      for (var i = 0; i <= this.stacks; i++) {
-        for (var j = 0; j <= this.slices; j++) {
-          this.vertices.push(
-            r * Math.cos(j * delta_rad),
-            r * Math.sin(j * delta_rad),
-            i * delta_z
-          );
-          if (Math.abs(this.radiusBottom - this.radiusTop) < 0.0001) {
-            this.normals.push(
-              Math.cos(j * delta_rad),
-              Math.sin(j * delta_rad),
-              0);
-          } else if (this.radiusBottom > this.radiusTop) {
-            this.normals.push(
-              maxheight * Math.cos(j * delta_rad) / Math.sqrt(Math.pow(this.radiusBottom, 2) + Math.pow(maxheight, 2)),
-              maxheight * Math.sin(j * delta_rad) / Math.sqrt(Math.pow(this.radiusBottom, 2) + Math.pow(maxheight, 2)),
-              this.radiusBottom / Math.sqrt(Math.pow(this.radiusBottom, 2) + Math.pow(maxheight, 2))
-            );
-          } else {
-            this.normals.push(
-              maxheight * Math.cos(j * delta_rad) / Math.sqrt(Math.pow(this.radiusTop, 2) + Math.pow(maxheight, 2)),
-              maxheight * Math.sin(j * delta_rad) / Math.sqrt(Math.pow(this.radiusTop, 2) + Math.pow(maxheight, 2)),
-              this.radiusTop / Math.sqrt(Math.pow(this.radiusTop, 2) + Math.pow(maxheight, 2))
-            );
-          }
-          this.texCoords.push(j / this.slices, i / this.stacks);
+    initBuffers() {
 
+        this.vertices = [];
+        this.normals = [];
+        this.indices = [];
+        this.texCoords = [];
+
+        for (var i = 0; i <= this.stacks; i++) {
+            for (var j = 0; j < this.slices; j++) {
+
+                // defines the vertices
+                this.vertices.push(
+                    Math.cos(j * 2 * Math.PI / this.slices) * ((this.stacks - i) * (this.baseRadius - this.topRadius) / (this.stacks) + this.topRadius),
+                    Math.sin(j * 2 * Math.PI / this.slices) * ((this.stacks - i) * (this.baseRadius - this.topRadius) / (this.stacks) + this.topRadius),
+                    i / this.stacks * this.height);
+
+                // defines the normals
+                this.normals.push(Math.cos(j * 2 * Math.PI / this.slices),  Math.sin(j * 2 * Math.PI / this.slices), 0);
+
+                // defines the texture coordinates
+                this.texCoords.push(j / this.slices, i / this.stacks);
+            }
         }
-        r = (i + 1) * delta_r + this.radiusBottom;
-      }
 
-      for (var i = 0; i < this.stacks; i++) {
-        for (var j = 0; j < this.slices; j++) {
-          this.indices.push(
-            i * (this.slices + 1) + j,
-            i * (this.slices + 1) + (j + 1),
-            (i + 1) * (this.slices + 1) + (j + 1)
-          );
-          this.indices.push(
-            (i + 1) * (this.slices + 1) + (j + 1),
-            (i + 1) * (this.slices + 1) + j,
-            i * (this.slices + 1) + j
-          );
+        // defines the indices
+        for (var i = 0; i < this.stacks; i++) {
+            for (j = 0; j < this.slices - 1; j++) {
+                this.indices.push(i * this.slices + j, i * this.slices + j + 1, (i + 1) * this.slices + j);
+                this.indices.push(i * this.slices + j + 1, (i + 1) * this.slices + j + 1, (i + 1) * this.slices + j);
+            }
 
+            this.indices.push(i * this.slices + this.slices - 1, i * this.slices, (i + 1) * this.slices + this.slices - 1);
+            this.indices.push(i * this.slices, i * this.slices + this.slices, (i + 1) * this.slices + this.slices - 1);
         }
-  }
 
-  this.primitiveType = this.scene.gl.TRIANGLES;
-  this.initGLBuffers();
+        this.primitiveType = this.scene.gl.TRIANGLES;
+        this.initGLBuffers();
 
-  };
+    };
 };

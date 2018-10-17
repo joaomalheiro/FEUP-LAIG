@@ -1,33 +1,18 @@
-function MyTriangle(scene, x0, y0, z0, x1, y1, z1, x2, y2, z2) {
+class MyTriangle extends CGFobject {
+
+	constructor(scene, x0, y0, z0, x1, y1, z1, x2, y2, z2) {
  	
- 	CGFobject.call(this,scene);
+ 	super(scene);
+ 	this.scene = scene;
  	this.setTex = false;
     this.p1 = [x0, y0, z0];
     this.p2 = [x1, y1, z1];
     this.p3 = [x2, y2, z2];
 	this.initBuffers();
- };
 
-/**
- * Create
- * @method create
- * @param   CGFobject.prototype
- * @return
- */
- MyTriangle.prototype = Object.create(CGFobject.prototype);
+ 	};
 
- /**
-  * Constructor
-  * @type
-  */
- MyTriangle.prototype.constructor = MyTriangle;
-
-/**
- * Init Buffers
- * @method function
- * @return
- */
- MyTriangle.prototype.initBuffers = function() {
+ 	initBuffers() {
 	var p1 = this.p1;
 	var p2 = this.p2;
 	var p3 = this.p3;
@@ -46,17 +31,18 @@ function MyTriangle(scene, x0, y0, z0, x1, y1, z1, x2, y2, z2) {
    					x, y, z,
    					x, y, z
     			];
+
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
- };
+ 	};
 
-/**
- * Function to set the ratio of the texture using length_s and length_t
- * @method set_lengths_texture
- * @param      ampS
- * @param      ampT
- */
- MyTriangle.prototype.set_lengths_texture = function (length_s, length_t) {
+	/**
+ 	* Function to set the ratio of the texture using length_s and length_t
+ 	* @method set_lengths_texture
+ 	* @param      length_s
+ 	* @param      length_t
+ 	*/
+ 	set_lengths_texture(length_s, length_t) {
  	this.length_s = length_s;
 	this.length_t = length_t;
 
@@ -82,13 +68,14 @@ function MyTriangle(scene, x0, y0, z0, x1, y1, z1, x2, y2, z2) {
 
 	this.texCoords = [
 	
-		(this.c - this.a*Math.cos(beta)) / length_s, 
-		1-(this.a * Math.sin(beta))/t,
-		0, 1/length_t, this.c/length_s,
-		1/length_t
+		(this.c - this.a*Math.cos(beta)) / lthis.length_s, 
+		1-(this.a * Math.sin(beta))/this.length_t,
+		0, 1/this.length_t, this.c/this.length_s,
+		1/this.length_t
 		
     ];
 
 	this.setTex = true;
 	this.updateTexCoordsGLBuffers();
 }
+};

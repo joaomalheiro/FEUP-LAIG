@@ -2,12 +2,12 @@
     <scene root="room" axis_length="10.0"/>
  
     <views default="camera-perspective-0">
-       <perspective id="camera-perspective-0" near="0.1" far="40" angle="45">
+       <perspective id="camera-perspective-0" near="0.1" far="500" angle="45">
             <from x="10" y="5.0" z="12.0"/>
             <to x="0.0" y="1.0" z="0.0"/>
         </perspective>
  
-        <ortho id="camera-ortho-0" near="0.1" far ="40"
+        <ortho id="camera-ortho-0" near="0.1" far ="500"
                           left="-10" right="10" top="5" bottom="-5">
                 <from x="10.0" y="5.0" z="5.0"/>
                 <to x="0.0" y="5.0" z="5.0"/>
@@ -195,7 +195,7 @@
         <transformation id="leg-chair">
             <translate x="0" y="0" z="0"/>
             <rotate axis="x" angle="-90"/>
-            <scale x="1" y="0.75" z="0.75"/>
+            <scale x="1" y="1" z="1"/>
         </transformation>
 
         <transformation id="leg-chair-1T">
@@ -260,7 +260,7 @@
                     stacks="10" />
         </primitive >
         <primitive id="cylinder">
-          <cylinder base="0.2" top="0.2"
+          <cylinder base="0.2" top="0.3"
                     height="2" slices="30" stacks="10" />
         </primitive >
 
