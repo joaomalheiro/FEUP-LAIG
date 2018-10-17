@@ -263,6 +263,12 @@
           <cylinder base="0.2" top="0.2"
                     height="2" slices="30" stacks="10" />
         </primitive >
+
+         <primitive id="torus">
+          <torus inner="0.5" outer="2"
+                 slices="40" loops="10" />
+        </primitive >
+
     </primitives >
  
     <components>
@@ -282,6 +288,7 @@
                 <componentref id="door"/>
                 <componentref id="painting"/> 
                 <componentref id="game"/>
+                <primitiveref id="torus"/>
             </children>
         </component>
 

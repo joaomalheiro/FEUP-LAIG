@@ -929,6 +929,10 @@ class MySceneGraph {
               case 'cylinder':
                 prim = new MyCylinder(this.scene,this.reader.getFloat(grandChildren,'height'),this.reader.getFloat(grandChildren,'base'),this.reader.getFloat(grandChildren,'top'),this.reader.getFloat(grandChildren,'stacks'),this.reader.getFloat(grandChildren,'slices'));
               break;
+
+              case 'torus':
+                prim = new MyTorus(this.scene,this.reader.getFloat(grandChildren,'inner'), this.reader.getFloat(grandChildren,'outer'),this.reader.getFloat(grandChildren,'slices'),this.reader.getFloat(grandChildren,'loops'));
+              break;
           }
 
       this.primitives[this.reader.getString(children[i],'id')] = prim;
@@ -1169,6 +1173,8 @@ displayComponent(componentID) {
     displayPrimitive(current_component, i){
       if(this.primitives[current_component.primitiveref[i]] instanceof(MyRectangle) || this.primitives[current_component.primitiveref[i]] instanceof(MyTriangle))
     this.primitives[current_component.primitiveref[i]].set_lengths_texture(current_component.tex_length_s, current_component.tex_length_t);
+    
+
     this.primitives[current_component.primitiveref[i]].display();
   }
 }
