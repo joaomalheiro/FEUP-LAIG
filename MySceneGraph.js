@@ -1060,9 +1060,7 @@ pushMaterial(mat_id) {
 }
 
 applyMaterialAndTexture() {
-    //setTexture before, here
-    
-    //console.log(this.textureStack);
+   
     this.materialStack[this.materialStack.length-1].setTexture(this.textureStack[this.textureStack.length-1]);
     this.materialStack[this.materialStack.length-1].apply();
     this.materialStack[this.materialStack.length-1].setTexture(null);
@@ -1113,7 +1111,7 @@ displayComponent(componentID) {
     */
 
     for(let i = 0; i < current_component.primitiveref.length; i++) {
-        this.displayPrimitive(current_component.primitiveref[i]);
+        this.displayPrimitive(current_component,i);
     }
 
     //Recursively displays the tree
@@ -1177,7 +1175,9 @@ displayComponent(componentID) {
         return mat;
 
     }
-    displayPrimitive(primitiveID){
-    this.primitives[primitiveID].display();
+    displayPrimitive(current_component, i){
+      if(this.primitives[current_component.primitiveref[i]] instanceof(MyRectangle) || this.primitives[current_component.primitiveref[i]] instanceof(MyTriangle))
+    this.primitives[current_component.primitiveref[i]].set_lengths_texture(current_component.tex_length_s, current_component.tex_length_t);
+    this.primitives[current_component.primitiveref[i]].display();
   }
 }

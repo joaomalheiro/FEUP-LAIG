@@ -42,16 +42,17 @@ MyRectangle.prototype.initBuffers = function () {
 };
 
 
-MyRectangle.prototype.setAmpSAmpT = function (ampS, ampT) {
+MyRectangle.prototype.set_lengths_texture = function (length_s, length_t) {
 
-	this.ampS = ampS;
-	this.ampT = ampT;
+	this.length_s = length_s;
+	this.length_t = length_t;
 
 	this.texCoords = [
-		0, (this.y0 - this.y1) / this.ampT,
-		(this.x1- this.x0) / this.ampS, (this.y0 - this.y1) / this.ampT,
+		0, (this.y0 - this.y1) / this.length_t,
+		(this.x1- this.x0) / this.length_s, 
+		(this.y0 - this.y1) / this.length_t,
 		0, 0,
-		(this.x1- this.x0) / this.ampS, 0,
+		(this.x1- this.x0) / this.length_s, 0,
 	];
 
 	this.setTex = true;
