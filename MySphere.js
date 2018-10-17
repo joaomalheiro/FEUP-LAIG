@@ -1,6 +1,8 @@
-function MySphere(scene, radius, slices, stacks) {
-    CGFobject.call(this, scene);
+class MySphere extends CGFobject{
 
+    constructor(scene, radius, slices, stacks) {
+  
+    super(scene);
     this.slices = slices;
     this.stacks = stacks;
     this.radius = radius;
@@ -8,10 +10,7 @@ function MySphere(scene, radius, slices, stacks) {
     this.initBuffers();
 };
 
-MySphere.prototype = Object.create(CGFobject.prototype);
-MySphere.prototype.constructor = MySphere;
-
-MySphere.prototype.initBuffers = function() {
+    initBuffers() {
 
     this.vertices = [];
     this.normals = [];
@@ -61,3 +60,5 @@ MySphere.prototype.initBuffers = function() {
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
 };
+
+}

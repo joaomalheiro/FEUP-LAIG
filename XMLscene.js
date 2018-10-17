@@ -12,7 +12,6 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
-        this.selectedCamera = 0;
         this.lightValues = {};
         this.materialCounter = 0;
     }
@@ -171,7 +170,7 @@ class XMLscene extends CGFscene {
 
         //TODO: Change reference length according to parsed graph
         this.axis = new CGFaxis(this, this.graph.axisLength);
-    
+        this.selectedCamera = this.graph.defaultViewID;
         // TODO: Change ambient and background details according to parsed graph
         
         this.initMaterials();

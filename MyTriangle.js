@@ -82,6 +82,10 @@ function MyTriangle(scene, x0, y0, z0, x1, y1, z1, x2, y2, z2) {
 
 	this.texCoords = [
 	
+		(this.c - this.a*Math.cos(beta)) / length_s, 
+		1-(this.a * Math.sin(beta))/t,
+		0, 1/length_t, this.c/length_s,
+		1/length_t
 		
     ];
 
