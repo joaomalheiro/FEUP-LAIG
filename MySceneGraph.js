@@ -847,41 +847,44 @@ class MySceneGraph {
 
             var grandChildren = children[i].children;
 
-            let transfor = {id: "", translate:[],rotate:[],scale:[]};
+            let transfor = [];
 
-            transfor.id = this.reader.getString(children[i],'id');
+            let id = this.reader.getString(children[i],'id');
 
             for(var j = 0; j < grandChildren.length ; j++) {
               
               var arr = [];
               if(grandChildren[j].nodeName == "translate"){
+                arr.push(grandChildren[j].nodeName);
                 arr.push(this.reader.getFloat(grandChildren[j],'x'));
                 arr.push(this.reader.getFloat(grandChildren[j],'y'));
                 arr.push(this.reader.getFloat(grandChildren[j],'z'));
-                transfor.translate = arr;
+                transfor.push(arr)
               } 
               else if (grandChildren[j].nodeName == "rotate"){
+                arr.push(grandChildren[j].nodeName);
                 arr.push(this.reader.getString(grandChildren[j],'axis'));
                 arr.push(this.reader.getFloat(grandChildren[j],'angle'));
-                transfor.rotate = arr;
+                transfor.push(arr);
               }
               else if (grandChildren[j].nodeName == "scale"){
+                arr.push(grandChildren[j].nodeName);
                 arr.push(this.reader.getFloat(grandChildren[j],'x'));
                 arr.push(this.reader.getFloat(grandChildren[j],'y'));
                 arr.push(this.reader.getFloat(grandChildren[j],'z'));
-                transfor.scale = arr;
+                transfor.push(arr);
               } else
                     this.onXMLMinorError("Not a valid transformation tag");
 
             }
 
-        if (this.transformations[transfor.id] == null)
-          this.transformations[transfor.id] = transfor;
+        if (this.transformations[id] == null)
+          this.transformations[id] = transfor;
           else this.onXMLMinorError("at least two transformations with the same id, only the first was parsed and loaded");
            
         } 
-        console.log(this.transformations);
         console.log("Parsed transformations");
+        console.log(this.transformations);
         return null;
 
     }
@@ -1116,47 +1119,53 @@ displayComponent(componentID) {
 
         var transf = this.components[componentID].transformation;
         var transfor = this.transformations[transf];
-
-            if(transfor != null){
-                if(transfor.translate.length !== 0) {
-                    //console.log(this.transformations);
-                    var x = transfor.translate[0];
-                    var y = transfor.translate[1];
-                    var z = transfor.translate[2];
+        if(transfor != null){
+            for(let j = 0; j < transfor.length; j++ ){
+                switch(transfor[j][0]){
+                    case "translate": 
+    
+                    var x = transfor[j][1];
+                    var y = transfor[j][2];
+                    var z = transfor[j][3];
                     //console.log(x)
                     var vec = vec3.fromValues(x,y,z);
                     //console.log("vec: ", vec);
                     mat4.translate(mat,mat,vec3.fromValues(x,y,z));
-                }
-                if(transfor.rotate.length != 0) {
-                    var angle = transfor.rotate[1];
-                    switch (transfor.rotate[0]){
+                    break;
+    
+                    case "scale":
+                    var sx = transfor[j][1];
+                    var sy = transfor[j][2];
+                    var sz = transfor[j][3];
+    
+                    mat4.scale(mat, mat, vec3.fromValues(sx,sy,sz));
+                    break;
+    
+                    case "rotate":
+                    var angle = transfor[j][2];
+                    switch (transfor[j][1]){
                         case "x":
                         mat4.rotate(mat, mat, angle * DEGREE_TO_RAD,vec3.fromValues(1,0,0));
                         break;
-
+    
                         case "y":
                         mat4.rotate(mat, mat, angle * DEGREE_TO_RAD,vec3.fromValues(0,1,0));
                         break;
                         case "z": 
                         mat4.rotate(mat, mat, angle * DEGREE_TO_RAD,vec3.fromValues(0,0,1));
                         break;
-
+    
                         default:
                         break;
                     }
+                    default:
+                    break;
+    
                 }
-
-                if(transfor.scale.length != 0) {
-                    var sx = transfor.scale[0];
-                    var sy = transfor.scale[1];
-                    var sz = transfor.scale[2];
-
-                    mat4.scale(mat, mat, vec3.fromValues(sx,sy,sz));
-                }
-
             }
+    
 
+        }
         return mat;
 
     }
