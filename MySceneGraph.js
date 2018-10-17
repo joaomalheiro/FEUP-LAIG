@@ -931,7 +931,7 @@ class MySceneGraph {
               break;
           }
 
-      this.primitives[grandChildren.nodeName] = prim;
+      this.primitives[this.reader.getString(children[i],'id')] = prim;
 
       }
         
