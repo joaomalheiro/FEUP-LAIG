@@ -239,6 +239,36 @@
             <rotate axis="y" angle="0"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
+
+        <transformation id="cubeSide2T">
+            <translate x="0" y="0" z="-1"/>
+            <rotate axis="y" angle="-90"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="cubeSide3T">
+            <translate x="0" y="1" z="0"/>
+            <rotate axis="x" angle="-90"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="cubeSide4T">
+            <translate x="1" y="0" z="-1"/>
+            <rotate axis="y" angle="180"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+         <transformation id="cubeSide5T">
+            <translate x="0" y="0" z="-1"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="cubeSide6T">
+            <translate x="1" y="0" z="0"/>
+            <rotate axis="y" angle="90"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
         
         
 
@@ -692,7 +722,7 @@
           <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
 
           <children>
-            <primitiveref id="rectangle"/>
+            <componentref id="unitCube"/>
           </children>
         </component> -->
 
@@ -813,6 +843,129 @@
           </children>
        </component>
 
+       <component id = "unitCube">
+          <transformation>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+            <material id="material-1"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1" length_t="1"/>
+
+          <children>
+            <componentref id="cubeSide1"/>
+            <componentref id="cubeSide2"/>
+            <componentref id="cubeSide3"/>
+            <componentref id="cubeSide4"/>
+            <componentref id="cubeSide5"/>
+            <componentref id="cubeSide6"/>
+          </children>
+       </component>
+
+       <component id = "cubeSide1">
+          <transformation>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+            <material id="material-1"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1" length_t="1"/>
+
+          <children>
+            <primitiveref id="rectangle"/>
+          </children>
+       </component>
+
+       <component id = "cubeSide2">
+          <transformation>
+            <transformationref id="cubeSide2T"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+            <material id="material-1"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1" length_t="1"/>
+
+          <children>
+            <componentref id="cubeSide1"/>
+          </children>
+       </component>
+
+       <component id = "cubeSide3">
+          <transformation>
+            <transformationref id="cubeSide3T"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+            <material id="material-1"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1" length_t="1"/>
+
+          <children>
+            <componentref id="cubeSide1"/>
+          </children>
+       </component>
+
+       <component id = "cubeSide4">
+          <transformation>
+            <transformationref id="cubeSide4T"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+            <material id="material-1"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1" length_t="1"/>
+
+          <children>
+            <componentref id="cubeSide1"/>
+          </children>
+       </component>
+
+       <component id = "cubeSide5">
+          <transformation>
+            <transformationref id="cubeSide5T"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+            <material id="material-1"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1" length_t="1"/>
+
+          <children>
+            <componentref id="cubeSide1"/>
+          </children>
+       </component>
+
+       <component id = "cubeSide6">
+          <transformation>
+            <transformationref id="cubeSide6T"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+            <material id="material-1"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1" length_t="1"/>
+
+          <children>
+            <componentref id="cubeSide1"/>
+          </children>
+       </component>
+
+
         <component id = "painting">
           <transformation>
             <transformationref id="paintingT"/>
@@ -823,7 +976,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
+          <texture id="tex-painting" length_s="1" length_t="1"/>
 
           <children>
             <primitiveref id="rectangle"/>

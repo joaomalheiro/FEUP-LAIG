@@ -44,8 +44,6 @@ class MyTorus extends CGFobject{
             this.vertices.push(x, y, z);
             this.normals.push(x, y, z);
             this.textCoords.push(s, t);
-
-            console.log(this.normals);
         }
     }
 

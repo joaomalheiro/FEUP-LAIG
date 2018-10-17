@@ -75,7 +75,6 @@ class MyTriangle extends CGFobject {
 		
     ];
 
-	this.setTex = true;
 	this.updateTexCoordsGLBuffers();
 }
 };
