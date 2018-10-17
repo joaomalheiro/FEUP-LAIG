@@ -800,7 +800,7 @@ class MySceneGraph {
 
             var grandChildren = children[i].children;
 
-            let mat = {id: "", shininess:0, emission:[],ambient:[],difuse:[],specular:[]};
+            let mat = {id: "", shininess:0, emission:[],ambient:[],diffuse:[],specular:[]};
 
             mat.id = this.reader.getString(children[i],'id');
             mat.shininess = this.reader.getFloat(children[i],'shininess');
@@ -808,10 +808,10 @@ class MySceneGraph {
             for(var j = 0; j < grandChildren.length ; j++) {
               
               var arr = [];
-              arr.push(this.reader.getFloat(grandChildren[i],'r'));
-              arr.push(this.reader.getFloat(grandChildren[i],'g'));
-              arr.push(this.reader.getFloat(grandChildren[i],'b'));
-              arr.push(this.reader.getFloat(grandChildren[i],'a'));
+              arr.push(this.reader.getFloat(grandChildren[j],'r'));
+              arr.push(this.reader.getFloat(grandChildren[j],'g'));
+              arr.push(this.reader.getFloat(grandChildren[j],'b'));
+              arr.push(this.reader.getFloat(grandChildren[j],'a'));
 
               switch(j){
                 case 0: mat.emission = arr;
@@ -825,7 +825,6 @@ class MySceneGraph {
               }
 
             }
-
         if (!this.materials.has(mat.id))
             this.materials.set(mat.id,mat);
           else this.onXMLMinorError("at least two materials with the same id, only the first was parsed and loaded");
