@@ -49,7 +49,7 @@ class XMLscene extends CGFscene {
             
             if(this.graph.defaultViewID == perpective_model.id)
                 def = perpective_model.id;
-            this.views.set(perpective_model.id,new CGFcamera(perpective_model.angle,perpective_model.near,perpective_model.far,perpective_model.from,perpective_model.to));
+            this.views.set(perpective_model.id,new CGFcamera(DEGREE_TO_RAD *perpective_model.angle,perpective_model.near,perpective_model.far,perpective_model.from,perpective_model.to));
             i++;
         }
 
