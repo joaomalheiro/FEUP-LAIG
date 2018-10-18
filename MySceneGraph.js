@@ -258,7 +258,7 @@ class MySceneGraph {
                 perspective.to.push(this.reader.getFloat(children[j].children[1],'z'));
 
                 if (this.parserStringMinorError(perspective.id, "perspective_id","views") != 0)
-                  perspective.id == "def_perspective_ID"+j;
+                   this.onXMLError("Variable ID of a perspective view is null");
                 
                 if(this.parserFloatMinorError(perspective.near, "perspective_near","views") != 0)
                   perspective.near = 0.2;
@@ -1233,10 +1233,12 @@ pushMaterial(mat_id) {
 }
 
 applyMaterialAndTexture() {
-   
-    this.materialStack[this.materialStack.length-1].setTexture(this.textureStack[this.textureStack.length-1]);
+    
+    if(this.textureStack[this.textureStack.length-1] != "none")
+      this.materialStack[this.materialStack.length-1].setTexture(this.textureStack[this.textureStack.length-1]);
     this.materialStack[this.materialStack.length-1].apply();
-    this.materialStack[this.materialStack.length-1].setTexture(null);
+    if(this.textureStack[this.textureStack.length-1] != "none")
+      this.materialStack[this.materialStack.length-1].setTexture(null);
 }
 
 popMaterial() {
@@ -1246,7 +1248,8 @@ popMaterial() {
 pushTexture(tex_id) {
   if(tex_id === "inherit")
     this.textureStack.push(this.textureStack[this.textureStack.length-1]);
-  else this.textureStack .push(this.scene.textures[tex_id]);
+  else if(tex_id == "none") this.textureStack.push("none");
+  else this.textureStack.push(this.scene.textures[tex_id]);
 }
 
 popTexture(){
@@ -1272,7 +1275,6 @@ displayComponent(componentID) {
     this.pushTexture(current_texture_id);
 
 
-
     this.applyMaterialAndTexture();
     this.applyTransformations(componentID);
 
@@ -1284,7 +1286,7 @@ displayComponent(componentID) {
     for(let i = 0; i < current_component.componentref.length; i++) {
         this.displayComponent(this.components[current_component.componentref[i]].id);    
     }
-
+    
     this.scene.popMatrix();
     this.popMaterial();
     this.popTexture();

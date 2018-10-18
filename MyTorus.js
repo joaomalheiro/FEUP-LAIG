@@ -18,7 +18,7 @@ class MyTorus extends CGFobject{
         this.vertices = [];
         this.indices = [];
         this.normals = [];
-        this.textCoords = [];
+        this.texCoords = [];
 
         for (var nLoop = 0; nLoop <= this.loops; nLoop++) {
             
@@ -43,7 +43,7 @@ class MyTorus extends CGFobject{
 
             this.vertices.push(x, y, z);
             this.normals.push(x, y, z);
-            this.textCoords.push(s, t);
+            this.texCoords.push(s, t);
         }
     }
 
@@ -60,6 +60,5 @@ class MyTorus extends CGFobject{
 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
-
     };
 }

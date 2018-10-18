@@ -46,7 +46,8 @@
         <texture id="tex-exitSign" file="textures/exitSign.jpg"/>
         <texture id="tex-painting" file="textures/painting1.jpg"/>
         <texture id="tex-wood" file="textures/wood.jpg"/>
-        <texture id="tex-pokerstars" file="textures/pokerstars.jpg"/>
+        <texture id="tex-pokerstars" file="textures/pokerstars.png"/>
+        <texture id="tex-blackLeather" file="textures/leather.jpg"/>
     </textures>
  
     <materials>
@@ -63,6 +64,15 @@
             <diffuse r="0.3" g="0.2" b="0.5" a="1" />
             <specular r="0.1" g="0.225" b="0.3" a="1" />
         </material>
+
+         <material id="material-black" shininess = "10" >
+            <emission r="0.4" g="0.4" b="0.4" a="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1" />
+            <specular r="0" g="0" b="0" a="1" />
+        </material>
+
+
     </materials>
  
     <transformations>
@@ -224,9 +234,9 @@
         </transformation>
 
         <transformation id="sit-chair">
-            <translate x="0" y="2" z="1"/>
+            <translate x="0" y="2" z="1.2"/>
             <rotate axis="x" angle="0"/>
-            <scale x="1.5" y="0.25" z="1.2"/>
+            <scale x="1.5" y="0.25" z="1.4"/>
         </transformation>
 
         <transformation id="back-chair">
@@ -759,11 +769,10 @@
           </transformation>
 
           <materials>
-            <material id="material-1"/>
-            <material id="material-2"/>
+            <material id="material-black"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="tex-blackLeather" length_s="1.0" length_t="1.0"/>
 
           <children>
             <primitiveref id="torus"/>

@@ -76,6 +76,8 @@ class MyInterface extends CGFinterface {
         this.camerasID = [];
 
        for(const [k,v] of cameras.entries()){
+       		
+       		if(k != null)
             this.camerasID.push(k);
         }
 
