@@ -1123,6 +1123,7 @@ class MySceneGraph {
     parseComponents(nodesNode) {
         this.children = nodesNode.children;
         this.components = [];
+        this.transfCounter = 0;
 
         for(var i = 0; i < this.children.length; i++){
             let component = {id: "", transformation: "", materials:[] ,tex_id:"",tex_length_s:0,tex_length_t:0,componentref:[],primitiveref:[]};
@@ -1133,9 +1134,48 @@ class MySceneGraph {
             if(this.componentInfo.length != 4){
                 this.onXMLError("Component does not have all required attributes");
             } else {
-                if(this.componentInfo[0].children.length != 0){
+                if(this.componentInfo[0].children.length == 1){
                  component.transformation = this.reader.getString(this.componentInfo[0].children[0],'id'); 
-                }
+                } else if (this.componentInfo[0].children.length > 1){
+                            var grandChildren = this.componentInfo[0].children;
+                
+                            let transfor = [];
+                
+                            let id = "default" + this.transfCounter;
+                            this.transfCounter++;
+                            component.transformation = id;
+                
+                            for(var j = 0; j < grandChildren.length ; j++) {
+                              
+                              var arr = [];
+                              if(grandChildren[j].nodeName == "translate"){
+                                arr.push(grandChildren[j].nodeName);
+                                arr.push(this.reader.getFloat(grandChildren[j],'x'));
+                                arr.push(this.reader.getFloat(grandChildren[j],'y'));
+                                arr.push(this.reader.getFloat(grandChildren[j],'z'));
+                                transfor.push(arr)
+                              } 
+                              else if (grandChildren[j].nodeName == "rotate"){
+                                arr.push(grandChildren[j].nodeName);
+                                arr.push(this.reader.getString(grandChildren[j],'axis'));
+                                arr.push(this.reader.getFloat(grandChildren[j],'angle'));
+                                transfor.push(arr);
+                              }
+                              else if (grandChildren[j].nodeName == "scale"){
+                                arr.push(grandChildren[j].nodeName);
+                                arr.push(this.reader.getFloat(grandChildren[j],'x'));
+                                arr.push(this.reader.getFloat(grandChildren[j],'y'));
+                                arr.push(this.reader.getFloat(grandChildren[j],'z'));
+                                transfor.push(arr);
+                              } else
+                                    this.onXMLMinorError("Not a valid transformation tag");
+                
+                            }
+                
+                        if (this.transformations[id] == null)
+                          this.transformations[id] = transfor;
+
+            }
 
                 var materials = this.componentInfo[1].children;
                 for(var j = 0; j < materials.length; j++){
@@ -1265,7 +1305,6 @@ applyTransformations(componentID) {
 
 displayComponent(componentID) {
     //console.log(`For material with id ${componentID} the stack is `, this.auxStack);
-
     const current_component = this.components[componentID];
 
     this.scene.pushMatrix();
@@ -1286,6 +1325,7 @@ displayComponent(componentID) {
 
     //Recursively displays the tree
     for(let i = 0; i < current_component.componentref.length; i++) {
+        console.log(current_component.componentref[i]);
         this.displayComponent(this.components[current_component.componentref[i]].id);    
     }
     
