@@ -85,10 +85,14 @@ class XMLscene extends CGFscene {
     initMaterials() {
 
         this.materials = [];
-        
-        console.log(this.graph.materials);
+        this.materials["default"] = new CGFappearance(this);
+        this.materials["default"].setAmbient(0,0,0,0);
+        this.materials["default"].setSpecular(0,0,0,0);
+        this.materials["default"].setDiffuse(0,0,0,0);
+        this.materials["default"].setEmission(0,0,0,0);
+        this.materials["default"].setShininess(0);
+
         for(const [k,v] of this.graph.materials.entries()) {
-            console.log(v);
             this.materials[k] = new CGFappearance(this);
             this.materials[k].setAmbient(v.ambient[0],v.ambient[1],v.ambient[2],v.ambient[3]);
             this.materials[k].setSpecular(v.specular[0],v.specular[1],v.specular[2],v.specular[3]);                

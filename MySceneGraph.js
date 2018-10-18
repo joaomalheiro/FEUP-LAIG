@@ -34,6 +34,10 @@ class MySceneGraph {
         this.axisCoords['y'] = [0, 1, 0];
         this.axisCoords['z'] = [0, 0, 1];
 
+        this.materialStack = [];
+        this.auxStack = [];
+        this.textureStack = [];
+
         // File reading 
         this.reader = new CGFXMLreader();
 
@@ -1215,9 +1219,7 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
   displayScene() {
-    this.materialStack = [];
-    this.auxStack = [];
-    this.textureStack = [];
+    this.pushMaterial("default");
     this.displayComponent(this.root);
     return null;
 }
