@@ -1131,13 +1131,16 @@ class MySceneGraph {
             component.id = this.reader.getString(this.children[i],'id');
 
             this.componentInfo = this.children[i].children;
+            console.log(this.componentInfo[0].children);
             if(this.componentInfo.length != 4){
                 this.onXMLError("Component does not have all required attributes");
             } else {
-                if(this.componentInfo[0].children.length == 1){
-                 component.transformation = this.reader.getString(this.componentInfo[0].children[0],'id'); 
-                } else if (this.componentInfo[0].children.length > 1){
+                 if (this.componentInfo[0].children.length > 0){
+                    console.log("DIRECT TRASNFORMATION OF", component.id);
                             var grandChildren = this.componentInfo[0].children;
+                            if(grandChildren[0].nodeName == "transformationref"){
+                                component.transformation = this.reader.getString(this.componentInfo[0].children[0],'id'); 
+                            } else {
                 
                             let transfor = [];
                 
@@ -1176,6 +1179,7 @@ class MySceneGraph {
                           this.transformations[id] = transfor;
 
             }
+        }
 
                 var materials = this.componentInfo[1].children;
                 for(var j = 0; j < materials.length; j++){
