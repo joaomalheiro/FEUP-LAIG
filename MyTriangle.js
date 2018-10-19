@@ -1,7 +1,7 @@
 class MyTriangle extends CGFobject {
 
 	constructor(scene, x0, y0, z0, x1, y1, z1, x2, y2, z2) {
- 	
+
  	super(scene);
  	this.scene = scene;
  	this.setTex = false;
@@ -67,12 +67,11 @@ class MyTriangle extends CGFobject {
 	this.beta = Math.acos(this.cosBeta);
 
 	this.texCoords = [
-	
-		(this.c - this.a*Math.cos(this.beta)) / this.length_s, 
+
+		(this.c - this.a*Math.cos(this.beta)) / this.length_s,
 		1-(this.a * Math.sin(this.beta))/this.length_t,
-		0, 1/this.length_t, this.c/this.length_s,
-		1/this.length_t
-		
+		0, 1,
+		this.c/this.length_s, 1
     ];
 
 	this.updateTexCoordsGLBuffers();

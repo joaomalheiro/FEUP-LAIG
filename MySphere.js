@@ -1,7 +1,7 @@
 class MySphere extends CGFobject{
 
     constructor(scene, radius, slices, stacks) {
-  
+
     super(scene);
     this.slices = slices;
     this.stacks = stacks;
@@ -23,8 +23,8 @@ class MySphere extends CGFobject{
 
     var patchLengthx = 1 / this.slices;
     var patchLengthy = 1 / this.stacks;
-    var xCoord = 0;
-    var yCoord = 0;
+    var xCoord = 1;
+    var yCoord = 1;
 
 
     for (var i = 0; i <= this.slices; i++) {
@@ -45,14 +45,14 @@ class MySphere extends CGFobject{
             }
 
 
-                yCoord += patchLengthy;
+                yCoord -= patchLengthy;
 
           //  this.originalTexCoords.push(0.5 * x + 0.5, 0.5 - 0.5 * y);
-            this.originalTexCoords.push(  xCoord,yCoord);
+            this.originalTexCoords.push(  xCoord, yCoord);
         }
 
-        yCoord = 0;
-        xCoord += patchLengthx;
+        yCoord = 1;
+        xCoord -= patchLengthx;
 
     }
 
