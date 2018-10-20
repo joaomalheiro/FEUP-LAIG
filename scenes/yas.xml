@@ -53,8 +53,11 @@
         <texture id="tex-aceOfDiamonds" file="textures/aceOfDiamonds.png"/>
         <texture id="tex-aceOfHearts" file="textures/aceOfHearts.png"/>
         <texture id="tex-9ofSpades" file="textures/9ofSpades.png"/>
+        <texture id="tex-9ofHearts" file="textures/9ofHearts.png"/>
         <texture id="tex-9ofClubs" file="textures/9ofClubs.png"/>
+        <texture id="tex-8ofClubs" file="textures/8ofClubs.png"/>
         <texture id="tex-3ofSpades" file="textures/3ofSpades.png"/>
+        <texture id="tex-redWhiteStack" file="textures/redWhiteStack.png"/>
 
     </textures>
 
@@ -93,20 +96,20 @@
     <transformations>
 
         <transformation id="rotateSide1">
-            <translate x="0" y="1" z="0"/>
-            <rotate axis="x" angle="180"/>
+            <translate x="0" y="0" z="1"/>
+            <rotate axis="y" angle="90"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
 
         <transformation id="rotateSide2">
             <translate x="0" y="0" z="0"/>
-            <rotate axis="y" angle="-90"/>
+            <rotate axis="y" angle="0"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
 
         <transformation id="rotateSide3">
-            <translate x="0" y="0" z="0"/>
-            <rotate axis="x" angle="90"/>
+            <translate x="0" y="0" z="1"/>
+            <rotate axis="x" angle="-90"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
 
@@ -135,7 +138,7 @@
         </transformation>
 
          <transformation id="paintingT">
-            <translate x="0" y="3" z="9"/>
+            <translate x="0.05" y="3" z="9"/>
             <rotate axis="y" angle="90"/>
             <scale x="6" y="3" z="1"/>
         </transformation>
@@ -315,6 +318,43 @@
             <scale x="1" y="1" z="1"/>
         </transformation>
 
+        <transformation id="card2T">
+            <translate x="4.5" y="2.03" z="5"/>
+            <rotate axis="z" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="card3T">
+            <translate x="4.5" y="2.03" z="5.5"/>
+            <rotate axis="z" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="card4T">
+            <translate x="4.5" y="2.03" z="6.2"/>
+            <rotate axis="z" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="card5T">
+            <translate x="4.5" y="2.03" z="6.7"/>
+            <rotate axis="z" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="stackT">
+            <translate x="6" y="2.20" z="6.7"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="0.2" y="0.2" z="0.1"/>
+        </transformation>
+
+        <transformation id="stack2T">
+            <translate x="0" y="0" z="0.2"/>
+            <rotate axis="x" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+
     </transformations>
 
 
@@ -357,20 +397,20 @@
             <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
-                <!--<componentref id="walls"/>-->
+                <componentref id="walls"/>
                 <componentref id="door"/>
                 <componentref id="painting"/>
                 <componentref id="game"/>
             </children>
         </component>
 
-       <!-- <component id = "walls">
+        <component id = "walls">
             <transformation>
               <transformationref id="scaleWalls"/>
             </transformation>
 
             <materials>
-                <material id="material-1"/>
+                <material id="material-black"/>
             </materials>
 
             <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
@@ -388,10 +428,10 @@
           </transformation>
 
           <materials>
-            <material id="material-1"/>
+            <material id="inherit"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
 
           <children>
             <primitiveref id="rectangle"/>
@@ -404,10 +444,10 @@
           </transformation>
 
           <materials>
-            <material id="material-1"/>
+            <material id="inherit"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
 
           <children>
             <primitiveref id="rectangle"/>
@@ -428,7 +468,7 @@
           <children>
             <primitiveref id="rectangle"/>
           </children>
-       </component> -->
+       </component>
 
        <component id = "door">
           <transformation>
@@ -509,7 +549,71 @@
             <children>
                 <componentref id="table"/>
                 <componentref id="chairs"/>
-                <componentref id="cards" />
+                <componentref id="cards"/>
+                <componentref id="stacks"/>
+            </children>
+        </component>
+
+        <component id = "stacks">
+            <transformation>
+            </transformation>
+
+            <materials>
+                <material id="material-white"/>
+            </materials>
+
+            <texture id="none" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="stack1"/>
+                <componentref id="stack2"/>
+            </children>
+        </component>
+
+        <component id = "stack1">
+            <transformation>
+            </transformation>
+
+            <materials>
+                <material id="material-white"/>
+            </materials>
+
+            <texture id="tex-redWhiteStack" length_s="1.0" length_t="1.0"/>
+
+            <children>
+                <componentref id="stack"/>
+            </children>
+        </component>
+
+        <component id = "stack2">
+            <transformation>
+                <transformationref id="stack2T"/>
+            </transformation>
+
+            <materials>
+                <material id="material-white"/>
+            </materials>
+
+            <texture id="tex-redWhiteStack" length_s="1.0" length_t="1.0"/>
+
+            <children>
+                <componentref id="stack"/>
+            </children>
+        </component>
+
+        <component id = "stack">
+            <transformation>
+              <transformationref id="stackT"/>
+            </transformation>
+
+            <materials>
+                <material id="inherit"/>
+            </materials>
+
+            <texture id="inherit" length_s="1.0" length_t="1.0"/>
+
+            <children>
+                <primitiveref id="cylinder"/>
             </children>
         </component>
 
@@ -525,6 +629,10 @@
 
             <children>
                 <componentref id="card1"/>
+                <componentref id="card2"/>
+                <componentref id="card3"/>
+                <componentref id="card4"/>
+                <componentref id="card5"/>
             </children>
         </component>
 
@@ -538,6 +646,70 @@
             </materials>
 
             <texture id="tex-aceOfSpades" length_s="1.0" length_t="1.0"/>
+
+            <children>
+                <componentref id="card"/>
+            </children>
+        </component>
+
+        <component id = "card2">
+            <transformation>
+              <transformationref id="card2T"/>
+            </transformation>
+
+            <materials>
+                <material id="material-white"/>
+            </materials>
+
+            <texture id="tex-9ofSpades" length_s="1.0" length_t="1.0"/>
+
+            <children>
+                <componentref id="card"/>
+            </children>
+        </component>
+
+        <component id = "card3">
+            <transformation>
+              <transformationref id="card3T"/>
+            </transformation>
+
+            <materials>
+                <material id="material-white"/>
+            </materials>
+
+            <texture id="tex-8ofClubs" length_s="1.0" length_t="1.0"/>
+
+            <children>
+                <componentref id="card"/>
+            </children>
+        </component>
+
+        <component id = "card4">
+            <transformation>
+              <transformationref id="card4T"/>
+            </transformation>
+
+            <materials>
+                <material id="material-white"/>
+            </materials>
+
+            <texture id="tex-9ofHearts" length_s="1.0" length_t="1.0"/>
+
+            <children>
+                <componentref id="card"/>
+            </children>
+        </component>
+
+        <component id = "card5">
+            <transformation>
+              <transformationref id="card5T"/>
+            </transformation>
+
+            <materials>
+                <material id="material-white"/>
+            </materials>
+
+            <texture id="tex-3ofSpades" length_s="1.0" length_t="1.0"/>
 
             <children>
                 <componentref id="card"/>
@@ -692,7 +864,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="none" length_s="1.0" length_t="1.0"/>
 
           <children>
               <componentref id="leg-chair1"/>
@@ -793,7 +965,7 @@
             <material id="material-2"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="tex-blackLeather" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="unitCube"/>
@@ -809,7 +981,7 @@
             <material id="material-2"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="tex-blackLeather" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="unitCube"/>
@@ -959,7 +1131,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1" length_t="1"/>
+          <texture id="inherit" length_s="1" length_t="1"/>
 
           <children>
             <componentref id="cubeSide1"/>
@@ -980,7 +1152,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1" length_t="1"/>
+          <texture id="inherit" length_s="1" length_t="1"/>
 
           <children>
             <componentref id="cubeSide"/>
@@ -997,7 +1169,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1" length_t="1"/>
+          <texture id="inherit" length_s="1" length_t="1"/>
 
           <children>
             <componentref id="cubeSide"/>
@@ -1014,7 +1186,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1" length_t="1"/>
+          <texture id="inherit" length_s="1" length_t="1"/>
 
           <children>
             <componentref id="cubeSide"/>
@@ -1031,7 +1203,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1" length_t="1"/>
+          <texture id="inherit" length_s="1" length_t="1"/>
 
           <children>
             <componentref id="cubeSide"/>
@@ -1048,7 +1220,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1" length_t="1"/>
+          <texture id="inherit" length_s="1" length_t="1"/>
 
           <children>
             <componentref id="cubeSide"/>
@@ -1065,7 +1237,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1" length_t="1"/>
+          <texture id="inherit" length_s="1" length_t="1"/>
 
           <children>
             <componentref id="cubeSide"/>
@@ -1081,7 +1253,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-painting" length_s="1" length_t="1"/>
+          <texture id="inherit" length_s="1" length_t="1"/>
 
           <children>
             <primitiveref id="rectangle"/>
