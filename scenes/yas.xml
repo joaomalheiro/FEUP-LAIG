@@ -58,6 +58,7 @@
         <texture id="tex-8ofClubs" file="textures/8ofClubs.png"/>
         <texture id="tex-3ofSpades" file="textures/3ofSpades.png"/>
         <texture id="tex-redWhiteStack" file="textures/redWhiteStack.png"/>
+        <texture id="tex-darkWood" file="textures/dark-wood.jpg"/>
 
     </textures>
 
@@ -74,6 +75,13 @@
             <ambient r="0.6" g="0.4" b="0.6" a="1" />
             <diffuse r="0.3" g="0.2" b="0.5" a="1" />
             <specular r="0.1" g="0.225" b="0.3" a="1" />
+        </material>
+
+        <material id="material-wall" shininess = "10" >
+            <emission r="0.3" g="0.4" b="0.7" a="0" />
+            <ambient r="0.5" g="0.4" b="1" a="1" />
+            <diffuse r="0.5" g="0.4" b="0.9" a="1" />
+            <specular r="0" g="0.225" b="1" a="1" />
         </material>
 
          <material id="material-black" shininess = "10" >
@@ -150,25 +158,25 @@
         </transformation>
 
         <transformation id="leg1T">
-            <translate x="1" y="0" z="5.5"/>
+            <translate x="0.75" y="0" z="3.4"/>
             <rotate axis="x" angle="-90"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
 
         <transformation id="leg2T">
-            <translate x="2" y="0" z="2"/>
+            <translate x="2.25" y="0" z="0"/>
             <rotate axis="x" angle="-90"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
 
         <transformation id="leg3T">
-            <translate x="1" y="0" z="2"/>
+            <translate x="0.75" y="0" z="0"/>
             <rotate axis="x" angle="-90"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
 
         <transformation id="leg4T">
-            <translate x="2" y="0" z="5.5"/>
+            <translate x="2.25" y="0" z="3.4"/>
             <rotate axis="x" angle="-90"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
@@ -224,7 +232,7 @@
         <transformation id="leg-chair">
             <translate x="0" y="0" z="0"/>
             <rotate axis="x" angle="-90"/>
-            <scale x="0.5" y="0.5" z="1"/>
+            <scale x="0.2" y="0.2" z="0.6"/>
         </transformation>
 
         <transformation id="leg-chair-1T">
@@ -234,13 +242,13 @@
         </transformation>
 
         <transformation id="leg-chair-2T">
-            <translate x="0.8" y="0" z="0.1"/>
+            <translate x="1.2" y="0" z="0.1"/>
             <rotate axis="y" angle="0"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
 
         <transformation id="leg-chair-3T">
-            <translate x="0.8" y="0" z="0.9"/>
+            <translate x="1.3" y="0" z="0.9"/>
             <rotate axis="y" angle="0"/>
             <scale x="1" y="1" z="1"/>
         </transformation>
@@ -252,13 +260,13 @@
         </transformation>
 
         <transformation id="sit-chair">
-            <translate x="0" y="2" z="1.2"/>
+            <translate x="0" y="1.2" z="1.2"/>
             <rotate axis="x" angle="0"/>
             <scale x="1.5" y="0.25" z="1.4"/>
         </transformation>
 
         <transformation id="back-chair">
-            <translate x="0.2" y="2" z="1.2"/>
+            <translate x="0.2" y="1.2" z="1.2"/>
             <rotate axis="y" angle="90"/>
             <scale x="1.4" y="1.75" z="0.25"/>
         </transformation>
@@ -354,6 +362,12 @@
             <scale x="1" y="1" z="1"/>
         </transformation>
 
+        <transformation id="legTableT">
+            <translate x="0" y="0" z="0"/>
+            <rotate axis="x" angle="0"/>
+            <scale x="0.7" y="0.7" z="0.98"/>
+        </transformation>
+
 
     </transformations>
 
@@ -410,7 +424,7 @@
             </transformation>
 
             <materials>
-                <material id="material-black"/>
+                <material id="material-wall"/>
             </materials>
 
             <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
@@ -544,7 +558,7 @@
                 <material id="material-1"/>
             </materials>
 
-            <texture id="none" length_s="1.0" length_t="1.0"/>
+            <texture id="none"/>
 
             <children>
                 <componentref id="table"/>
@@ -885,7 +899,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="leg-chair"/>
@@ -901,7 +915,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="leg-chair"/>
@@ -917,7 +931,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="leg-chair"/>
@@ -933,7 +947,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="leg-chair"/>
@@ -949,7 +963,7 @@
             <material id="material-2"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="tex-metalKnob" length_s="1.0" length_t="1.0"/>
 
           <children>
             <primitiveref id="cylinder"/>
@@ -1000,14 +1014,29 @@
           <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
 
           <children>
-                <componentref id="leg1"/>
-                <componentref id="leg2"/>
-                <componentref id="leg3"/>
-                <componentref id="leg4"/>
                 <componentref id="top"/>
+                <componentref id="legs"/>
                 <componentref id ="armRest"/>
             </children>
         </component>
+
+        <component id = "legs">
+          <transformation>
+          </transformation>
+
+          <materials>
+            <material id="material-black"/>
+          </materials>
+
+          <texture id="tex-darkWood" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <componentref id="leg1"/>
+            <componentref id="leg2"/>
+            <componentref id="leg3"/>
+            <componentref id="leg4"/>
+          </children>
+       </component>
 
         <component id = "armRest">
           <transformation>
@@ -1044,13 +1073,14 @@
 
          <component id = "leg">
           <transformation>
+            <transformationref id="legTableT"/>
           </transformation>
 
           <materials>
-            <material id="material-2"/>
+            <material id="inherit"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
 
           <children>
             <primitiveref id="cylinder"/>
@@ -1063,10 +1093,10 @@
           </transformation>
 
           <materials>
-            <material id="material-2"/>
+            <material id="inherit"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
 
           <children>
            <componentref id="leg"/>
@@ -1079,10 +1109,10 @@
           </transformation>
 
           <materials>
-            <material id="material-2"/>
+            <material id="inherit"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
 
           <children>
            <componentref id="leg"/>
@@ -1095,10 +1125,10 @@
           </transformation>
 
           <materials>
-            <material id="material-2"/>
+            <material id="inherit"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="leg"/>
@@ -1112,10 +1142,10 @@
           </transformation>
 
           <materials>
-            <material id="material-2"/>
+            <material id="inherit"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="leg"/>

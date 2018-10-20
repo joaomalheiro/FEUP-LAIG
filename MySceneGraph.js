@@ -17,6 +17,8 @@ var COMPONENTS_INDEX = 8;
 class MySceneGraph {
     /**
      * @constructor
+     * @param filename name of the XML file
+     * @param scene XMLscene
      */
     constructor(filename, scene) {
         this.loadedOk = null;
@@ -25,15 +27,18 @@ class MySceneGraph {
         this.scene = scene;
         scene.graph = this;
 
+        //array that will contain all the nodes in the XML file
         this.nodes = [];
 
-        this.idRoot = null;                    // The id of the root element.
+        // The id of the root element
+        this.idRoot = null;
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];
         this.axisCoords['y'] = [0, 1, 0];
         this.axisCoords['z'] = [0, 0, 1];
 
+        //stacks that will help in the display of the scene
         this.materialStack = [];
         this.auxStack = [];
         this.textureStack = [];
@@ -206,16 +211,16 @@ class MySceneGraph {
 
     /**
     * Parses the <scene> block
+    * @param {scene block element}
     */
     parseScene(sceneNode) {
 
+        //gets the string of the root and the float axis_length
         this.root = this.reader.getString(sceneNode, 'root');
         this.axisLength = this.reader.getFloat(sceneNode, 'axis_length');
 
-        if (this.root == null) {
+        if (this.parserStringMinorError(this.root, "root", "scene") != 0)
             this.root = 1;
-            this.onXMLMinorError("unable to parse value for root; assuming 'root = 1'");
-            }
 
          if (this.parserFloatMinorError(this.axisLength,"axisLength", "scene") != 0 )
            this.axisLength = 1;
@@ -225,22 +230,28 @@ class MySceneGraph {
 
     /**
     * Parses the <views> block
+    * @param {views block element}
     */
-
     parseViews(viewsNode) {
 
         var children = viewsNode.children;
         var nodeNames = [];
+
+        //array to hold the information that will be required to create all the perspective cameras in the XMLscene file
         this.perspectives = [];
+        //array to hold the information that will be required to create all the ortho cameras in the XMLscene file
         this.orthos = [];
 
         this.defaultViewID = this.reader.getString(viewsNode,'default');
+        this.parserStringMinorError(this.defaultViewID,"defaultViewID","views");
 
+        //cycle to guarantee every view is either perspective or ortho
         for(var i = 0; i < children.length; i++){
             if(children[i].nodeName === 'perspective' || children[i].nodeName === 'ortho')
             nodeNames.push(children[i].nodeName);
             else  this.onXMLMinorError("unable to parse the type of the view, not perspective or ortho");
         }
+
 
         for(var j = 0; j < children.length; j++) {
 
@@ -261,6 +272,7 @@ class MySceneGraph {
                 perspective.to.push(this.reader.getFloat(children[j].children[1],'y'));
                 perspective.to.push(this.reader.getFloat(children[j].children[1],'z'));
 
+                //section in which the values passed are tested and if they are null or they are not a number, they are fixed
                 if (this.parserStringMinorError(perspective.id, "perspective_id","views") != 0)
                    this.onXMLError("Variable ID of a perspective view is null");
 
@@ -291,6 +303,7 @@ class MySceneGraph {
                  if(this.parserFloatMinorError(perspective.to[2], "perspective_to","views") != 0)
                   perspective.to[2] = 1;
 
+                //all the info is pushed to the respective array
                 this.perspectives.push(perspective);
 
             } else if (nodeNames[j] === 'ortho'){
@@ -313,6 +326,7 @@ class MySceneGraph {
                 ortho.to.push(this.reader.getFloat(children[j].children[1],'y'));
                 ortho.to.push(this.reader.getFloat(children[j].children[1],'z'));
 
+                //section in which the values passed are tested and if they are null or they are not a number, they are fixed
                 if (this.parserStringMinorError(ortho.id, "ortho_id", "views") != 0)
                   ortho.id == "def_ortho_ID"+j;
 
@@ -352,30 +366,30 @@ class MySceneGraph {
                  if(this.parserFloatMinorError(ortho.to[2], "ortho_to", "views") != 0)
                   ortho.to[2] = 5;
 
+                //al the info regarding ortho cameras is pushed to the respective array
                 this.orthos.push(ortho);
             }
-
         }
-
         console.log("Parsed views !");
-
     }
 
     /**
     * Parses the <ambient> block
+    * @param {ambient block element}
     */
-
     parseAmbient(ambientNode) {
 
         var children = ambientNode.children;
         var ambient = children[0];
         var background = children[1];
 
+        //data reader for the ambient section of the ambient node
         this.ambientR = this.reader.getFloat(ambient,"r");
         this.ambientG = this.reader.getFloat(ambient,"g");
         this.ambientB = this.reader.getFloat(ambient,"b");
         this.ambientA = this.reader.getFloat(ambient,"a");
 
+        //section in which the values passed are tested and if they are null or they are not a number, they are fixed
         if(this.parserFloatMinorError(this.ambientR, "ambientR", "ambient") != 0)
           this.ambientR = 0.5;
 
@@ -388,11 +402,13 @@ class MySceneGraph {
         if(this.parserFloatMinorError(this.ambientA, "ambientA", "ambient") != 0)
           this.ambientA = 1;
 
+        //data reader for the background section of the ambient node
         this.backgroundR = this.reader.getFloat(background,"r");
         this.backgroundG = this.reader.getFloat(background,"g");
         this.backgroundB = this.reader.getFloat(background,"b");
         this.backgroundA = this.reader.getFloat(background,"a");
 
+        //section in which the values passed are tested and if they are null or they are not a number, they are fixed
         if(this.parserFloatMinorError(this.backgroundR, "backgroundR", "background") != 0)
           this.backgroundR = 0.5;
         if(this.parserFloatMinorError(this.backgroundG, "backgroundG", "background") != 0)
@@ -835,25 +851,20 @@ class MySceneGraph {
     parseTextures(texturesNode) {
 
         var children = texturesNode.children;
+        //map created with the id as key and the texture object as the other element of the pair
         this.textures =new Map();
 
         for(var i = 0; i < children.length; i++){
 
+            //model for a texture object
             let texture = {id:this.reader.getString(children[i],'id'),file:this.reader.getString(children[i],'file')};
 
-            if(this.parserStringMinorError(texture.id)!=0)
-              texture.id = "def_texture_ID"+i;
-
-            //TODO
+            //check to see if there is no texture with the same ID (name)
             if (!this.textures.has(texture.id))
               this.textures.set(texture.id,texture);
             else this.onXMLMinorError("at least two textures with the same id, only the first was parsed and loaded");
-
         }
-
-        console.log(this.textures);
         console.log("Parsed textures !");
-
         return null;
     }
 
@@ -864,16 +875,23 @@ class MySceneGraph {
     parseMaterials(materialsNode) {
 
         var children = materialsNode.children;
+        //map created with the id as key and the material object with the parsed info as the other element of the pair
         this.materials = new Map();
 
         for(var i = 0; i < children.length; i++){
 
             var grandChildren = children[i].children;
 
+            //model for a material object containing all the requeriments
             let mat = {id: "", shininess:0, emission:[],ambient:[],diffuse:[],specular:[]};
 
             mat.id = this.reader.getString(children[i],'id');
             mat.shininess = this.reader.getFloat(children[i],'shininess');
+
+            this.parserStringMinorError(mat.id,"id","materials");
+
+            if(this.parserFloatMinorError(mat.shininess,"shininess","materials")!=0)
+              mat.shininess = 10;
 
             for(var j = 0; j < grandChildren.length ; j++) {
 
@@ -1187,8 +1205,13 @@ class MySceneGraph {
                 }
 
                 component.tex_id = this.reader.getString(this.componentInfo[2],'id');
+
+                console.log(component.tex_id);
+
+                if(component.tex_id != "none"){
                 component.tex_length_s = this.reader.getString(this.componentInfo[2],'length_s');
                 component.tex_length_t = this.reader.getString(this.componentInfo[2],'length_t');
+              }
 
                 var componentChildren = this.componentInfo[3].children;
 

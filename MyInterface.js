@@ -26,23 +26,37 @@ class MyInterface extends CGFinterface {
 
         return true;
     }
+    /**
+    * Initializes the use of keys in the program
+    */
     initKeys() {
-		this.scene.gui=this;
-		this.processKeyboard=function(){};
-		this.activeKeys={};
-	};
-	processKeyDown(event) {
-		this.activeKeys[event.code]=true;
-	};
-	processKeyUp(event) {
-        if(event.code === "KeyM"){
-            this.scene.materialCounter++;
-        }
-		this.activeKeys[event.code]=false;
-	};
-	isKeyPressed(keyCode) {
-		return this.activeKeys[keyCode] || false;
-	};
+  		this.scene.gui=this;
+  		this.processKeyboard=function(){};
+  		this.activeKeys={};
+  	};
+
+    /**
+    * Detect when an keyboard event received is a keyDown
+    */
+  	processKeyDown(event) {
+  		this.activeKeys[event.code]=true;
+  	};
+
+    /**
+    * Detect when an keyboard event received is a keyUp(M) and then increment the material counter used to keep track of every components materials
+    */
+  	processKeyUp(event) {
+          if(event.code === "KeyM"){
+              this.scene.materialCounter++;
+          }
+  		this.activeKeys[event.code]=false;
+  	};
+    /**
+    * Detect when a certain key is pressed
+    */
+  	isKeyPressed(keyCode) {
+  		return this.activeKeys[keyCode] || false;
+  	};
 
     /**
      * Adds a folder containing the IDs of the lights passed as parameter.
@@ -54,7 +68,7 @@ class MyInterface extends CGFinterface {
 
         // add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
         // e.g. this.option1=true; this.option2=false;
-        
+
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
                 this.scene.lightValues[key] = lights[key][0];
@@ -63,20 +77,20 @@ class MyInterface extends CGFinterface {
         }
         console.log(group);
     }
-    
+
     /**
-    *
-    *
-    */
+     * Adds a folder containing the IDs of the cameras passed as parameter.
+     * @param {Map} cameras
+     */
     addCamerasGroup(cameras) {
 
         var group = this.gui.addFolder("Views")
         group.open();
-        
+
         this.camerasID = [];
 
        for(const [k,v] of cameras.entries()){
-       		
+
        		if(k != null)
             this.camerasID.push(k);
         }
@@ -86,7 +100,7 @@ class MyInterface extends CGFinterface {
         views.onChange(value =>{
            this.scene.setCamera(cameras.get(value));
         });
-       
+
 
     }
 }
