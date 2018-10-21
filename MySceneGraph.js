@@ -471,7 +471,7 @@ class MySceneGraph {
                  if(enableLight == null){
                      this.onXMLMinorError("enable value missing for ID = " + lightId + "; assuming 'value = 1'");
                  }
-                          // Retrieves the light position.
+            // Retrieves the light position.
             var locationLight = [];
             if (locationIndex != -1) {
                 // x
@@ -539,7 +539,7 @@ class MySceneGraph {
             else
                 return "ambient component undefined for ID = " + lightId;
 
-            // TODO: Retrieve the diffuse component
+            //Retrieves the diffuse component
             var diffuseIllumination = [];
             if (diffuseIndex != -1) {
                 // R
@@ -578,7 +578,7 @@ class MySceneGraph {
             else
                 return "diffuse component undefined for ID = " + lightId;
 
-            // TODO: Retrieve the specular component
+            //Retrieves the specular component
             var specularIllumination = [];
             if (specularIndex != -1) {
             // R
@@ -624,7 +624,7 @@ class MySceneGraph {
 
             }
         else if(children[i].nodeName == 'spot'){
-             // Gets indices of each element.
+                // Gets indices of each element.
                 var locationIndex = nodeNames.indexOf("location");
                 var ambientIndex = nodeNames.indexOf("ambient");
                 var diffuseIndex = nodeNames.indexOf("diffuse");
@@ -651,7 +651,7 @@ class MySceneGraph {
                     else {
                         exponentLight = this.reader.getString(children[i], 'exponent');
                     }
-                          // Retrieves the light position.
+            // Retrieves the light position.
             var locationLight = [];
             if (locationIndex != -1) {
                 // x
@@ -747,7 +747,7 @@ class MySceneGraph {
             else
                 return "ambient component undefined for ID = " + lightId;
 
-            // TODO: Retrieve the diffuse component
+            // Retrieves the diffuse component
             var diffuseIllumination = [];
             if (diffuseIndex != -1) {
                 // R
@@ -786,7 +786,7 @@ class MySceneGraph {
             else
                 return "diffuse component undefined for ID = " + lightId;
 
-            // TODO: Retrieve the specular component
+            //Retrieve the specular component
             var specularIllumination = [];
             if (specularIndex != -1) {
             // R
@@ -1000,8 +1000,6 @@ class MySceneGraph {
         var nodeNames = [];
 
         this.primitives = [];
-
-        //let primitive = {primitiveID,rectX1,rectY1,rectX2,rectY2, triX1, triX2, triX3, triY1,triY2,triY3,triZ1,triZ2,triZ3};
 
         for(var i = 0; i < children.length; i++) {
 
@@ -1294,7 +1292,8 @@ class MySceneGraph {
     this.displayComponent(this.root);
     return null;
 }
-
+ 
+// Places the most recent material on top of the stack
 pushMaterial(mat_id) {
     if(mat_id === "inherit") {
         this.materialStack.push(this.materialStack[this.materialStack.length-1]);
@@ -1304,7 +1303,6 @@ pushMaterial(mat_id) {
         this.auxStack.push(mat_id);
     }
 }
-
 applyMaterialAndTexture() {
 
     if(this.textureStack[this.textureStack.length-1] != "none")
@@ -1328,7 +1326,7 @@ pushTexture(tex_id) {
 popTexture(){
   this.textureStack.pop();
 }
-
+//Retrieves the transformation matrix and applies it
 applyTransformations(componentID) {
     const matrix = this.getTransformationMatrix(componentID);
     this.scene.multMatrix(matrix);
@@ -1339,9 +1337,10 @@ displayComponent(componentID) {
     const current_component = this.components[componentID];
 
     this.scene.pushMatrix();
-
+    //In charge of changing materials once the "m" key is pressed
     let m_movedMaterial = this.scene.materialCounter%current_component.materials.length;
     let current_material_id = current_component.materials[m_movedMaterial];
+    
     this.pushMaterial(current_material_id);
     let current_texture_id = current_component.tex_id;
     this.pushTexture(current_texture_id);
