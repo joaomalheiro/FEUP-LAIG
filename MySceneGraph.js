@@ -1211,6 +1211,10 @@ class MySceneGraph {
                 if(component.tex_id != "none"){
                 component.tex_length_s = this.reader.getString(this.componentInfo[2],'length_s');
                 component.tex_length_t = this.reader.getString(this.componentInfo[2],'length_t');
+                if(component.tex_length_s == null || component.tex_length_t == null){
+                    component.tex_length_s = 1;
+                    component.tex_length_t = 1;
+                }
               }
 
                 var componentChildren = this.componentInfo[3].children;
