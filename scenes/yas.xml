@@ -3,8 +3,23 @@
 
     <views default="camera-perspective-0">
        <perspective id="camera-perspective-0" near="0.1" far="500" angle="45">
-            <from x="10" y="5.0" z="12.0"/>
+            <from x="15" y="7.0" z="17.0"/>
             <to x="0.0" y="1.0" z="0.0"/>
+        </perspective>
+
+        <perspective id="camera-Game" near="0.1" far="30" angle="90">
+            <from x="7" y="4.0" z="6.0"/>
+            <to x="6" y="3.0" z="6.0"/>
+        </perspective>
+
+        <perspective id="camera-Cards" near="0.1" far="500" angle="20">
+            <from x="5.5" y="6.0" z="5.5"/>
+            <to x="4.5" y="3.0" z="5.5"/>
+        </perspective>
+
+        <perspective id="camera-Painting" near="0.1" far="500" angle="45">
+            <from x="7" y="4.0" z="6.0"/>
+            <to x="0.0" y="4.0" z="6.0"/>
         </perspective>
 
         <ortho id="camera-ortho-0" near="0.1" far ="500"
@@ -20,16 +35,48 @@
     </ambient>
 
     <lights>
-        <omni id="omni-light-0" enabled="true">
+        <omni id="omni-light-0" enabled="1">
             <location x="0" y="0" z="0" w="1"/>
             <ambient r="0.5" g="0.5" b="0.5" a="1"/>
             <diffuse r="0" g="0" b="0" a="0"/>
             <specular r="0" g="0" b="0" a="0"/>
         </omni>
 
-        <spot id="spot-light-1" enabled ="f" angle="5" exponent="1">
-            <location x="0" y="0" z="0" w="1" />
-            <target x="-4" y="-4" z="-4" />
+        <omni id="omni-light-1" enabled="1">
+            <location x="6" y="10" z="6" w="1"/>
+            <ambient r="0.5" g="0.5" b="0.5" a="1"/>
+            <diffuse r="0" g="0" b="0" a="0"/>
+            <specular r="0" g="0" b="0" a="0"/>
+        </omni>
+
+
+        <spot id="spot-corner-light-2" enabled ="0" angle="45" exponent="1">
+            <location x="12" y="12" z="0" w="1" />
+            <target x="6" y="0" z="6" />
+            <ambient r="0" g="0" b="0" a="0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1" />
+            <specular r="0" g="0" b="0" a="0" />
+        </spot>
+
+        <spot id="spot-corner-light-3" enabled ="0" angle="45" exponent="1">
+            <location x="0" y="12" z="0" w="1" />
+            <target x="6" y="0" z="6" />
+            <ambient r="0" g="0" b="0" a="0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1" />
+            <specular r="0" g="0" b="0" a="0" />
+        </spot>
+
+        <spot id="spot-corner-light-4" enabled ="0" angle="45" exponent="1">
+            <location x="0" y="12" z="12" w="1" />
+            <target x="6" y="0" z="6" />
+            <ambient r="0" g="0" b="0" a="0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1" />
+            <specular r="0" g="0" b="0" a="0" />
+        </spot>
+
+        <spot id="spot-corner-light-5" enabled ="0" angle="45" exponent="1">
+            <location x="12" y="12" z="12" w="1" />
+            <target x="6" y="0" z="6" />
             <ambient r="0" g="0" b="0" a="0" />
             <diffuse r="0.3" g="0.3" b="0.3" a="1" />
             <specular r="0" g="0" b="0" a="0" />
@@ -71,10 +118,24 @@
         </material>
 
         <material id="material-2" shininess = "10" >
-            <emission r="0" g="0" b="0" a="0" />
+            <emission r="0" g="0" b="0" a="1" />
             <ambient r="0.6" g="0.4" b="0.6" a="1" />
             <diffuse r="0.3" g="0.2" b="0.5" a="1" />
             <specular r="0.1" g="0.225" b="0.3" a="1" />
+        </material>
+
+        <material id="material-3" shininess = "10" >
+            <emission r="0.2" g="0.2" b="0.2" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <diffuse r="0.3" g="0.2" b="0.5" a="1" />
+            <specular r="0.1" g="0.225" b="0.3" a="1" />
+        </material>
+
+        <material id="material-4" shininess = "10" >
+            <emission r="0.8" g="0.1" b="0.2" a="1" />
+            <ambient r="0.8" g="0.1" b="0.2" a="1" />
+            <diffuse r="0.8" g="0.1" b="0.2" a="1" />
+            <specular r="0.8" g="0.1" b="0.2" a="1" />
         </material>
 
         <material id="material-wall" shininess = "10" >
@@ -474,7 +535,7 @@
           </transformation>
 
           <materials>
-            <material id="material-1"/>
+            <material id="inherit"/>
           </materials>
 
           <texture id="tex-floor" length_s="1.0" length_t="1.0"/>
@@ -1008,7 +1069,7 @@
           </transformation>
 
           <materials>
-              <material id="material-1"/>
+              <material id="material-3"/>
           </materials>
 
           <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
@@ -1060,8 +1121,9 @@
           </transformation>
 
           <materials>
-            <material id="material-1"/>
             <material id="material-2"/>
+            <material id="material-1"/>
+            <material id="material-4"/>
           </materials>
 
           <texture id="tex-green" length_s="1.0" length_t="1.0"/>
@@ -1157,8 +1219,8 @@
           </transformation>
 
           <materials>
+            <material id="material-3"/>
             <material id="material-2"/>
-            <material id="material-1"/>
           </materials>
 
           <texture id="inherit" length_s="1" length_t="1"/>
@@ -1178,8 +1240,8 @@
           </transformation>
 
           <materials>
+            <material id="material-3"/>
             <material id="material-2"/>
-            <material id="material-1"/>
           </materials>
 
           <texture id="inherit" length_s="1" length_t="1"/>
@@ -1195,8 +1257,8 @@
           </transformation>
 
           <materials>
+            <material id="material-3"/>
             <material id="material-2"/>
-            <material id="material-1"/>
           </materials>
 
           <texture id="inherit" length_s="1" length_t="1"/>
@@ -1212,8 +1274,8 @@
           </transformation>
 
           <materials>
+            <material id="material-3"/>
             <material id="material-2"/>
-            <material id="material-1"/>
           </materials>
 
           <texture id="inherit" length_s="1" length_t="1"/>
@@ -1229,8 +1291,8 @@
           </transformation>
 
           <materials>
+            <material id="material-3"/>
             <material id="material-2"/>
-            <material id="material-1"/>
           </materials>
 
           <texture id="inherit" length_s="1" length_t="1"/>
@@ -1246,8 +1308,8 @@
           </transformation>
 
           <materials>
+            <material id="material-3"/>
             <material id="material-2"/>
-            <material id="material-1"/>
           </materials>
 
           <texture id="inherit" length_s="1" length_t="1"/>
@@ -1263,8 +1325,8 @@
           </transformation>
 
           <materials>
+            <material id="material-3"/>
             <material id="material-2"/>
-            <material id="material-1"/>
           </materials>
 
           <texture id="inherit" length_s="1" length_t="1"/>
@@ -1279,8 +1341,8 @@
           </transformation>
 
           <materials>
+            <material id="material-3"/>
             <material id="material-2"/>
-            <material id="material-1"/>
           </materials>
 
           <texture id="inherit" length_s="1" length_t="1"/>
@@ -1299,7 +1361,7 @@
 
           <materials>
             <material id="material-2"/>
-            <material id="material-1"/>
+            <material id="material-3"/>
           </materials>
 
           <texture id="tex-painting" length_s="1" length_t="1"/>
