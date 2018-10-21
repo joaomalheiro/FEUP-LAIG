@@ -84,28 +84,28 @@
     </lights>
 
     <textures>
-        <texture id="tex-wall" file="textures/wall.jpg"/>
-        <texture id="tex-floor" file="textures/floor.jpg"/>
-        <texture id="tex-vidral" file="textures/vidral.jpg"/>
-        <texture id="tex-door" file="textures/door.jpg"/>
-        <texture id="tex-green" file="textures/green.jpg"/>
-        <texture id="tex-metalKnob" file="textures/metal-knob.jpg"/>
-        <texture id="tex-exitSign" file="textures/exitSign.jpg"/>
-        <texture id="tex-painting" file="textures/painting1.jpg"/>
-        <texture id="tex-wood" file="textures/wood.jpg"/>
-        <texture id="tex-pokerstars" file="textures/pokerstars.png"/>
-        <texture id="tex-blackLeather" file="textures/leather.jpg"/>
-        <texture id="tex-aceOfSpades" file="textures/aceOfSpades.png"/>
-        <texture id="tex-aceOfClubs" file="textures/aceOfClubs.png"/>
-        <texture id="tex-aceOfDiamonds" file="textures/aceOfDiamonds.png"/>
-        <texture id="tex-aceOfHearts" file="textures/aceOfHearts.png"/>
-        <texture id="tex-9ofSpades" file="textures/9ofSpades.png"/>
-        <texture id="tex-9ofHearts" file="textures/9ofHearts.png"/>
-        <texture id="tex-9ofClubs" file="textures/9ofClubs.png"/>
-        <texture id="tex-8ofClubs" file="textures/8ofClubs.png"/>
-        <texture id="tex-3ofSpades" file="textures/3ofSpades.png"/>
-        <texture id="tex-redWhiteStack" file="textures/redWhiteStack.png"/>
-        <texture id="tex-darkWood" file="textures/dark-wood.jpg"/>
+        <texture id="tex-wall" file="scenes/images/wall.jpg"/>
+        <texture id="tex-floor" file="scenes/images/floor.jpg"/>
+        <texture id="tex-vidral" file="scenes/images/vidral.jpg"/>
+        <texture id="tex-door" file="scenes/images/door.jpg"/>
+        <texture id="tex-green" file="scenes/images/green.jpg"/>
+        <texture id="tex-metalKnob" file="scenes/images/metal-knob.jpg"/>
+        <texture id="tex-exitSign" file="scenes/images/exitSign.jpg"/>
+        <texture id="tex-painting" file="scenes/images/painting1.jpg"/>
+        <texture id="tex-wood" file="scenes/images/wood.jpg"/>
+        <texture id="tex-pokerstars" file="scenes/images/pokerstars.png"/>
+        <texture id="tex-blackLeather" file="scenes/images/leather.jpg"/>
+        <texture id="tex-aceOfSpades" file="scenes/images/aceOfSpades.png"/>
+        <texture id="tex-aceOfClubs" file="scenes/images/aceOfClubs.png"/>
+        <texture id="tex-aceOfDiamonds" file="scenes/images/aceOfDiamonds.png"/>
+        <texture id="tex-aceOfHearts" file="scenes/images/aceOfHearts.png"/>
+        <texture id="tex-9ofSpades" file="scenes/images/9ofSpades.png"/>
+        <texture id="tex-9ofHearts" file="scenes/images/9ofHearts.png"/>
+        <texture id="tex-9ofClubs" file="scenes/images/9ofClubs.png"/>
+        <texture id="tex-8ofClubs" file="scenes/images/8ofClubs.png"/>
+        <texture id="tex-3ofSpades" file="scenes/images/3ofSpades.png"/>
+        <texture id="tex-redWhiteStack" file="scenes/images/redWhiteStack.png"/>
+        <texture id="tex-darkWood" file="scenes/images/dark-wood.jpg"/>
 
     </textures>
 
