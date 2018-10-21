@@ -901,6 +901,7 @@ class MySceneGraph {
               arr.push(this.reader.getFloat(grandChildren[j],'b'));
               arr.push(this.reader.getFloat(grandChildren[j],'a'));
 
+              //section in which the values passed are tested and if they are null or they are not a number, they are fixed
               if(this.parserFloatMinorError(arr[0],"r","materials")!=0)
                 arr[0] = 0.5;
 
@@ -913,6 +914,7 @@ class MySceneGraph {
                if(this.parserFloatMinorError(arr[3],"a","materials")!=0)
                 arr[3] = 0.5 ;
 
+              //switch to see if it is the emission, ambient, diffuse or specular section and save the data accordingly
               switch(j){
                 case 0: mat.emission = arr;
                 break;
@@ -925,12 +927,12 @@ class MySceneGraph {
               }
 
             }
+
+        //checks if there is already a material with the same ID
         if (!this.materials.has(mat.id))
             this.materials.set(mat.id,mat);
           else this.onXMLMinorError("at least two materials with the same id, only the first was parsed and loaded");
-
         }
-
         console.log("Parsed materials");
         return null;
 
@@ -1006,6 +1008,7 @@ class MySceneGraph {
           let prim = {};
           var grandChildren = children[i].children[0];
 
+          //checks if the tag for the primitive is a valid one
           for(var j = 0; j < grandChildren.length; j++){
             if(!(grandChildren[j].nodeName == 'rectangle' || grandChildren[j].nodeName == 'triangle' || grandChildren[j].nodeName == 'cylinder' || grandChildren[j].nodeName == 'sphere' || grandChildren[j].nodeName == 'thorus'))
               this.onXMLMinorError("unable to parse the primitive, not an accepted primitive type");
@@ -1020,6 +1023,7 @@ class MySceneGraph {
                 var y1 = this.reader.getFloat(grandChildren,'y1');
                 var y2 = this.reader.getFloat(grandChildren,'y2');
 
+                //section in which the values passed are tested and if they are null or they are not a number, they are fixed
                 if(this.parserFloatMinorError(x1,"rectangle","primitives")!=0)
                   x1 = 0;
 
@@ -1046,6 +1050,7 @@ class MySceneGraph {
                 var y3 = this.reader.getFloat(grandChildren,'y3');
                 var z3 = this.reader.getFloat(grandChildren,'z3');
 
+                  //section in which the values passed are tested and if they are null or they are not a number, they are fixed
                 if(this.parserFloatMinorError(x1,"triangle","primitives")!=0)
                   x1 = 0;
                 if(this.parserFloatMinorError(x2,"triangle","primitives")!=0)
@@ -1073,6 +1078,7 @@ class MySceneGraph {
                 var slices = this.reader.getFloat(grandChildren,'slices');
                 var stacks = this.reader.getFloat(grandChildren,'stacks');
 
+                //section in which the values passed are tested and if they are null or they are not a number, they are fixed
                 if(this.parserFloatMinorError(radius,"sphere","primitives")!=0)
                   radius = 1;
                 if(this.parserFloatMinorError(stacks,"sphere","primitives")!=0)
@@ -1091,6 +1097,7 @@ class MySceneGraph {
                 var stacks = this.reader.getFloat(grandChildren,'stacks');
                 var slices = this.reader.getFloat(grandChildren,'slices');
 
+                //section in which the values passed are tested and if they are null or they are not a number, they are fixed
                 if(this.parserFloatMinorError(height,"cylinder","primitives")!=0)
                   height = 1;
                 if(this.parserFloatMinorError(base,"cylinder","primitives")!=0)
@@ -1123,11 +1130,8 @@ class MySceneGraph {
                 prim = new MyTorus(this.scene,inner, outer ,slices, loops);
               break;
           }
-
       this.primitives[this.reader.getString(children[i],'id')] = prim;
-
       }
-
     console.log("Parsed primitives");
     return null;
     }
@@ -1257,6 +1261,12 @@ class MySceneGraph {
         console.warn("Warning: " + message);
     }
 
+    /**
+    * Auxiliary function to check if a value is valid or not
+    *@param {float} value to be tested
+    *@param {string} text what the value represents
+    *@param {string} section the main tag this data belongs to
+    */
     parserFloatMinorError(value, text, section) {
        if (!(value != null && !isNaN(value))) {
             this.onXMLMinorError("unable to parse " + text + " of " + section +" section");
@@ -1265,6 +1275,12 @@ class MySceneGraph {
         return 0;
     }
 
+    /**
+    * Auxiliary function to check if a value is valid or not
+    *@param {float} value to be tested
+    *@param {string} text what the value represents
+    *@param {string} section the main tag this data belongs to
+    */
     parserStringMinorError(value, text, section) {
        if (value == null) {
             this.onXMLMinorError("unable to parse " + text + " of " + section +" section");
@@ -1292,7 +1308,7 @@ class MySceneGraph {
     this.displayComponent(this.root);
     return null;
 }
- 
+
 // Places the most recent material on top of the stack
 pushMaterial(mat_id) {
     if(mat_id === "inherit") {
@@ -1340,7 +1356,7 @@ displayComponent(componentID) {
     //In charge of changing materials once the "m" key is pressed
     let m_movedMaterial = this.scene.materialCounter%current_component.materials.length;
     let current_material_id = current_component.materials[m_movedMaterial];
-    
+
     this.pushMaterial(current_material_id);
     let current_texture_id = current_component.tex_id;
     this.pushTexture(current_texture_id);
@@ -1419,11 +1435,15 @@ getTransformationMatrix(componentID){
     return mat;
 
 }
+
+    /**
+    * Function that displays a primitive that belongs to the current_component array of primitives and has the index i
+    * @param {current_component}
+    * @param {float} id of the primitive
+    */
     displayPrimitive(current_component, i){
       if(this.primitives[current_component.primitiveref[i]] instanceof(MyRectangle) || this.primitives[current_component.primitiveref[i]] instanceof(MyTriangle))
-    this.primitives[current_component.primitiveref[i]].set_lengths_texture(current_component.tex_length_s, current_component.tex_length_t);
-
-
+        this.primitives[current_component.primitiveref[i]].set_lengths_texture(current_component.tex_length_s, current_component.tex_length_t);
     this.primitives[current_component.primitiveref[i]].display();
   }
 }
