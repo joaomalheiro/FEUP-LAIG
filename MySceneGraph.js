@@ -1345,7 +1345,6 @@ applyTransformations(componentID) {
 displayComponent(componentID) {
     //console.log(`For material with id ${componentID} the stack is `, this.auxStack);
     const current_component = this.components[componentID];
-
     this.scene.pushMatrix();
     //In charge of changing materials once the "m" key is pressed
     let m_movedMaterial = this.scene.materialCounter%current_component.materials.length;

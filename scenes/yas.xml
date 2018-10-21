@@ -469,7 +469,7 @@
                 <material id="material-1"/>
             </materials>
 
-            <texture id="none" length_s="1.0" length_t="1.0"/>
+            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
 
             <children>
                 <componentref id="walls"/>
@@ -554,7 +554,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="tex-vidral" length_s="1.0" length_t="1.0"/>
+          <texture id="none" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="doorKnob"/>
@@ -619,7 +619,7 @@
                 <material id="material-1"/>
             </materials>
 
-            <texture id="none"/>
+            <texture id="tex-wall"  length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="table"/>
@@ -700,7 +700,7 @@
                 <material id="material-1"/>
             </materials>
 
-            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+            <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
                 <componentref id="card1"/>
@@ -815,7 +815,7 @@
                 <material id="material-1"/>
             </materials>
 
-            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+            <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
                 <componentref id="chair1"/>
@@ -836,7 +836,7 @@
                 <material id="material-1"/>
             </materials>
 
-            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+            <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
                 <componentref id="chair"/>
@@ -853,7 +853,7 @@
                 <material id="material-1"/>
             </materials>
 
-            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+            <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
                 <componentref id="chair"/>
@@ -870,7 +870,7 @@
                 <material id="material-1"/>
             </materials>
 
-            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+            <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
                 <componentref id="chair"/>
@@ -887,7 +887,7 @@
                 <material id="material-1"/>
             </materials>
 
-            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+            <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
                 <componentref id="chair"/>
@@ -904,7 +904,7 @@
                 <material id="material-1"/>
             </materials>
 
-            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+            <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
                 <componentref id="chair"/>
@@ -921,7 +921,7 @@
                 <material id="material-1"/>
             </materials>
 
-            <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+            <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
                 <componentref id="chair"/>
@@ -960,7 +960,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="inherit" length_s="1.0" length_t="1.0"/>
+          <texture id="none" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="leg-chair"/>
@@ -976,7 +976,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="inherit" length_s="1.0" length_t="1.0"/>
+          <texture id="none" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="leg-chair"/>
@@ -992,7 +992,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="inherit" length_s="1.0" length_t="1.0"/>
+          <texture id="none" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="leg-chair"/>
@@ -1008,7 +1008,7 @@
             <material id="material-1"/>
           </materials>
 
-          <texture id="inherit" length_s="1.0" length_t="1.0"/>
+          <texture id="none" length_s="1.0" length_t="1.0"/>
 
           <children>
             <componentref id="leg-chair"/>
@@ -1061,7 +1061,7 @@
           <children>
             <componentref id="unitCube"/>
           </children>
-        </component> -->
+        </component>
 
         <component id = "table">
           <transformation>
@@ -1072,12 +1072,12 @@
               <material id="material-3"/>
           </materials>
 
-          <texture id="tex-wall" length_s="1.0" length_t="1.0"/>
+          <texture id="none" length_s="1.0" length_t="1.0"/>
 
           <children>
                 <componentref id="top"/>
                 <componentref id="legs"/>
-                <componentref id ="armRest"/>
+                <componentref id="armRest"/>
             </children>
         </component>
 
