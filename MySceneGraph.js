@@ -986,7 +986,6 @@ class MySceneGraph {
 
         }
         console.log("Parsed transformations");
-        console.log(this.transformations);
         return null;
 
     }
@@ -1151,12 +1150,10 @@ class MySceneGraph {
             component.id = this.reader.getString(this.children[i],'id');
 
             this.componentInfo = this.children[i].children;
-            console.log(this.componentInfo[0].children);
             if(this.componentInfo.length != 4){
                 this.onXMLError("Component does not have all required attributes");
             } else {
                  if (this.componentInfo[0].children.length > 0){
-                    console.log("DIRECT TRASNFORMATION OF", component.id);
                             var grandChildren = this.componentInfo[0].children;
                             if(grandChildren[0].nodeName == "transformationref"){
                                 component.transformation = this.reader.getString(this.componentInfo[0].children[0],'id');
@@ -1208,8 +1205,6 @@ class MySceneGraph {
 
                 component.tex_id = this.reader.getString(this.componentInfo[2],'id');
 
-                console.log(component.tex_id);
-
                 if(component.tex_id != "none"){
                 component.tex_length_s = this.reader.getString(this.componentInfo[2],'length_s');
                 component.tex_length_t = this.reader.getString(this.componentInfo[2],'length_t');
@@ -1233,8 +1228,7 @@ class MySceneGraph {
                 }
 
                 this.components[component.id] = component;
-                console.log(component);
-
+          
             }
 
         }
