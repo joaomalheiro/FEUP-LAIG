@@ -1,9 +1,3 @@
-/**
- * MyCircle
- * @param gl {WebGLRenderingContext}
- * @constructor
- */
-
 class MyCircle extends CGFobject
 {
 	constructor(scene, slices)
@@ -11,7 +5,7 @@ class MyCircle extends CGFobject
 		super(scene);
 
     	this.slices = slices;
-    	
+
 		this.initBuffers();
 	};
 

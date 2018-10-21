@@ -15,19 +15,20 @@ class MyTorus extends CGFobject{
 
     initBuffers() {
 
+        //sets up the arrays going to be used in the creation of this primitive
         this.vertices = [];
         this.indices = [];
         this.normals = [];
         this.texCoords = [];
 
+        //cycle to iterate through the loops
         for (var nLoop = 0; nLoop <= this.loops; nLoop++) {
 
-            let theta = nLoop * 2 * Math.PI / this.loops;
+            var theta = nLoop * 2 * Math.PI / this.loops;
+            var cTheta = Math.cos(theta);
+            var sTheta = Math.sin(theta);
 
-            let cTheta = Math.cos(theta);
-            let sTheta = Math.sin(theta);
-
-
+        //cycle to iterate through the slices
         for (var slice = 0; slice <= this.slices; slice++) {
 
             var phi = slice * 2 * Math.PI / this.slices;

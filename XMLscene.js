@@ -6,7 +6,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
 class XMLscene extends CGFscene {
     /**
      * @constructor
-     * @param {MyInterface} myinterface 
+     * @param {MyInterface} myinterface
      */
     constructor(myinterface) {
         super();
@@ -41,26 +41,28 @@ class XMLscene extends CGFscene {
      * Initializes the scene cameras.
      */
     initCameras() {
-            
+
+       //initializes the views Map that will countain both the perspective cameras and the ortho ones, based on ID
        this.views = new Map();
-       var i = 0, def;
-      
-       for(let perpective_model of this.graph.perspectives){
-            
-            if(this.graph.defaultViewID == perpective_model.id)
-                def = perpective_model.id;
-            this.views.set(perpective_model.id,new CGFcamera(DEGREE_TO_RAD *perpective_model.angle,perpective_model.near,perpective_model.far,perpective_model.from,perpective_model.to));
-            i++;
+       var def = 0;
+
+       //cycle for the perspective cameras
+       for(let perspective_model of this.graph.perspectives){
+
+            if(this.graph.defaultViewID == perspective_model.id)
+                def = perspective_model.id;
+            this.views.set(perspective_model.id,new CGFcamera(DEGREE_TO_RAD *perspective_model.angle,perspective_model.near,perspective_model.far,perspective_model.from,perspective_model.to));
         }
 
+        //cycle for the ortho cameras
         for(let ortho_model of this.graph.orthos){
-            
+
             if(this.graph.defaultViewID == ortho_model.id)
                 def = perpective_model.id;
             this.views.set(ortho_model.id,new CGFcameraOrtho(ortho_model.left,ortho_model.right,ortho_model.bottom,ortho_model.top,ortho_model.near,ortho_model.far,ortho_model.from,ortho_model.to,[0,1,0]));
-            i++;
         }
 
+        //Setting up the default camera, if there is one that matches the default given
         if (def != null){
             this.camera = this.views.get(def);
             this.interface.setActiveCamera(this.views.get(def));
@@ -68,7 +70,6 @@ class XMLscene extends CGFscene {
             console.log('The default ID for the views did not match any parsed camera of the XML file')
         }
 
-        console.log(this.views);
         console.log('Created Cameras!');
     }
 
@@ -92,15 +93,15 @@ class XMLscene extends CGFscene {
         this.materials["default"].setEmission(0,0,0,0);
         this.materials["default"].setShininess(0);
 
+        //Cycle to iterate the materials info map created in SceneGraph. Creates the material and pushes it into the CGFMaterial array
         for(const [k,v] of this.graph.materials.entries()) {
             this.materials[k] = new CGFappearance(this);
             this.materials[k].setAmbient(v.ambient[0],v.ambient[1],v.ambient[2],v.ambient[3]);
-            this.materials[k].setSpecular(v.specular[0],v.specular[1],v.specular[2],v.specular[3]);                
+            this.materials[k].setSpecular(v.specular[0],v.specular[1],v.specular[2],v.specular[3]);
             this.materials[k].setDiffuse(v.diffuse[0],v.diffuse[1],v.diffuse[2],v.diffuse[3]);
             this.materials[k].setEmission(v.emission[0],v.emission[1],v.emission[2],v.emission[3]);
             this.materials[k].setShininess(v.shininess);
         }
-        
         console.log("Materials created !")
     }
 
@@ -109,12 +110,12 @@ class XMLscene extends CGFscene {
     */
     initTextures() {
 
-        this.textures = [];
-        
+       this.textures = [];
+
+       //Cycle to iterate the texture info map created in SceneGraph. Creates the texture and pushes it into the CGFtexture array
        for(const [k,v] of this.graph.textures.entries()){
-            this.textures[k] = new CGFtexture(this,v.file);        
+            this.textures[k] = new CGFtexture(this,v.file);
         }
-        
         console.log("Textures created !")
     }
     /**
@@ -139,7 +140,7 @@ class XMLscene extends CGFscene {
                     this.lights[i].setDiffuse(light[3][0], light[3][1], light[3][2], light[3][3]);
                     this.lights[i].setSpecular(light[4][0], light[4][1], light[4][2], light[4][3]);
                 }
-                //If it is a spot light 
+                //If it is a spot light
                 else if(light.length == 8){
                     this.lights[i].setPosition(light[3][0], light[3][1], light[3][2], light[3][3]);
                     this.lights[i].setAmbient(light[5][0], light[5][1], light[5][2], light[5][3]);
@@ -165,38 +166,33 @@ class XMLscene extends CGFscene {
     }
 
 
-    /* Handler called when the graph is finally loaded. 
+    /* Handler called when the graph is finally loaded.
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-       //this.camera.near = this.graph.near;
-        //this.camera.far = this.graph.far;
 
-        //TODO: Change reference length according to parsed graph
         this.axis = new CGFaxis(this, this.graph.axisLength);
         this.selectedCamera = this.graph.defaultViewID;
-        // TODO: Change ambient and background details according to parsed graph
-        
+
         this.initMaterials();
         this.initTextures();
         this.initCameras();
 
         this.setGlobalAmbientLight(this.graph.ambientR,this.graph.ambientG,this.graph.ambientB,this.graph.ambientA);
         this.gl.clearColor(this.graph.backgroundR,this.graph.backgroundG,this.graph.backgroundB,this.graph.backgroundA);
-        
+
         this.initLights();
-        // Adds lights group.
 
+        //adds lights group
         this.interface.addLightsGroup(this.graph.lights);
-
+        //adds cameras group to the interface
         this.interface.addCamerasGroup(this.views);
-
-        //this.interface.addCamerasGroup(this.graph.perspective);
-        //this.interface.addCamerasGroup(this.graph.orthos);
 
         this.sceneInited = true;
     }
-    
+    /**
+    * Auxiliary function that sets the camera
+    */
     setCamera(camera) {
         this.camera = camera;
         this.interface.setActiveCamera(camera);
@@ -204,23 +200,12 @@ class XMLscene extends CGFscene {
         console.log(camera);
     }
 
-
-    checkKeys(){
-        /*if (this.interface.isKeyPressed("KeyC")){
-            console.log("C WAS PRESSED!");
-            if(this.selectedCamera == this.views.size()-1)
-                setCamera(this.views.get(this.interface.camerasID[0]));
-            else 
-            console.log(this.selectedCamera);
-        }*/
-    }
-
     /**
      * Displays the scene.
      */
     display() {
         // ---- BEGIN Background, camera and axis setup
-        
+
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -231,14 +216,12 @@ class XMLscene extends CGFscene {
 
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
-        
+
         this.pushMatrix();
 
         if (this.sceneInited) {
             // Draw axis
             this.axis.display();
-
-            this.checkKeys();
 
             var i = 0;
             for (var key in this.lightValues) {
@@ -268,4 +251,3 @@ class XMLscene extends CGFscene {
         // ---- END Background, camera and axis setup
     }
 }
-  
