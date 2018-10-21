@@ -105,7 +105,7 @@
         <texture id="tex-8ofClubs" file="scenes/images/8ofClubs.png"/>
         <texture id="tex-3ofSpades" file="scenes/images/3ofSpades.png"/>
         <texture id="tex-redWhiteStack" file="scenes/images/redWhiteStack.png"/>
-        <texture id="tex-darkWood" file="scenes/images/dark-wood.jpg"/>
+        <texture id="tex-darkWood" file="scenes/images/darkWood.jpg"/>
 
     </textures>
 
