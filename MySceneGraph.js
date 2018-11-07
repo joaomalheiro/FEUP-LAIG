@@ -42,6 +42,8 @@ class MySceneGraph {
         this.materialStack = [];
         this.auxStack = [];
         this.textureStack = [];
+        this.testAnimation = new LinearAnimation(this.scene,0,10,vec3.fromValues(0,0,0),vec3.fromValues(1,1,1));
+
 
         // File reading
         this.reader = new CGFXMLreader();

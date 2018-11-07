@@ -15,8 +15,8 @@ class Animation {
 
 class LinearAnimation extends Animation {
     constructor(scene,id,time,controlPoints){
-        this.controlPoints = controlPoints;
         super(scene,id,time);
+        this.controlPoints = controlPoints;
     }
 
     update(deltaTime) {
