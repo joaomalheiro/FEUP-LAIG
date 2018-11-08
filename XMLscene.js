@@ -187,6 +187,9 @@ class XMLscene extends CGFscene {
         this.interface.addCamerasGroup(this.views);
 
         this.sceneInited = true;
+        
+        //creates the plane object
+        this.plane = new Plane(this, 1, 1);
     }
     /**
     * Auxiliary function that sets the camera
@@ -220,6 +223,7 @@ class XMLscene extends CGFscene {
         if (this.sceneInited) {
             // Draw axis
             this.axis.display();
+            this.plane.display();
 
             var i = 0;
             for (var key in this.lightValues) {
