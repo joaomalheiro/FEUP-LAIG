@@ -42,7 +42,11 @@ class MySceneGraph {
         this.materialStack = [];
         this.auxStack = [];
         this.textureStack = [];
-        this.testAnimation = new LinearAnimation(this.scene,0,10,vec3.fromValues(0,0,0),vec3.fromValues(1,1,1));
+        let controlPoints = [];
+        controlPoints[0] = vec3.fromValues(0,0,0);
+        controlPoints[1] = vec3.fromValues(1,1,1);
+        this.testAnimation = new LinearAnimation(scene,"painting",10,controlPoints);
+        this.previousUpdate = Date.now();
 
 
         // File reading
@@ -1300,6 +1304,7 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
   displayScene() {
+    
     this.pushMaterial("default");
     this.displayComponent(this.root);
     return null;
@@ -1348,6 +1353,14 @@ displayComponent(componentID) {
     //console.log(`For material with id ${componentID} the stack is `, this.auxStack);
     const current_component = this.components[componentID];
     this.scene.pushMatrix();
+
+    //TESTING CODE
+    if(componentID == this.testAnimation.id){
+        this.testAnimation.update(Date.now() - this.previousUpdate);
+        this.previousUpdate = Date.now();
+        this.testAnimation.apply();
+    }
+    //TESTING CODE
     //In charge of changing materials once the "m" key is pressed
     let m_movedMaterial = this.scene.materialCounter%current_component.materials.length;
     let current_material_id = current_component.materials[m_movedMaterial];
