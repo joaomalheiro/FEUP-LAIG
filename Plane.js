@@ -9,12 +9,7 @@ class Plane extends CGFobject{
 		nrDivsU = typeof nrDivsU !== 'undefined' ? nrDivsU : 1;
 		nrDivsV = typeof nrDivsV !== 'undefined' ? nrDivsV : 1;
 
-		this.nrDivsU = nrDivsU;
-		this.nrDivsV = nrDivsV;
-
 		this.createSurface("0", nrDivsU, nrDivsV);
-
-		//this.initBuffers();
 
 	};
 

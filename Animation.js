@@ -39,7 +39,7 @@ class LinearAnimation extends Animation {
             this.currentTime = 0;
         }
         let currentDist = (this.currentTime / this.time) * this.totalDist;
-        console.log(currentDist / this.totalDist * 100);
+        //console.log(currentDist / this.totalDist * 100);
         //Determines the controlPoint where the animation is ahead of
         let controlPoint;
         //console.log(this.vecDists[0]);
@@ -62,10 +62,10 @@ class LinearAnimation extends Animation {
 
         let activeVector = vec3.create();
         activeVector = vec3.subtract(activeVector,this.controlPoints[controlPoint + 1],this.controlPoints[controlPoint]);
-        console.log(distBetweenPoints , this.vecDists[controlPoint]);
+        //console.log(distBetweenPoints , this.vecDists[controlPoint]);
         let distInVec = distBetweenPoints / this.vecDists[controlPoint];
         vec3.multiply(activeVector,activeVector,vec3.fromValues(distInVec,distInVec,distInVec));
-        console.log(activeVector);
+        //console.log(activeVector);
         mat4.translate(mat,mat,activeVector);
         this.matrix = mat;
     }

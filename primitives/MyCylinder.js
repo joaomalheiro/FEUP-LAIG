@@ -23,7 +23,6 @@ class MyCylinder extends CGFobject{
 
   display() {
 
-
     this.baselessCylinder.display();
 
     this.scene.pushMatrix();

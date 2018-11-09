@@ -1015,7 +1015,7 @@ class MySceneGraph {
 
           //checks if the tag for the primitive is a valid one
           for(var j = 0; j < grandChildren.length; j++){
-            if(!(grandChildren[j].nodeName == 'rectangle' || grandChildren[j].nodeName == 'triangle' || grandChildren[j].nodeName == 'cylinder' || grandChildren[j].nodeName == 'sphere' || grandChildren[j].nodeName == 'thorus'))
+            if(!(grandChildren[j].nodeName == 'rectangle' || grandChildren[j].nodeName == 'triangle' || grandChildren[j].nodeName == 'cylinder' || grandChildren[j].nodeName == 'sphere' || grandChildren[j].nodeName == 'thorus' || grandChildren[j].nodeName == 'patch' || grandChildren[j].nodeName == 'plane'))
               this.onXMLMinorError("unable to parse the primitive, not an accepted primitive type");
             }
 
@@ -1134,6 +1134,33 @@ class MySceneGraph {
 
                 prim = new MyTorus(this.scene,inner, outer ,slices, loops);
               break;
+
+              case 'plane':
+                var nPartsU = this.reader.getFloat(grandChildren,'npartsU');
+                var nPartsV = this.reader.getFloat(grandChildren,'npartsV');
+
+                if(this.parserFloatMinorError(nPartsU,"patch","primitives")!=0)
+                  nPartsU = 1;
+                if(this.parserFloatMinorError(nPartsV,"patch","primitives")!=0)
+                  nPartsV = 1;
+
+                prim = new Plane(this.scene,nPartsU,nPartsV);
+              break;
+
+              case 'patch':
+                var nPartsU = this.reader.getFloat(grandChildren,'npartsU');
+                var nPartsV = this.reader.getFloat(grandChildren,'npartsV');
+
+                console.log(grandChildren);
+                //for(var i = 0; i < grandChildren)             
+                if(this.parserFloatMinorError(nPartsU,"patch","primitives")!=0)
+                  nPartsU = 1;
+                if(this.parserFloatMinorError(nPartsV,"patch","primitives")!=0)
+                  nPartsV = 1;
+
+                prim = new Plane(this.scene,nPartsU,nPartsV);
+              break;
+
           }
       this.primitives[this.reader.getString(children[i],'id')] = prim;
       }
