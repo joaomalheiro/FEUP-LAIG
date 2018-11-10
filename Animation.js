@@ -43,7 +43,7 @@ class LinearAnimation extends Animation {
         //Determines the controlPoint where the animation is ahead of
         let controlPoint;
         for(let i = 0; i < this.vecDists.length; i++){
-            if(currentDist < this.vecDists[i]){
+            if(currentDist <= this.vecDists[i]){
                 controlPoint = i;
                 break;
             }
@@ -61,14 +61,26 @@ class LinearAnimation extends Animation {
         //The vector made by the 2 control points where the object is between
         let activeVector = vec3.create();
         activeVector = vec3.subtract(activeVector,this.controlPoints[controlPoint + 1],this.controlPoints[controlPoint]);
-
+        
         let activeVectorSize = this.vecDists[controlPoint];
         if(controlPoint != 0) {
             activeVectorSize = this.vecDists[controlPoint] - this.vecDists[controlPoint - 1];
         }
-        let distInVec = distBetweenPoints / activeVectorSize;
-        vec3.multiply(activeVector,activeVector,vec3.fromValues(distInVec,distInVec,distInVec));
+        let distInActiveVec = distBetweenPoints / activeVectorSize;
+        vec3.multiply(activeVector,activeVector,vec3.fromValues(distInActiveVec,distInActiveVec,distInActiveVec));
         mat4.translate(mat,mat,activeVector);
+
+        let rotationAngle;
+        if(activeVector[0] == 0) {
+            rotationAngle = 0;
+            if(activeVector[2] < 0) {
+                rotationAngle = -180;
+            }
+        } else {
+            rotationAngle = Math.tan(activeVector[2] / activeVector[0]);
+        }
+        console.log(rotationAngle);
+        mat4.rotate(mat,mat,rotationAngle,vec3.fromValues(0,1,0));
         this.matrix = mat;
     }
 }

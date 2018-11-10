@@ -44,8 +44,10 @@ class MySceneGraph {
         this.textureStack = [];
         let controlPoints = [];
         controlPoints[0] = vec3.fromValues(0,0,0);
-        controlPoints[1] = vec3.fromValues(1,1,1);
-        this.testAnimation = new LinearAnimation(scene,"painting",10,controlPoints);
+        controlPoints[1] = vec3.fromValues(6,0,0);
+        controlPoints[2] = vec3.fromValues(0,0,6);
+        controlPoints[3] = vec3.fromValues(8,6,12);
+        this.testAnimation = new LinearAnimation(scene,"room",10,controlPoints);
         this.previousUpdate = Date.now();
 
 
