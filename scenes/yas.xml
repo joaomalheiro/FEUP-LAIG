@@ -458,8 +458,14 @@
         </primitive >
 
         <primitive id="patch">
-          <patch npartsU="1" npartsV="1" />
-                <controlpoint xx="0.0" yy="0.0" zz="0.0" />
+          <patch npartsU="1" npartsV="1" npointsU="3" npointsV="2">
+                <controlpoint xx="1.0" yy="1.0" zz="1.0" />
+                <controlpoint xx="1.1" yy="1.1" zz="1.2" />
+                <controlpoint xx="1.5" yy="1.5" zz="2.0" />
+                <controlpoint xx="1.5" yy="1.9" zz="3.0" />
+                <controlpoint xx="2.0" yy="3.0" zz="5.0" />
+                <controlpoint xx="6.0" yy="6.0" zz="6.0" />
+          </patch>
         </primitive >
 
     </primitives >

@@ -1150,15 +1150,47 @@ class MySceneGraph {
               case 'patch':
                 var nPartsU = this.reader.getFloat(grandChildren,'npartsU');
                 var nPartsV = this.reader.getFloat(grandChildren,'npartsV');
+                var nPointsU = this.reader.getFloat(grandChildren,'npointsU');
+                var nPointsV = this.reader.getFloat(grandChildren,'npointsV');
+                
+                var controlPoints = [];
+                var x,y,z;
+                
+                for(var j = 0; j < grandChildren.children.length; j++){
+                   
+                    x = this.reader.getFloat(grandChildren.children[j],'xx');
+                    y = this.reader.getFloat(grandChildren.children[j],'yy');
+                    z = this.reader.getFloat(grandChildren.children[j],'zz');
 
-                console.log(grandChildren);
-                //for(var i = 0; i < grandChildren)             
+                    if(this.parserFloatMinorError(x,"patch","primitives")!=0)
+                        x = j;
+                    if(this.parserFloatMinorError(y,"patch","primitives")!=0)
+                        y = j;
+                    if(this.parserFloatMinorError(z,"patch","primitives")!=0)
+                        z = j;
+
+                    controlPoints.push([x,y,z]);
+
+                }
+                
+                var degreeU = nPointsU - 1;
+                var degreeV = nPointsV - 1;
+                var controlPointsList = [];
+                
+                for (var a = 0; a <= degreeU; a++) {
+                    var tmp = [];
+                    for (var b = 0; b <= degreeV; b++)
+                        tmp.push(controlPoints.shift());
+                    
+                    controlPointsList.push(tmp);
+                }
+                                        
                 if(this.parserFloatMinorError(nPartsU,"patch","primitives")!=0)
                   nPartsU = 1;
                 if(this.parserFloatMinorError(nPartsV,"patch","primitives")!=0)
                   nPartsV = 1;
 
-                prim = new Plane(this.scene,nPartsU,nPartsV);
+                prim = new Patch(this.scene,nPartsU,nPartsV, degreeU, degreeV,controlPointsList);
               break;
 
           }
