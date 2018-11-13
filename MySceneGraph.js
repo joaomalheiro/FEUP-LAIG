@@ -42,12 +42,14 @@ class MySceneGraph {
         this.materialStack = [];
         this.auxStack = [];
         this.textureStack = [];
-        let controlPoints = [];
+        /*let controlPoints = [];
         controlPoints[0] = vec3.fromValues(0,0,0);
         controlPoints[1] = vec3.fromValues(6,0,0);
         controlPoints[2] = vec3.fromValues(0,0,6);
         controlPoints[3] = vec3.fromValues(8,6,12);
-        this.testAnimation = new LinearAnimation(scene,"room",10,controlPoints);
+        this.testAnimation = new LinearAnimation(scene,"room",10,controlPoints);*/
+        let center = vec3.fromValues(5,0,0);
+        this.testAnimation = new CircularAnimation(scene,"room",10,center,5,30,60);
         this.previousUpdate = Date.now();
 
 
