@@ -1143,9 +1143,9 @@ class MySceneGraph {
                 var nPartsU = this.reader.getFloat(grandChildren,'npartsU');
                 var nPartsV = this.reader.getFloat(grandChildren,'npartsV');
 
-                if(this.parserFloatMinorError(nPartsU,"patch","primitives")!=0)
+                if(this.parserFloatMinorError(nPartsU,"plane","primitives")!=0)
                   nPartsU = 1;
-                if(this.parserFloatMinorError(nPartsV,"patch","primitives")!=0)
+                if(this.parserFloatMinorError(nPartsV,"plane","primitives")!=0)
                   nPartsV = 1;
 
                 prim = new Plane(this.scene,nPartsU,nPartsV);
@@ -1173,10 +1173,10 @@ class MySceneGraph {
                     if(this.parserFloatMinorError(z,"patch","primitives")!=0)
                         z = j;
 
-                    controlPoints.push([x,y,z]);
+                    controlPoints.push([x,y,z,1.0]);
 
                 }
-                
+                      
                 var degreeU = nPointsU - 1;
                 var degreeV = nPointsV - 1;
                 var controlPointsList = [];
@@ -1195,6 +1195,16 @@ class MySceneGraph {
                   nPartsV = 1;
 
                 prim = new Patch(this.scene,nPartsU,nPartsV, degreeU, degreeV,controlPointsList);
+              break;
+
+              case 'cylinder2':
+                 var base = this.reader.getFloat(grandChildren,'base');
+                 var top = this.reader.getFloat(grandChildren, 'top');
+                 var height = this.reader.getFloat(grandChildren, 'height');
+                 var slices = this.reader.getFloat(grandChildren, 'slices');
+                 var stacks = this.reader.getFloat(grandChildren, 'stacks');
+
+                 prim = new Cylinder2(this.scene, height, base, top, stacks, slices);
               break;
 
           }
@@ -1416,13 +1426,14 @@ displayComponent(componentID) {
     //console.log(`For material with id ${componentID} the stack is `, this.auxStack);
     const current_component = this.components[componentID];
     this.scene.pushMatrix();
-
+    /*
     //TESTING CODE
     if(componentID == this.testAnimation.id){
         this.testAnimation.update(Date.now() - this.previousUpdate);
         this.previousUpdate = Date.now();
         this.testAnimation.apply();
     }
+    */
     //TESTING CODE
     //In charge of changing materials once the "m" key is pressed
     let m_movedMaterial = this.scene.materialCounter%current_component.materials.length;

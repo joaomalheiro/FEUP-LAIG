@@ -8,7 +8,8 @@ class Patch extends CGFobject{
 		// nrDivs = 1 if not provided
 		nrDivsU = typeof nrDivsU !== 'undefined' ? nrDivsU : 1;
 		nrDivsV = typeof nrDivsV !== 'undefined' ? nrDivsV : 1;
-
+		
+		console.log(controlPoints);
 		this.controlPoints = controlPoints;
 		this.degreeU = degreeU;
 		this.degreeV = degreeV;
@@ -20,10 +21,17 @@ class Patch extends CGFobject{
 	};
 
 	createSurface() {
-    	
+    	console.log(this.controlPoints);
+    	console.log(this.degreeU);
+    	console.log(this.degreeV);
+    	console.log(this.nrDivsU);
+    	console.log(this.nrDivsV);
+
         var nurbsSurface = new CGFnurbsSurface(this.degreeU,this.degreeV, this.controlPoints);
         
-        this.obj = new CGFnurbsObject(this.scene, this.nrDivsU, this.nrDivsV, nurbsSurface ); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)
+        this.obj = new CGFnurbsObject(this.scene, this.nrDivsU, this.nrDivsV, nurbsSurface );
+
+        console.log(this.obj); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)
 	}
 
 	display() {
