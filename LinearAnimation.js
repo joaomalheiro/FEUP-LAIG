@@ -17,6 +17,7 @@ class LinearAnimation extends Animation {
         this.currentTime += deltaTime;
         if(this.currentTime > this.time) {
             this.currentTime = 0;
+            this.done = true;
         }
         //How much distance the animation has travelled
         let currentDist = (this.currentTime / this.time) * this.totalDist;

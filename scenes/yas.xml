@@ -43,6 +43,17 @@
 
     </transformations>
 
+    <animations>
+        <linear id="linearAnim-1" span="10">
+            <controlpoint xx = "0" yy = "0" zz = "0" />
+            <controlpoint xx = "6" yy = "0" zz = "0" />
+            <controlpoint xx = "0" yy = "0" zz = "6" />
+            <controlpoint xx = "8" yy = "6" zz = "12" />
+        </linear>
+
+        <circular id="circularAnim-1" span="10" center= "5 0 0" radius="5" startang="30" rotang="60"/>
+
+    </animations>
 
     <primitives>
         <primitive id="triangle">
@@ -103,6 +114,11 @@
             <children>
                 <primitiveref id="cylinder2"/>
             </children>
+            <animations>
+                <animationref id="circularAnim-1"/>
+                <animationref id="linearAnim-1"/>
+            </animations>
+
         </component>
 
     </components>
