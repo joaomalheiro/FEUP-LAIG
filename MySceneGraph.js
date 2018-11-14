@@ -8,8 +8,9 @@ var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
-var PRIMITIVES_INDEX = 7;
-var COMPONENTS_INDEX = 8;
+var ANIMATION_INDEX = 7;
+var PRIMITIVES_INDEX = 8;
+var COMPONENTS_INDEX = 9;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -48,8 +49,8 @@ class MySceneGraph {
         controlPoints[2] = vec3.fromValues(0,0,6);
         controlPoints[3] = vec3.fromValues(8,6,12);
         this.testAnimation = new LinearAnimation(scene,"room",10,controlPoints);*/
-        let center = vec3.fromValues(5,0,0);
-        this.testAnimation = new CircularAnimation(scene,"room",10,center,5,30,60);
+        /*let center = vec3.fromValues(5,0,0);
+        this.testAnimation = new CircularAnimation(scene,"room",10,center,5,30,60);*/
         this.previousUpdate = Date.now();
 
 
@@ -193,6 +194,19 @@ class MySceneGraph {
             if ((error = this.parseTransformations(nodes[index])) != null)
                return error;
         }
+
+        // <ANIMATIONS>
+        if ((index = nodeNames.indexOf("animations")) == -1)
+            return "tag <animations> missing";
+        else {
+            if (index != ANIMATION_INDEX)
+                this.onXMLMinorError("tag <animations> out of order");
+
+            //Parse ANIMATIONS block
+            if ((error = this.parseAnimations(nodes[index])) != null)
+                return error;
+        }
+
 
         // <PRIMITIVES>
         if ((index = nodeNames.indexOf("primitives")) == -1)
@@ -1000,6 +1014,63 @@ class MySceneGraph {
 
     }
 
+      /**
+     * Parses the <Animations> node.
+     * @param {animations block element} animationsNode
+     */
+    parseAnimations(animationsNode) {
+        var children = animationsNode.children;
+        this.animations = [];
+
+        for(var i = 0; i < children.length; i++){
+
+            var grandChildren = children[i].children;
+
+            let id = this.reader.getString(children[i],'id');
+            let span = this.reader.getFloat(children[i],'span');
+            let controlPoints = [];
+
+            if(children[i].nodeName == "linear"){
+                for(let j = 0; j < grandChildren.length ; j++) {
+                    if(grandChildren[j].nodeName == "controlpoint"){
+                      let x = this.reader.getFloat(grandChildren[j],'xx');
+                      let y = this.reader.getFloat(grandChildren[j],'yy');
+                      let z = this.reader.getFloat(grandChildren[j],'zz');
+                      controlPoints.push(vec3.fromValues(x,y,z));
+                    }
+                    else
+                          this.onXMLMinorError("Not a valid transformation tag");
+      
+                  }
+                  if(controlPoints.length < 2){
+                      while(controlPoints.length < 2) {
+                          controlPoints.push(vec3.fromValues(0,0,0));
+                      }
+                      this.onXMLMinorError("Linear animation must have at least 2 control points (Assuming (0,0,0) on missing points)");
+                  }
+
+                if (this.animations[id] == null)
+                    this.animations[id] = new LinearAnimation(this.scene,id,span,controlPoints);
+                else this.onXMLMinorError("at least two animations with the same id, only the first was parsed and loaded");
+                } 
+                else if(children[i].nodeName == "circular"){
+                    let center = this.reader.getVector3(children[i],'center');
+                    let radius = this.reader.getFloat(children[i],'radius');
+                    let startang = this.reader.getFloat(children[i],'startang');
+                    let rotang = this.reader.getFloat(children[i],'rotang');
+
+                    if (this.animations[id] == null)
+                        this.animations[id] = new CircularAnimation(this.scene,id,span,center,radius,startang,rotang);
+                    else this.onXMLMinorError("at least two animations with the same id, only the first was parsed and loaded");
+                }
+
+        }
+        console.log(this.animations);
+        console.log("Parsed Animations");
+        return null;
+
+    }
+
      /**
      * Parses the <primitives> block.
      * @param {primitives block element} nodesNode
@@ -1214,12 +1285,12 @@ class MySceneGraph {
         this.transfCounter = 0;
 
         for(var i = 0; i < this.children.length; i++){
-            let component = {id: "", transformation: "", materials:[] ,tex_id:"",tex_length_s:0,tex_length_t:0,componentref:[],primitiveref:[]};
+            let component = {id: "", transformation: "", materials:[] ,tex_id:"",tex_length_s:0,tex_length_t:0,componentref:[],primitiveref:[],animations:[]};
 
             component.id = this.reader.getString(this.children[i],'id');
 
             this.componentInfo = this.children[i].children;
-            if(this.componentInfo.length != 4){
+            if(this.componentInfo.length < 4){
                 this.onXMLError("Component does not have all required attributes");
             } else {
                  if (this.componentInfo[0].children.length > 0){
@@ -1297,13 +1368,22 @@ class MySceneGraph {
                 }
 
                 this.components[component.id] = component;
+
+                if(this.componentInfo[4] != undefined){
+                    let componentAnimations = this.componentInfo[4].children;
+                    for(let k = 0; k < componentAnimations.length; k++)
+                    if(componentAnimations[k].nodeName == "animationref"){
+                        let animationId = this.reader.getString(componentAnimations[k],'id');
+                        component.animations.push(this.animations[animationId]);
+                    }
+                }
           
             }
 
         }
 
 
-
+        console.log(this.components);
         this.log("Parsed components");
         return null;
     }
@@ -1411,19 +1491,19 @@ applyTransformations(componentID) {
     const matrix = this.getTransformationMatrix(componentID);
     this.scene.multMatrix(matrix);
 }
-
+applyAnimations(componentID) {
+    //TODO: MULTIPLE ANIMATIONS
+    if(this.components[componentID].animations.length > 0){
+        this.components[componentID].animations[0].update(Date.now() - this.previousUpdate);
+        this.previousUpdate = Date.now();
+        this.components[componentID].animations[0].apply();
+    }
+}
 displayComponent(componentID) {
     //console.log(`For material with id ${componentID} the stack is `, this.auxStack);
     const current_component = this.components[componentID];
     this.scene.pushMatrix();
 
-    //TESTING CODE
-    if(componentID == this.testAnimation.id){
-        this.testAnimation.update(Date.now() - this.previousUpdate);
-        this.previousUpdate = Date.now();
-        this.testAnimation.apply();
-    }
-    //TESTING CODE
     //In charge of changing materials once the "m" key is pressed
     let m_movedMaterial = this.scene.materialCounter%current_component.materials.length;
     let current_material_id = current_component.materials[m_movedMaterial];
@@ -1436,6 +1516,7 @@ displayComponent(componentID) {
     this.applyMaterialAndTexture();
     this.applyTransformations(componentID);
 
+    this.applyAnimations(componentID);
     for(let i = 0; i < current_component.primitiveref.length; i++) {
         this.displayPrimitive(current_component,i);
     }
