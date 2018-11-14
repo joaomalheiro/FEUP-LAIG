@@ -12,6 +12,7 @@ class CircularAnimation extends Animation {
     this.currentTime += deltaTime;
     if(this.currentTime > this.time) {
         this.currentTime = 0;
+        this.done = true;
     }
     //Translating the scene to the center point
     let mat = mat4.create();

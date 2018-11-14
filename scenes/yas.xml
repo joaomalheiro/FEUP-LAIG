@@ -108,6 +108,7 @@
                  <primitiveref id="cylinder"/>
             </children>
             <animations>
+                <animationref id="circularAnim-1"/>
                 <animationref id="linearAnim-1"/>
             </animations>
 

@@ -1492,11 +1492,15 @@ applyTransformations(componentID) {
     this.scene.multMatrix(matrix);
 }
 applyAnimations(componentID) {
-    //TODO: MULTIPLE ANIMATIONS
-    if(this.components[componentID].animations.length > 0){
-        this.components[componentID].animations[0].update(Date.now() - this.previousUpdate);
-        this.previousUpdate = Date.now();
-        this.components[componentID].animations[0].apply();
+    //TODO: MULTIPLE
+    for(let i = 0; i < this.components[componentID].animations.length; i++){
+        if(!this.components[componentID].animations[i].done)
+        {    
+            this.components[componentID].animations[i].update(Date.now() - this.previousUpdate);
+            this.previousUpdate = Date.now();
+            this.components[componentID].animations[i].apply();
+            break;
+        }
     }
 }
 displayComponent(componentID) {
