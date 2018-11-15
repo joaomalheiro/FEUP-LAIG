@@ -1065,7 +1065,6 @@ class MySceneGraph {
                 }
 
         }
-        console.log(this.animations);
         console.log("Parsed Animations");
         return null;
 
@@ -1244,7 +1243,7 @@ class MySceneGraph {
                     if(this.parserFloatMinorError(z,"patch","primitives")!=0)
                         z = j;
 
-                    controlPoints.push([x,y,z]);
+                    controlPoints.push([x,y,z,1.0]);
 
                 }
                 
@@ -1267,6 +1266,16 @@ class MySceneGraph {
 
                 prim = new Patch(this.scene,nPartsU,nPartsV, degreeU, degreeV,controlPointsList);
               break;
+
+                case 'cylinder2':
+                 var base = this.reader.getFloat(grandChildren,'base');
+                 var top = this.reader.getFloat(grandChildren, 'top');
+                 var height = this.reader.getFloat(grandChildren, 'height');
+                 var slices = this.reader.getFloat(grandChildren, 'slices');
+                 var stacks = this.reader.getFloat(grandChildren, 'stacks');
+                 prim = new Cylinder2(this.scene, height, base, top, stacks, slices);
+              break;
+
 
           }
       this.primitives[this.reader.getString(children[i],'id')] = prim;
@@ -1600,6 +1609,7 @@ getTransformationMatrix(componentID){
     displayPrimitive(current_component, i){
       if(this.primitives[current_component.primitiveref[i]] instanceof(MyRectangle) || this.primitives[current_component.primitiveref[i]] instanceof(MyTriangle))
         this.primitives[current_component.primitiveref[i]].set_lengths_texture(current_component.tex_length_s, current_component.tex_length_t);
+    console.log(this.primitives[current_component.primitiveref[i]]);
     this.primitives[current_component.primitiveref[i]].display();
   }
 }

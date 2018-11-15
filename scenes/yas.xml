@@ -114,11 +114,13 @@
             <children>
                 <primitiveref id="cylinder2"/>
             </children>
+            <!--
             <animations>
                 <animationref id="circularAnim-1"/>
                 <animationref id="linearAnim-1"/>
             </animations>
-
+            -->
+h
         </component>
 
     </components>
