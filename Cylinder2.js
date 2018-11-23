@@ -47,17 +47,9 @@ class Cylinder2 extends CGFobject{
     }
 
     createSurface() {
-    	console.log(this.controlPointsList);
-    	console.log(this.degreeU);
-    	console.log(this.degreeV);
-    	console.log(this.nrDivsU);
-    	console.log(this.nrDivsV);
-
         var nurbsSurface = new CGFnurbsSurface(this.degreeU,this.degreeV, this.controlPointsList);
         
         this.obj = new CGFnurbsObject(this.scene, this.nrDivsU, this.nrDivsV, nurbsSurface ); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)
-	
-        console.log(this.obj);
 	}
 
 	display() {

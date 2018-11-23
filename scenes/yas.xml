@@ -97,6 +97,14 @@
           <cylinder2 base="1.5" top="1.5" height="3.0" slices="50" stacks="50" />
         </primitive >
 
+        <primitive id="mountains">
+          <terrain idtexture="scenes/images/mountainsColor.jpg" idheightmap="scenes/images/mountainsHeightMap.jpg" parts="30" heightscale="2" />
+        </primitive >
+
+        <primitive id="waves">
+          <water idtexture="scenes/images/waterColor.jpg" idwavemap="scenes/images/waterWavesMap.jpg" parts="30" heightscale="1" texscale="1" />
+        </primitive >
+
     </primitives >
 
     <components>
@@ -112,7 +120,7 @@
             <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
-                <primitiveref id="cylinder2"/>
+                <primitiveref id="waves"/>
             </children>
             <!--
             <animations>

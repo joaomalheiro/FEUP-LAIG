@@ -207,7 +207,6 @@ class MySceneGraph {
                 return error;
         }
 
-
         // <PRIMITIVES>
         if ((index = nodeNames.indexOf("primitives")) == -1)
             return "tag <primitives> missing";
@@ -1276,6 +1275,26 @@ class MySceneGraph {
                  prim = new Cylinder2(this.scene, height, base, top, stacks, slices);
               break;
 
+              case 'terrain':
+                 var idtexture = this.reader.getString(grandChildren,'idtexture');
+                 var idheightmap = this.reader.getString(grandChildren,'idheightmap');
+                 var parts = this.reader.getFloat(grandChildren, 'parts');
+                 var heightscale = this.reader.getFloat(grandChildren, 'heightscale');
+                 
+                 prim = new MyTerrain(this.scene, idtexture, idheightmap, parts, heightscale);
+              break;
+
+              case 'water':
+                 var idtexture = this.reader.getString(grandChildren,'idtexture');
+                 var idheightmap = this.reader.getString(grandChildren,'idwavemap');
+                 var parts = this.reader.getFloat(grandChildren, 'parts');
+                 var heightscale = this.reader.getFloat(grandChildren, 'heightscale');
+                 var texscale = this.reader.getFloat(grandChildren, 'texscale');
+                 
+                 prim = new MyWater(this.scene, idtexture, idheightmap, parts, heightscale, texscale);
+              break;
+
+
 
           }
       this.primitives[this.reader.getString(children[i],'id')] = prim;
@@ -1390,9 +1409,7 @@ class MySceneGraph {
             }
 
         }
-
-
-        console.log(this.components);
+        
         this.log("Parsed components");
         return null;
     }
@@ -1609,7 +1626,6 @@ getTransformationMatrix(componentID){
     displayPrimitive(current_component, i){
       if(this.primitives[current_component.primitiveref[i]] instanceof(MyRectangle) || this.primitives[current_component.primitiveref[i]] instanceof(MyTriangle))
         this.primitives[current_component.primitiveref[i]].set_lengths_texture(current_component.tex_length_s, current_component.tex_length_t);
-    console.log(this.primitives[current_component.primitiveref[i]]);
     this.primitives[current_component.primitiveref[i]].display();
   }
 }
