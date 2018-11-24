@@ -120,7 +120,7 @@
             <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
-                <primitiveref id="waves"/>
+                <primitiveref id="cylinder2"/>
             </children>
             <!--
             <animations>

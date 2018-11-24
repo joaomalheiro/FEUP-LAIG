@@ -53,7 +53,7 @@ class MySceneGraph {
         this.testAnimation = new CircularAnimation(scene,"room",10,center,5,30,60);*/
         this.previousUpdate = Date.now();
 
-
+        this.scene.movingShader = [];
         // File reading
         this.reader = new CGFXMLreader();
 
@@ -83,7 +83,7 @@ class MySceneGraph {
         }
 
         this.loadedOk = true;
-
+        
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
         this.scene.onGraphLoaded();
     }
@@ -1292,9 +1292,9 @@ class MySceneGraph {
                  var texscale = this.reader.getFloat(grandChildren, 'texscale');
                  
                  prim = new MyWater(this.scene, idtexture, idheightmap, parts, heightscale, texscale);
+                 
+                 this.scene.movingShader.push(prim);
               break;
-
-
 
           }
       this.primitives[this.reader.getString(children[i],'id')] = prim;
@@ -1529,6 +1529,7 @@ applyAnimations(componentID) {
         }
     }
 }
+
 displayComponent(componentID) {
     //console.log(`For material with id ${componentID} the stack is `, this.auxStack);
     const current_component = this.components[componentID];
@@ -1624,8 +1625,9 @@ getTransformationMatrix(componentID){
     * @param {float} id of the primitive
     */
     displayPrimitive(current_component, i){
-      if(this.primitives[current_component.primitiveref[i]] instanceof(MyRectangle) || this.primitives[current_component.primitiveref[i]] instanceof(MyTriangle))
+      if(this.primitives[current_component.primitiveref[i]] instanceof(MyRectangle) || this.primitives[current_component.primitiveref[i]] instanceof(MyTriangle)){
         this.primitives[current_component.primitiveref[i]].set_lengths_texture(current_component.tex_length_s, current_component.tex_length_t);
+      }
     this.primitives[current_component.primitiveref[i]].display();
   }
 }

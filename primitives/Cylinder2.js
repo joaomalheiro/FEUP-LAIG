@@ -18,11 +18,11 @@ class Cylinder2 extends CGFobject{
     
     createControlPoints() {
 
-        let xBottom = 2 * this.baseRadius;
-        let xTop = 2 * this.topRadius;
+        let xBottom = this.baseRadius;
+        let xTop = this.topRadius;
         let z = this.height;
-        let yBottom = 2/3 * xBottom;
-        let yTop = 2/3 * xTop;
+        let yBottom = 2* 2/3 * xBottom;
+        let yTop = 2* 2/3 * xTop;
 
         var controlPoints = [];
 
@@ -30,10 +30,10 @@ class Cylinder2 extends CGFobject{
         controlPoints.push([xTop,0,z,1.0]);
         controlPoints.push([xBottom,yBottom,0,1.0]);
         controlPoints.push([xTop,yTop,z,1.0]);
-        controlPoints.push([0,yBottom,0,1.0]);
-        controlPoints.push([0,yTop,z,1.0]);
-        controlPoints.push([0,0,0,1.0]);
-        controlPoints.push([0,0,z,1.0]);
+        controlPoints.push([-xBottom,yBottom,0,1.0]);
+        controlPoints.push([-xTop,yTop,z,1.0]);
+        controlPoints.push([-xBottom,0,0,1.0]);
+        controlPoints.push([-xTop,0,z,1.0]);
         
         this.controlPointsList = [];
                 
@@ -56,7 +56,6 @@ class Cylinder2 extends CGFobject{
 		this.obj.display();
 
 		this.scene.pushMatrix();
-		this.scene.translate(this.baseRadius*2,0,0)
 		this.scene.rotate(Math.PI,0,0,1);
 		this.obj.display();
 		this.scene.popMatrix();

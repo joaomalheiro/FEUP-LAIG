@@ -1,14 +1,14 @@
-class MyWater extends Plane {
+class MyTerrain extends Plane {
 
-    constructor(scene,textureN, textureBandW, parts, heightScale, texScale){
+    constructor(scene,textureN, textureBandW, parts, heightScale){
         super(scene, parts, parts);
 
         this.textureN = new CGFtexture(scene,textureN);
         this.textureBandW = new CGFtexture(scene,textureBandW);
 
-        this.shader = new CGFshader(scene.gl, 'MyShader.vert', 'MyShader.frag');
+        this.shader = new CGFshader(scene.gl, 'shaders/MyTerrain.vert', 'shaders/MyTerrain.frag');
 
-        this.shader.setUniformsValues({uSampler2:1, heightScale: heightScale, texScale:texScale})
+        this.shader.setUniformsValues({uSampler2:1, heightScale: heightScale})
     }
 
     display() {

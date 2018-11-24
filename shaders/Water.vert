@@ -1,3 +1,5 @@
+#ifdef GL_ES
+precision highp float;
 #endif
 
 attribute vec3 aVertexPosition;
@@ -19,7 +21,7 @@ varying vec3 offset;
 void main() {
 
     vTextureCoord = aTextureCoord;
-    vec4 heightMapC = texture2D(uSampler, aTextureCoord); 
+    vec4 heightMapC = texture2D(uSampler, aTextureCoord + timeFactor); 
     float height = heightScale* (heightMapC.r + heightMapC.g + heightMapC.b)/3.0; 
     offset = aVertexNormal*height*0.1;
        

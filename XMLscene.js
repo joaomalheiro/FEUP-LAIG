@@ -187,6 +187,8 @@ class XMLscene extends CGFscene {
         this.interface.addCamerasGroup(this.views);
 
         this.sceneInited = true;
+
+        this.setUpdatePeriod(100);
     }
     /**
     * Auxiliary function that sets the camera
@@ -196,6 +198,16 @@ class XMLscene extends CGFscene {
         this.interface.setActiveCamera(camera);
         console.log('Camera has changed to');
         console.log(camera);
+    }
+    /**
+    * Auxiliary function that sets up the movement of the waves
+    */
+    update(currTime){
+
+        for(let i = 0; i < this.movingShader.length; i++){
+            if (this.movingShader[i] instanceof(MyWater))
+                this.movingShader[i].update(currTime);
+        }
     }
 
     /**

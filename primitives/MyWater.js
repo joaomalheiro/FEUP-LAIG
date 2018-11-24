@@ -1,14 +1,15 @@
-class MyTerrain extends Plane {
+class MyWater extends Plane {
 
-    constructor(scene,textureN, textureBandW, parts, heightScale){
+    constructor(scene,textureN, textureBandW, parts, heightScale, texScale){
         super(scene, parts, parts);
 
+        this.parts = parts;
         this.textureN = new CGFtexture(scene,textureN);
         this.textureBandW = new CGFtexture(scene,textureBandW);
 
-        this.shader = new CGFshader(scene.gl, 'MyShader.vert', 'MyShader.frag');
+        this.shader = new CGFshader(scene.gl, 'shaders/Water.vert', 'shaders/Water.frag');
 
-        this.shader.setUniformsValues({uSampler2:1, heightScale: heightScale})
+        this.shader.setUniformsValues({uSampler2:1, heightScale: heightScale, texScale:texScale})
     }
 
     display() {
@@ -25,5 +26,11 @@ class MyTerrain extends Plane {
         this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
 
+    }
+
+    update(currTime){
+        var time = ((currTime * 3.0) % 3141 * 0.002)+1.0*0.5;
+        console.log(time);
+        this.shader.setUniformsValues({timeFactor:time});
     }
 }
