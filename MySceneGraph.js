@@ -1313,7 +1313,7 @@ class MySceneGraph {
         this.transfCounter = 0;
 
         for(var i = 0; i < this.children.length; i++){
-            let component = {id: "", transformation: "", materials:[] ,tex_id:"",tex_length_s:0,tex_length_t:0,componentref:[],primitiveref:[],animations:[]};
+            let component = {id: "", transformation: [], materials:[] ,tex_id:"",tex_length_s:0,tex_length_t:0,componentref:[],primitiveref:[],animations:[]};
 
             component.id = this.reader.getString(this.children[i],'id');
 
@@ -1321,19 +1321,20 @@ class MySceneGraph {
             if(this.componentInfo.length < 4){
                 this.onXMLError("Component does not have all required attributes");
             } else {
-                 if (this.componentInfo[0].children.length > 0){
+                 for (let j=0; j < this.componentInfo[0].children.length;j++){
+
                             var grandChildren = this.componentInfo[0].children;
-                            if(grandChildren[0].nodeName == "transformationref"){
-                                component.transformation = this.reader.getString(this.componentInfo[0].children[0],'id');
+                            if(grandChildren[j].nodeName == "transformationref"){
+                                component.transformation.push(this.reader.getString(this.componentInfo[0].children[j],'id'));
                             } else {
 
                             let transfor = [];
 
                             let id = "default" + this.transfCounter;
                             this.transfCounter++;
-                            component.transformation = id;
+                            component.transformation.push(id);
 
-                            for(var j = 0; j < grandChildren.length ; j++) {
+                
 
                               var arr = [];
                               if(grandChildren[j].nodeName == "translate"){
@@ -1358,7 +1359,7 @@ class MySceneGraph {
                               } else
                                     this.onXMLMinorError("Not a valid transformation tag");
 
-                            }
+                            
 
                         if (this.transformations[id] == null)
                           this.transformations[id] = transfor;
@@ -1518,12 +1519,11 @@ applyTransformations(componentID) {
     this.scene.multMatrix(matrix);
 }
 applyAnimations(componentID) {
-    //TODO: MULTIPLE
     for(let i = 0; i < this.components[componentID].animations.length; i++){
-        if(!this.components[componentID].animations[i].done)
+        if(!this.components[componentID].animations[i].done || i == this.components[componentID].animations.length - 1)
         {    
-            this.components[componentID].animations[i].update(Date.now() - this.previousUpdate);
-            this.previousUpdate = Date.now();
+            console.log("Animating ",componentID,"Animation ",i);
+            this.components[componentID].animations[i].update(Date.now());
             this.components[componentID].animations[i].apply();
             break;
         }
@@ -1565,8 +1565,8 @@ displayComponent(componentID) {
 
 getTransformationMatrix(componentID){
     var mat = mat4.create();
-
-    var transf = this.components[componentID].transformation;
+    for(let i = 0;i<this.components[componentID].transformation.length;i++){
+        var transf = this.components[componentID].transformation[i];
     var transfor = this.transformations[transf];
     if(transfor != null){
         for(let j = 0; j < transfor.length; j++ ){
@@ -1615,6 +1615,9 @@ getTransformationMatrix(componentID){
 
 
     }
+
+    }
+    
     return mat;
 
 }
