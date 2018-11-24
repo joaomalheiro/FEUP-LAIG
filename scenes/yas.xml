@@ -502,6 +502,10 @@
 
         <circular id="deckRightLeft" span="2" center="6.5 0.5 5" radius="8"
             startang="215" rotang="-65" />
+        
+        <circular id="deckbackToCenter" span="1" center="6.5 0.5 5" radius="8"
+            startang="215" rotang="-35" />
+
     </animations>
 
     <primitives>
@@ -783,6 +787,14 @@
               <rotate axis="x" angle="90"/>
             </transformation>
 
+            <animations>
+                <animationref id="deckLeftRight"/>
+                <animationref id="deckRightLeft"/>
+                <animationref id="deckLeftRight2"/>
+                <animationref id="deckbackToCenter"/>
+                
+            </animations>
+        
             <materials>
                 <material id="inherit"/>
             </materials>
@@ -793,11 +805,7 @@
                 <componentref id="unitCube"/>
             </children>
 
-            <animations>
-                <animationref id="deckLeftRight"/>
-                <animationref id="deckRightLeft"/>
-                <animationref id="deckLeftRight2"/>
-            </animations>
+            
         </component>
         
         <component id = "cards">
@@ -910,7 +918,9 @@
                 <transformationref id="card5T"/>
                 <rotate axis="y" angle="35"/>   
             </transformation>
-
+            <animations>
+                <animationref id="throwPlayer1-Card1"/>
+            </animations>
             <materials>
                 <material id="material-white"/>
             </materials>
@@ -921,9 +931,7 @@
                 <componentref id="card"/>
             </children>
 
-            <animations>
-                <animationref id="throwPlayer1-Card1"/>
-            </animations>
+          
         </component>
 
          <component id = "player1-Card2">
@@ -931,7 +939,10 @@
                 <transformationref id="card5T"/>
                 <rotate axis="y" angle="35"/>   
             </transformation>
-
+            <animations>
+                <animationref id="wait7sec"/>
+                <animationref id="throwPlayer1-Card2"/>
+            </animations>
             <materials>
                 <material id="material-white"/>
             </materials>
@@ -942,17 +953,17 @@
                 <componentref id="card"/>
             </children>
 
-            <animations>
-                <animationref id="wait7sec"/>
-                <animationref id="throwPlayer1-Card2"/>
-            </animations>
+            
         </component>
 
         <component id = "player2-Card1">
             <transformation>
                 <transformationref id="card5T"/>
             </transformation>
-
+            <animations>
+                <animationref id="wait0.5sec"/>
+                <animationref id="throwPlayer2-Card1"/>
+            </animations>
             <materials>
                 <material id="material-white"/>
             </materials>
@@ -963,17 +974,17 @@
                 <componentref id="card"/>
             </children>
 
-            <animations>
-                <animationref id="wait0.5sec"/>
-                <animationref id="throwPlayer2-Card1"/>
-            </animations>
+            
         </component>
 
         <component id = "player2-Card2">
             <transformation>
                 <transformationref id="card5T"/>
             </transformation>
-
+            <animations>
+                <animationref id="wait7.5sec"/>
+                <animationref id="throwPlayer2-Card2"/>
+            </animations>
             <materials>
                 <material id="material-white"/>
             </materials>
@@ -984,17 +995,18 @@
                 <componentref id="card"/>
             </children>
 
-            <animations>
-                <animationref id="wait7.5sec"/>
-                <animationref id="throwPlayer2-Card2"/>
-            </animations>
+            
         </component>
 
         <component id = "player3-Card1">
             <transformation>
                 <transformationref id="card5T"/>
             </transformation>
-
+            <animations>
+                <animationref id="wait4sec"/>
+                <animationref id="throwPlayer3-Card1"/>
+                
+            </animations>
             <materials>
                 <material id="material-white"/>
             </materials>
@@ -1005,18 +1017,18 @@
                 <componentref id="card"/>
             </children>
 
-            <animations>
-                <animationref id="wait4sec"/>
-                <animationref id="throwPlayer3-Card1"/>
-                
-            </animations>
+            
         </component>
 
         <component id = "player3-Card2">
             <transformation>
                 <transformationref id="card5T"/>
             </transformation>
-
+            <animations>
+                <animationref id="wait11sec"/>
+                <animationref id="throwPlayer3-Card2"/>
+                
+            </animations>
             <materials>
                 <material id="material-white"/>
             </materials>
@@ -1027,11 +1039,7 @@
                 <componentref id="card"/>
             </children>
 
-            <animations>
-                <animationref id="wait11sec"/>
-                <animationref id="throwPlayer3-Card2"/>
-                
-            </animations>
+           
         </component>
 
         <component id = "card">

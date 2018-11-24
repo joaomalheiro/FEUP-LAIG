@@ -1366,25 +1366,33 @@ class MySceneGraph {
 
             }
         }
-
-                var materials = this.componentInfo[1].children;
+                let indx = 1;
+                if(this.componentInfo[indx].nodeName == "animations"){
+                    let componentAnimations = this.componentInfo[indx++].children;
+                    for(let k = 0; k < componentAnimations.length; k++)
+                        if(componentAnimations[k].nodeName == "animationref"){
+                            let animationId = this.reader.getString(componentAnimations[k],'id');
+                            component.animations.push(this.animations[animationId]);
+                        }
+                    
+                    }
+                var materials = this.componentInfo[indx].children;
                 for(var j = 0; j < materials.length; j++){
                     component.materials.push(this.reader.getString(materials[j],'id'));
                 }
-
-                component.tex_id = this.reader.getString(this.componentInfo[2],'id');
+                indx++;
+                component.tex_id = this.reader.getString(this.componentInfo[indx],'id');
 
                 if(component.tex_id != "none"){
-                component.tex_length_s = this.reader.getString(this.componentInfo[2],'length_s',false);
-                component.tex_length_t = this.reader.getString(this.componentInfo[2],'length_t',false);
+                component.tex_length_s = this.reader.getString(this.componentInfo[indx],'length_s',false);
+                component.tex_length_t = this.reader.getString(this.componentInfo[indx],'length_t',false);
                 if(component.tex_length_s == null || component.tex_length_t == null){
                     component.tex_length_s = 1;
                     component.tex_length_t = 1;
                 }
               }
-
-                var componentChildren = this.componentInfo[3].children;
-
+              indx++;
+                var componentChildren = this.componentInfo[indx].children;
                 for(var j = 0; j < componentChildren.length; j++){
                     if(componentChildren[j].nodeName == "componentref"){
                         component.componentref.push(this.reader.getString(componentChildren[j],'id'));
@@ -1398,19 +1406,11 @@ class MySceneGraph {
 
                 this.components[component.id] = component;
 
-                if(this.componentInfo[4] != undefined){
-                    let componentAnimations = this.componentInfo[4].children;
-                    for(let k = 0; k < componentAnimations.length; k++)
-                    if(componentAnimations[k].nodeName == "animationref"){
-                        let animationId = this.reader.getString(componentAnimations[k],'id');
-                        component.animations.push(this.animations[animationId]);
-                    }
-                }
+              
           
             }
 
         }
-        
         this.log("Parsed components");
         return null;
     }
@@ -1522,7 +1522,6 @@ applyAnimations(componentID) {
     for(let i = 0; i < this.components[componentID].animations.length; i++){
         if(!this.components[componentID].animations[i].done || i == this.components[componentID].animations.length - 1)
         {    
-            console.log("Animating ",componentID,"Animation ",i);
             this.components[componentID].animations[i].update(Date.now());
             this.components[componentID].animations[i].apply();
             break;
