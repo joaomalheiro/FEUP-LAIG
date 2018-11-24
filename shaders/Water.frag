@@ -9,8 +9,8 @@ varying vec2 vTextureCoord;
 uniform float timeFactor;
 uniform vec4 selColor;
 uniform sampler2D uSampler2;
-uniform float texscale;
+uniform float texScale;
 
 void main() {
-    gl_FragColor = texture2D(uSampler2, vTextureCoord+texscale);
+    gl_FragColor = texture2D(uSampler2, vTextureCoord+texScale);
 }

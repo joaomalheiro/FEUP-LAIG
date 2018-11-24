@@ -188,7 +188,8 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = true;
 
-        this.setUpdatePeriod(100);
+        this.setUpdatePeriod(60);
+
     }
     /**
     * Auxiliary function that sets the camera

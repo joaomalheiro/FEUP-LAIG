@@ -11,6 +11,7 @@ uniform mat4 uPMatrix;
 uniform mat4 uNMatrix;
 uniform float heightScale;
 uniform float timeFactor;
+uniform float texScale;
 uniform sampler2D uSampler;
 
 varying vec4 coords;
@@ -23,9 +24,8 @@ void main() {
     vTextureCoord = aTextureCoord;
     vec4 heightMapC = texture2D(uSampler, aTextureCoord + timeFactor); 
     float height = heightScale* (heightMapC.r + heightMapC.g + heightMapC.b)/3.0; 
-    offset = aVertexNormal*height*0.1;
        
-    vec4 vertex= vec4(aVertexPosition+offset,1.0);
+    vec4 vertex= vec4(aVertexPosition.x,aVertexPosition.y*texScale + height*0.3,aVertexPosition.z,1.0);
     gl_Position = uPMatrix * uMVMatrix * vertex;
 
 }
