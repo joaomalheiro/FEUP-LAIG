@@ -12,11 +12,16 @@ class LinearAnimation extends Animation {
         }
     }
 
-    update(deltaTime) {
+    update(time) {
         //Updates the animation counter, if it reaches the end it resets
+        if(this.previousUpdate == 0) {
+            this.previousUpdate = time;
+        }
+        let deltaTime = time - this.previousUpdate;
+        this.previousUpdate = time;        
         this.currentTime += deltaTime;
         if(this.currentTime > this.time) {
-            this.currentTime = 0;
+            this.currentTime = this.time;
             this.done = true;
         }
         //How much distance the animation has travelled
@@ -60,7 +65,6 @@ class LinearAnimation extends Animation {
         } else {
             rotationAngle = Math.tan(activeVector[2] / activeVector[0]);
         }
-        console.log(rotationAngle);
         mat4.rotate(mat,mat,rotationAngle,vec3.fromValues(0,1,0));
         this.matrix = mat;
     }
