@@ -1296,6 +1296,10 @@ class MySceneGraph {
                  this.scene.movingShader.push(prim);
               break;
 
+              case 'vehicle':
+                prim = new MyVehicle(this.scene);
+              break;
+
           }
       this.primitives[this.reader.getString(children[i],'id')] = prim;
       }
@@ -1522,7 +1526,7 @@ applyAnimations(componentID) {
     for(let i = 0; i < this.components[componentID].animations.length; i++){
         if(!this.components[componentID].animations[i].done || i == this.components[componentID].animations.length - 1)
         {    
-            console.log("Animating ",componentID,"Animation ",i);
+            //console.log("Animating ",componentID,"Animation ",i);
             this.components[componentID].animations[i].update(Date.now());
             this.components[componentID].animations[i].apply();
             break;
