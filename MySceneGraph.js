@@ -1272,6 +1272,18 @@ class MySceneGraph {
                  var height = this.reader.getFloat(grandChildren, 'height');
                  var slices = this.reader.getFloat(grandChildren, 'slices');
                  var stacks = this.reader.getFloat(grandChildren, 'stacks');
+
+                 if(this.parserFloatMinorError(base,"cylinder2","primitives")!=0)
+                  base = 1;
+                  if(this.parserFloatMinorError(top,"cylinder2","primitives")!=0)
+                  top = 1;
+                  if(this.parserFloatMinorError(height,"cylinder2","primitives")!=0)
+                  height = 1;
+                  if(this.parserFloatMinorError(slices,"cylinder2","primitives")!=0)
+                  slices = 20;
+                  if(this.parserFloatMinorError(stacks,"cylinder2","primitives")!=0)
+                  stacks = 20;
+
                  prim = new Cylinder2(this.scene, height, base, top, stacks, slices);
               break;
 
@@ -1280,6 +1292,12 @@ class MySceneGraph {
                  var idheightmap = this.reader.getString(grandChildren,'idheightmap');
                  var parts = this.reader.getFloat(grandChildren, 'parts');
                  var heightscale = this.reader.getFloat(grandChildren, 'heightscale');
+
+                 if(this.parserFloatMinorError(parts,"cylinder2","primitives")!=0)
+                  parts = 20;
+
+                  if(this.parserFloatMinorError(heightscale,"cylinder2","primitives")!=0)
+                  heightscale = 1;
                  
                  prim = new MyTerrain(this.scene, idtexture, idheightmap, parts, heightscale);
               break;
@@ -1290,6 +1308,15 @@ class MySceneGraph {
                  var parts = this.reader.getFloat(grandChildren, 'parts');
                  var heightscale = this.reader.getFloat(grandChildren, 'heightscale');
                  var texscale = this.reader.getFloat(grandChildren, 'texscale');
+
+                 if(this.parserFloatMinorError(parts,"cylinder2","primitives")!=0)
+                  parts = 20;
+
+                  if(this.parserFloatMinorError(heightscale,"cylinder2","primitives")!=0)
+                  heightscale = 1;
+
+                  if(this.parserFloatMinorError(texscale,"cylinder2","primitives")!=0)
+                  texscale = 1;
                  
                  prim = new MyWater(this.scene, idtexture, idheightmap, parts, heightscale, texscale);
                  
