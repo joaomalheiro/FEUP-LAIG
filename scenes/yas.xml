@@ -232,8 +232,6 @@
         </transformation>
 
         <transformation id="vehicleT">
-            <translate x="10" y="2" z="10"/>
-            <rotate axis="x" angle="0"/>
             <scale x="0.3" y="0.3" z="0.3"/>
         </transformation>
 
@@ -548,6 +546,31 @@
             <controlpoint xx="-0.5" yy="0" zz="-2.9"/>
         </linear>
 
+        <linear id="moveVehicleLinear1" span="6">
+            <controlpoint xx="26" yy="4" zz="-8"/>
+            <controlpoint xx="30" yy="24" zz="30"/>
+            <controlpoint xx="30" yy="22" zz="20"/>
+            <controlpoint xx="30" yy="24" zz="9"/>
+        </linear>
+
+        <linear id="moveVehicleLinear2" span="2.5">
+            <controlpoint xx="23" yy="24" zz="8.8"/>
+            <controlpoint xx="18" yy="22" zz="20"/>
+            <controlpoint xx="10" yy="24" zz="30"/>
+        </linear>
+
+        <linear id="moveVehicleLinear3" span="4.5">
+            <controlpoint xx="10" yy="24" zz="30"/>
+            <controlpoint xx="26" yy="16" zz="10"/>
+            <controlpoint xx="26" yy="4" zz="-8"/>
+        </linear>
+
+        <circular id="moveVehicleCircular1" span="1" center="26.34 24 12.34" radius="5"
+            startang="45" rotang="95" />
+
+        <circular id="moveVehicleCircular2" span="7" center="22.34 24 24.34" radius="13"
+            startang="210" rotang="360" />    
+
         <circular id="deckLeftRight" span="5" center="6.5 0.5 5" radius="8"
             startang="150" rotang="65" />
 
@@ -638,6 +661,7 @@
                 <componentref id="painting"/>
                 <componentref id="game"/>
                 <componentref id="model"/>
+                <componentref id="vehicleComp"/>
             </children>
         </component>
 
@@ -655,7 +679,6 @@
                 <componentref id="modelTable"/>
                 <componentref id="mountainsComp"/>
                 <componentref id="wavesComp"/>
-                <componentref id="vehicleComp"/>
             </children>
         </component>
 
@@ -663,7 +686,13 @@
           <transformation>
             <transformationref id="vehicleT"/>
           </transformation>
-
+          <animations>
+                <animationref id="moveVehicleLinear1"/>
+                <animationref id="moveVehicleCircular1"/>
+                <animationref id="moveVehicleLinear2"/>
+                <animationref id="moveVehicleCircular2"/>
+                <animationref id="moveVehicleLinear3"/>
+          </animations>
           <materials>
               <material id="material-3"/>
           </materials>
