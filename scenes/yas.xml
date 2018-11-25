@@ -219,6 +219,60 @@
             <scale x="12" y="12" z="12"/>
         </transformation>
 
+        <transformation id="modelTopTableT">
+            <translate x="7" y="1.5" z="5"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="6" y="6" z="0.05"/>
+        </transformation>
+
+        <transformation id="mountainsT">
+            <translate x="10.5" y="1.5" z="9"/>
+            <rotate axis="x" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="vehicleT">
+            <translate x="10" y="2" z="10"/>
+            <rotate axis="x" angle="0"/>
+            <scale x="0.3" y="0.3" z="0.3"/>
+        </transformation>
+
+        <transformation id="wavesT">
+            <translate x="10.5" y="1.5" z="9"/>
+            <rotate axis="x" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="modelTableT">
+            <translate x="3.5" y="0" z="4"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="modelLeg1T">
+            <translate x="6" y="0" z="6"/>
+            <rotate axis="x" angle="-90"/>
+            <scale x="1" y="1" z="0.75"/>
+        </transformation>
+
+        <transformation id="modelLeg2T">
+            <translate x="8" y="0" z="4"/>
+            <rotate axis="x" angle="-90"/>
+            <scale x="1" y="1" z="0.75"/>
+        </transformation>
+
+        <transformation id="modelLeg3T">
+            <translate x="6" y="0" z="4"/>
+            <rotate axis="x" angle="-90"/>
+            <scale x="1" y="1" z="0.75"/>
+        </transformation>
+
+        <transformation id="modelLeg4T">
+            <translate x="8" y="0" z="6"/>
+            <rotate axis="x" angle="-90"/>
+            <scale x="1" y="1" z="0.75"/>
+        </transformation>
+
         <transformation id="leg1T">
             <translate x="0.75" y="0" z="3.4"/>
             <rotate axis="x" angle="-90"/>
@@ -532,6 +586,23 @@
                  slices="40" loops="30" />
         </primitive >
 
+        <primitive id="plane">
+            <plane npartsU="10" npartsV="10"/>
+        </primitive>
+
+         <primitive id="patch">
+          <patch npartsU="50" npartsV="50" npointsU="4" npointsV="2">
+                <controlpoint xx="3.0" yy="0.0"  zz="0.0" />
+                <controlpoint xx="3.0" yy="0.0"  zz="3.0" />
+                <controlpoint xx="3.0" yy="2.0"  zz="0.0" />
+                <controlpoint xx="3.0" yy="2.0"  zz="3.0" />
+                <controlpoint xx="0.0" yy="2.0"  zz="0.0" />
+                <controlpoint xx="0.0" yy="2.0"  zz="3.0" />
+                <controlpoint xx="0.0" yy="0.0"  zz="0.0" />
+                <controlpoint xx="0.0" yy="0.0"  zz="3.0" />
+          </patch>
+        </primitive >
+
         <primitive id="cylinder2">
           <cylinder2 base="1.5" top="1.5" height="3.0" slices="50" stacks="50" />
         </primitive >
@@ -541,9 +612,12 @@
         </primitive >
 
         <primitive id="waves">
-          <water idtexture="scenes/images/waterColor.jpg" idwavemap="scenes/images/waterWavesMap.jpg" parts="30" heightscale="1" texscale="1" />
+          <water idtexture="scenes/images/waterColor.jpg" idwavemap="scenes/images/waterWavesMap2.jpg" parts="20" heightscale="0.3" texscale="2" />
         </primitive >
 
+        <primitive id="vehicle">
+            <vehicle/>
+        </primitive>
     </primitives >
 
     <components>
@@ -563,8 +637,192 @@
                 <componentref id="door"/>
                 <componentref id="painting"/>
                 <componentref id="game"/>
+                <componentref id="model"/>
             </children>
         </component>
+
+        <component id = "model">
+            <transformation>
+            </transformation>
+
+            <materials>
+                <material id="material-1"/>
+            </materials>
+
+            <texture id="none" length_s="1.0" length_t="1.0"/>
+
+            <children>
+                <componentref id="modelTable"/>
+                <componentref id="mountainsComp"/>
+                <componentref id="wavesComp"/>
+                <componentref id="vehicleComp"/>
+            </children>
+        </component>
+
+        <component id = "vehicleComp">
+          <transformation>
+            <transformationref id="vehicleT"/>
+          </transformation>
+
+          <materials>
+              <material id="material-3"/>
+          </materials>
+
+          <texture id="none" length_s="1.0" length_t="1.0"/>
+
+          <children>
+                <primitiveref id="vehicle"/>
+            </children>
+        </component>
+
+        <component id = "mountainsComp">
+          <transformation>
+            <transformationref id="mountainsT"/>
+          </transformation>
+
+          <materials>
+              <material id="material-3"/>
+          </materials>
+
+          <texture id="none" length_s="1.0" length_t="1.0"/>
+
+          <children>
+                <primitiveref id="mountains"/>
+            </children>
+        </component>
+
+        <component id = "wavesComp">
+          <transformation>
+            <transformationref id="wavesT"/>
+          </transformation>
+
+          <materials>
+              <material id="material-3"/>
+          </materials>
+
+          <texture id="none" length_s="1.0" length_t="1.0"/>
+
+          <children>
+                <primitiveref id="waves"/>
+            </children>
+        </component>
+
+         <component id = "modelTable">
+          <transformation>
+            <transformationref id="modelTableT"/>
+          </transformation>
+
+          <materials>
+              <material id="material-3"/>
+          </materials>
+
+          <texture id="none" length_s="1.0" length_t="1.0"/>
+
+          <children>
+                <componentref id="modelTableTop"/>
+                <componentref id="modelTableLegs"/>
+            </children>
+        </component>
+
+        <component id = "modelTableLegs">
+          <transformation>
+          </transformation>
+
+          <materials>
+            <material id="material-black"/>
+          </materials>
+
+          <texture id="tex-darkWood" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <componentref id="modelTableLeg1"/>
+            <componentref id="modelTableLeg2"/>
+            <componentref id="modelTableLeg3"/>
+            <componentref id="modelTableLeg4"/>
+          </children>
+       </component>
+
+        <component id = "modelTableTop">
+          <transformation>
+            <transformationref id="modelTopTableT"/>
+          </transformation>
+
+          <materials>
+            <material id="material-2"/>
+            <material id="material-1"/>
+            <material id="material-4"/>
+          </materials>
+
+          <texture id="tex-green" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="cylinder"/>
+          </children>
+       </component>
+
+        <component id = "modelTableLeg1">
+          <transformation>
+            <transformationref id="modelLeg1T"/>
+          </transformation>
+
+          <materials>
+            <material id="inherit"/>
+          </materials>
+
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
+
+          <children>
+           <componentref id="leg"/>
+          </children>
+       </component>
+
+       <component id = "modelTableLeg2">
+          <transformation>
+            <transformationref id="modelLeg2T"/>
+          </transformation>
+
+          <materials>
+            <material id="inherit"/>
+          </materials>
+
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
+
+          <children>
+           <componentref id="leg"/>
+          </children>
+       </component>
+
+       <component id = "modelTableLeg3">
+          <transformation>
+            <transformationref id="modelLeg3T"/>
+          </transformation>
+
+          <materials>
+            <material id="inherit"/>
+          </materials>
+
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <componentref id="leg"/>
+          </children>
+       </component>
+
+        <component id = "modelTableLeg4">
+          <transformation>
+            <transformationref id="modelLeg4T"/>
+          </transformation>
+
+          <materials>
+            <material id="inherit"/>
+          </materials>
+
+          <texture id="inherit" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <componentref id="leg"/>
+          </children>
+       </component>
 
         <component id = "walls">
             <transformation>

@@ -18,7 +18,7 @@ class MyTerrain extends Plane {
         this.scene.setActiveShader(this.shader);
         this.textureBandW.bind(0);
         this.textureN.bind(1);
-        this.scene.scale(10,10,10);
+        this.scene.scale(2,2,2);
         super.display();
         this.textureBandW.unbind(0);
         this.textureN.unbind(1);

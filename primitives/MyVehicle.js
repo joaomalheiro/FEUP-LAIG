@@ -30,6 +30,8 @@ class MyVehicle extends CGFobject {
         this.cylinder = new Cylinder2(this.scene, 0.5, 1, 2, 30, 30);
 
         this.circle = new MyCircle(this.scene, 30);
+
+        this.torus = new MyTorus(this.scene, 0.1, 1.8, 30, 30);
     }
 
     initTextures(){
@@ -96,6 +98,13 @@ class MyVehicle extends CGFobject {
             this.scene.scale(1.05,1,1.05);
             this.scene.rotate(-Math.PI/2.0,1,0,0);
             this.circle.display();
+        this.scene.popMatrix();
+
+        //displays the torus
+        this.scene.pushMatrix();
+            this.scene.scale(1.05,1,1.05);
+            this.scene.rotate(-Math.PI/2.0,1,0,0);
+            this.torus.display();
         this.scene.popMatrix();
 
 

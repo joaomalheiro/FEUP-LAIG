@@ -1320,7 +1320,6 @@ class MySceneGraph {
             let component = {id: "", transformation: [], materials:[] ,tex_id:"",tex_length_s:0,tex_length_t:0,componentref:[],primitiveref:[],animations:[]};
 
             component.id = this.reader.getString(this.children[i],'id');
-
             this.componentInfo = this.children[i].children;
             if(this.componentInfo.length < 4){
                 this.onXMLError("Component does not have all required attributes");
