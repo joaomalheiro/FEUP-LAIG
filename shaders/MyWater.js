@@ -3,7 +3,6 @@ class MyWater extends Plane {
     constructor(scene,textureN, textureBandW, parts, heightScale, texScale){
         super(scene, parts, parts);
 
-        this.speed = 0.1;
         this.time = 0;
         this.parts = parts;
         this.textureN = new CGFtexture(scene,textureN);
@@ -21,7 +20,6 @@ class MyWater extends Plane {
         this.scene.setActiveShader(this.shader);
         this.textureBandW.bind(0);
         this.textureN.bind(1);
-        this.scene.scale(10,1,10);
         super.display();
         this.textureBandW.unbind(0);
         this.textureN.unbind(1);
@@ -31,7 +29,7 @@ class MyWater extends Plane {
     }
 
     update(currTime){
-        this.time = (currTime % 3000*0.0001);
+        this.time += (currTime % 3000*0.0001);
         console.log(this.time);
         this.shader.setUniformsValues({timeFactor:this.time});
     }

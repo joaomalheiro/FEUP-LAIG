@@ -238,7 +238,7 @@
         <transformation id="wavesT">
             <translate x="10.5" y="1.5" z="9"/>
             <rotate axis="x" angle="0"/>
-            <scale x="1" y="1" z="1"/>
+            <scale x="1.2" y="1" z="1.2"/>
         </transformation>
 
         <transformation id="modelTableT">
@@ -272,9 +272,9 @@
         </transformation>
 
         <transformation id="aroundT">
-            <translate x="10.6" y="1.6" z="9.1"/>
+            <translate x="10.6" y="1.5" z="9"/>
             <rotate axis="x" angle="90"/>
-            <scale x="0.8" y="0.8" z="0.75"/>
+            <scale x="0.9" y="0.9" z="0.75"/>
         </transformation>
 
         <transformation id="leg1T">
@@ -806,7 +806,7 @@
             <material id="material-4"/>
           </materials>
 
-          <texture id="tex-green" length_s="1.0" length_t="1.0"/>
+          <texture id="tex-darkWood" length_s="1.0" length_t="1.0"/>
 
           <children>
             <primitiveref id="cylinder"/>

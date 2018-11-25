@@ -22,10 +22,10 @@ varying vec3 offset;
 void main() {
 
     vTextureCoord = aTextureCoord;
-    vec4 heightMapC = texture2D(uSampler, aTextureCoord + timeFactor); 
+    vec4 heightMapC = texture2D(uSampler, aTextureCoord *texScale + timeFactor); 
     float height = heightScale* (heightMapC.r + heightMapC.g + heightMapC.b)/3.0; 
        
-    vec4 vertex= vec4(aVertexPosition.x,aVertexPosition.y*texScale + height*0.3,aVertexPosition.z,1.0);
+    vec4 vertex= vec4(aVertexPosition.x,aVertexPosition.y + height*0.3,aVertexPosition.z,1.0);
     gl_Position = uPMatrix * uMVMatrix * vertex;
 
 }
