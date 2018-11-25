@@ -13,7 +13,7 @@ class LinearAnimation extends Animation {
     }
 
     update(time) {
-        //Updates the animation counter, if it reaches the end it resets
+        //Updates the animation counter, if it reaches the end will stay in the last position
         if(this.previousUpdate == 0) {
             this.previousUpdate = time;
         }
@@ -56,6 +56,7 @@ class LinearAnimation extends Animation {
         vec3.multiply(activeVector,activeVector,vec3.fromValues(distInActiveVec,distInActiveVec,distInActiveVec));
         mat4.translate(mat,mat,activeVector);
 
+        //Calculating the orientation
         let rotationAngle;
         if(activeVector[0] == 0) {
             rotationAngle = 0;

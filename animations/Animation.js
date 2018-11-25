@@ -14,8 +14,6 @@ class Animation {
         this.scene.multMatrix(this.matrix);
     }
 
-    isDone() {
-        return this.done;
-    }
+
 }
 

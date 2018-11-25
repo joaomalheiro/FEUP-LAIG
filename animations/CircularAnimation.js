@@ -14,21 +14,21 @@ class CircularAnimation extends Animation {
     let deltaTime = time - this.previousUpdate;
     this.previousUpdate = time;        
     this.currentTime += deltaTime;
-    //Updates the animation counter, if it reaches the end it resets
+    //Updates the animation counter, if it reaches the end it will stay in the last position
     if(this.currentTime > this.time) {
         this.currentTime = this.time;
         this.done = true;
     }
     //Translating the scene to the center point
-    let animationPercentage = this.currentTime / this.time;
-    let rotAngle = this.initAngle + (animationPercentage * this.rotAngle);
-
     let mat = mat4.create();
     mat4.translate(mat,mat,this.center);
     
-    
-    mat4.rotate(mat,mat,rotAngle * DEGREE_TO_RAD,vec3.fromValues(0,1,0));
+    //Rotating the corresponding degree
+    let animationPercentage = this.currentTime / this.time;
+    let rotAngle = this.initAngle + (animationPercentage * this.rotAngle);
 
+    mat4.rotate(mat,mat,rotAngle * DEGREE_TO_RAD,vec3.fromValues(0,1,0));
+    //Translating the radius amount
     let radius = vec3.fromValues(this.radius,0,0);
     mat4.translate(mat,mat,radius);
     
