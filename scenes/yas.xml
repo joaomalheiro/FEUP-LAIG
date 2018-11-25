@@ -91,14 +91,11 @@
     <textures>
         <texture id="tex-wall" file="scenes/images/wall.jpg"/>
         <texture id="tex-floor" file="scenes/images/floor.jpg"/>
-        <texture id="tex-vidral" file="scenes/images/vidral.jpg"/>
         <texture id="tex-door" file="scenes/images/door.jpg"/>
         <texture id="tex-green" file="scenes/images/green.jpg"/>
         <texture id="tex-metalKnob" file="scenes/images/metal-knob.jpg"/>
         <texture id="tex-exitSign" file="scenes/images/exitSign.jpg"/>
         <texture id="tex-painting" file="scenes/images/painting1.jpg"/>
-        <texture id="tex-wood" file="scenes/images/wood.jpg"/>
-        <texture id="tex-pokerstars" file="scenes/images/pokerstars.png"/>
         <texture id="tex-blackLeather" file="scenes/images/leather.jpg"/>
         <texture id="tex-aceOfSpades" file="scenes/images/aceOfSpades.png"/>
         <texture id="tex-aceOfClubs" file="scenes/images/aceOfClubs.png"/>
@@ -243,7 +240,7 @@
         <transformation id="wavesT">
             <translate x="10.5" y="1.5" z="9"/>
             <rotate axis="x" angle="0"/>
-            <scale x="1.2" y="1" z="1.2"/>
+            <scale x="2.2" y="1" z="2.2"/>
         </transformation>
 
         <transformation id="modelTableT">

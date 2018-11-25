@@ -17,11 +17,10 @@ uniform sampler2D uSampler;
 varying vec4 coords;
 varying vec4 normal;
 varying vec2 vTextureCoord;
-varying vec3 offset;
 
 void main() {
 
-    vTextureCoord = aTextureCoord;
+    vTextureCoord = aTextureCoord + timeFactor;
     vec4 heightMapC = texture2D(uSampler, aTextureCoord *texScale + timeFactor); 
     float height = heightScale* (heightMapC.r + heightMapC.g + heightMapC.b)/3.0; 
        

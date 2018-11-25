@@ -3,11 +3,16 @@ class MyTerrain extends Plane {
     constructor(scene,textureN, textureBandW, parts, heightScale){
         super(scene, parts, parts);
 
+        //color texture
         this.textureN = new CGFtexture(scene,textureN);
+
+        //heightmap texture
         this.textureBandW = new CGFtexture(scene,textureBandW);
 
+        //shader creation
         this.shader = new CGFshader(scene.gl, 'shaders/MyTerrain.vert', 'shaders/MyTerrain.frag');
 
+        //setting the heightscale oh the terrain
         this.shader.setUniformsValues({uSampler2:1, heightScale: heightScale})
     }
 

@@ -1,4 +1,4 @@
-/** Represents a plane with nrDivs divisions along both axis, with center at (0,0) */
+/** Represents a patch */
 class Patch extends CGFobject{
 
     constructor(scene, nrDivsU, nrDivsV, degreeU, degreeV, controlPoints)
@@ -18,14 +18,14 @@ class Patch extends CGFobject{
 		this.createSurface();
 
 	};
-
+	//creating surfaces using nurbs provided objects
 	createSurface() {
 
         var nurbsSurface = new CGFnurbsSurface(this.degreeU,this.degreeV, this.controlPoints);
         
         this.obj = new CGFnurbsObject(this.scene, this.nrDivsU, this.nrDivsV, nurbsSurface);
 	}
-
+	//displays the primitive
 	display() {
 		this.obj.display();
 	}

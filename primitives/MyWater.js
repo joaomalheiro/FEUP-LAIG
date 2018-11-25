@@ -3,17 +3,24 @@ class MyWater extends Plane {
     constructor(scene,textureN, textureBandW, parts, heightScale, texScale){
         super(scene, parts, parts);
 
-        this.speed = 0.1;
+        //initializing time variable
         this.time = 0;
         this.parts = parts;
+        
+        //color texture
         this.textureN = new CGFtexture(scene,textureN);
+
+        //wavesmap
         this.textureBandW = new CGFtexture(scene,textureBandW);
 
+        //initializing shader
         this.shader = new CGFshader(scene.gl, 'shaders/Water.vert', 'shaders/Water.frag');
 
         this.shader.setUniformsValues({uSampler2:1, heightScale: heightScale, texScale:texScale})
     }
-
+    /*
+    * Function to display the water primitive
+    */
     display() {
     
         // draw
@@ -21,7 +28,6 @@ class MyWater extends Plane {
         this.scene.setActiveShader(this.shader);
         this.textureBandW.bind(0);
         this.textureN.bind(1);
-        this.scene.scale(2,1,2);
         super.display();
         this.textureBandW.unbind(0);
         this.textureN.unbind(1);
@@ -29,9 +35,11 @@ class MyWater extends Plane {
         this.scene.popMatrix();
 
     }
-
+    /*
+    * Function to update the height according to time
+    */
     update(currTime){
-        this.time += currTime/30000;
+        this.time += (currTime /30000);
         this.shader.setUniformsValues({timeFactor:this.time});
     }
 }

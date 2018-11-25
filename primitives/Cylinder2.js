@@ -1,5 +1,8 @@
 class Cylinder2 extends CGFobject{
 
+    /*
+    * Consctructor of Cylinder2 primitive that will use nurbs surfaces
+    */
    constructor(scene, height, baseRadius, topRadius, stacks, slices) {
 
         super(scene);
@@ -15,7 +18,9 @@ class Cylinder2 extends CGFobject{
         this.createControlPoints();
         this.createSurface();
     };
-    
+    /*
+    * Auxiliary function requeried to create the control points for the cylinder based on height and radius
+    */
     createControlPoints() {
 
         let xBottom = this.baseRadius;
@@ -26,6 +31,7 @@ class Cylinder2 extends CGFobject{
 
         var controlPoints = [];
 
+        //control points will be created using 2 rectangles that will create half of the cylinder. the other half will be created with a rotate
         controlPoints.push([xBottom,0,0,1.0]);
         controlPoints.push([xTop,0,z,1.0]);
         controlPoints.push([xBottom,yBottom,0,1.0]);
@@ -45,13 +51,18 @@ class Cylinder2 extends CGFobject{
             this.controlPointsList.push(tmp);
         }
     }
-
+    /*
+    * Function that will call the consctructors of the nurb objects with all the info generated previously
+    */
     createSurface() {
         var nurbsSurface = new CGFnurbsSurface(this.degreeU,this.degreeV, this.controlPointsList);
         
         this.obj = new CGFnurbsObject(this.scene, this.nrDivsU, this.nrDivsV, nurbsSurface ); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)
 	}
 
+    /*
+    * Display function for the primitive cylinder
+    */
 	display() {
 		this.obj.display();
 

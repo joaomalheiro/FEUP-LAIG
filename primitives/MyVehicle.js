@@ -1,5 +1,8 @@
 class MyVehicle extends CGFobject {
 
+    /*
+    * Consctructor for the spaceship object
+    */
     constructor(scene) {
         super(scene);
         this.scene = scene;
@@ -27,12 +30,14 @@ class MyVehicle extends CGFobject {
                     [1.0, 0.0, 0.0,1]
                 ]
             ])
+
+        //body
         this.cylinder = new Cylinder2(this.scene, 0.5, 1, 2, 30, 30);
-
+        //legs 
         this.leg = new Cylinder2(this.scene, 1.3, 0.1,0.1,30,30);
-
+        //top of cylinder2
         this.circle = new MyCircle(this.scene, 30);
-
+        //ring of the spaceship
         this.torus = new MyTorus(this.scene, 0.1, 1.8, 30, 30);
     }
 
@@ -46,15 +51,16 @@ class MyVehicle extends CGFobject {
 		this.glassAppearance.setSpecular(1,1,1,1);
         this.glassAppearance.setShininess(120);
 
-        //appearance for the windShield and for the retromirrors
+        //grey appearance
         this.grey = new CGFappearance(this.scene);
-        this.grey.loadTexture("scenes/images/metalKnob.jpg");
+        this.grey.loadTexture("scenes/images/metal-knob.jpg");
 		this.grey.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
     	this.grey.setAmbient(0.3,0.3,0.3,1);
 		this.grey.setDiffuse(0.5,0.5,0.5,1);
 		this.grey.setSpecular(0.5,0.5,0.5,1);
         this.grey.setShininess(10.0);
 
+        //lightblue appearance for the bottom of the body
         this.lightBlue = new CGFappearance(this.scene);
         this.lightBlue.loadTexture("scenes/images/glass.jpg");
 		this.lightBlue.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
