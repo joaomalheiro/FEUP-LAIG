@@ -271,6 +271,12 @@
             <scale x="1" y="1" z="0.75"/>
         </transformation>
 
+        <transformation id="aroundT">
+            <translate x="10.6" y="1.6" z="9.1"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="0.8" y="0.8" z="0.75"/>
+        </transformation>
+
         <transformation id="leg1T">
             <translate x="0.75" y="0" z="3.4"/>
             <rotate axis="x" angle="-90"/>
@@ -677,8 +683,25 @@
 
             <children>
                 <componentref id="modelTable"/>
+                <componentref id="around"/>
                 <componentref id="mountainsComp"/>
                 <componentref id="wavesComp"/>
+            </children>
+        </component>
+
+        <component id = "around">
+          <transformation>
+            <transformationref id="aroundT"/>
+          </transformation>
+
+          <materials>
+              <material id="material-black"/>
+          </materials>
+
+          <texture id="tex-blackLeather" length_s="1.0" length_t="1.0"/>
+
+          <children>
+                <primitiveref id="torus"/>
             </children>
         </component>
 
@@ -686,13 +709,14 @@
           <transformation>
             <transformationref id="vehicleT"/>
           </transformation>
-          <animations>
+           <animations>
                 <animationref id="moveVehicleLinear1"/>
                 <animationref id="moveVehicleCircular1"/>
                 <animationref id="moveVehicleLinear2"/>
                 <animationref id="moveVehicleCircular2"/>
                 <animationref id="moveVehicleLinear3"/>
           </animations>
+          
           <materials>
               <material id="material-3"/>
           </materials>

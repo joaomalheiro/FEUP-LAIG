@@ -29,6 +29,8 @@ class MyVehicle extends CGFobject {
             ])
         this.cylinder = new Cylinder2(this.scene, 0.5, 1, 2, 30, 30);
 
+        this.leg = new Cylinder2(this.scene, 1.3, 0.1,0.1,30,30);
+
         this.circle = new MyCircle(this.scene, 30);
 
         this.torus = new MyTorus(this.scene, 0.1, 1.8, 30, 30);
@@ -46,9 +48,9 @@ class MyVehicle extends CGFobject {
 
         //appearance for the windShield and for the retromirrors
         this.grey = new CGFappearance(this.scene);
-        this.grey.loadTexture("scenes/images/glass.jpg");
+        this.grey.loadTexture("scenes/images/metalKnob.jpg");
 		this.grey.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
-    	this.grey.setAmbient(0.7,0.7,0.7,1);
+    	this.grey.setAmbient(0.3,0.3,0.3,1);
 		this.grey.setDiffuse(0.5,0.5,0.5,1);
 		this.grey.setSpecular(0.5,0.5,0.5,1);
         this.grey.setShininess(10.0);
@@ -61,8 +63,13 @@ class MyVehicle extends CGFobject {
 		this.lightBlue.setSpecular(0.5,0.5,0.5,1);
         this.lightBlue.setShininess(10.0);
 
-
-
+        this.red = new CGFappearance(this.scene);
+        this.red.loadTexture("scenes/images/glass.jpg");
+		this.red.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
+    	this.red.setAmbient(1,0.3,0.3,1);
+		this.red.setDiffuse(0.8,0.8,0.8,1);
+		this.red.setSpecular(0.5,0.5,0.5,1);
+        this.red.setShininess(10.0);
     
     }
     
@@ -104,10 +111,50 @@ class MyVehicle extends CGFobject {
         this.scene.pushMatrix();
             this.scene.scale(1.05,1,1.05);
             this.scene.rotate(-Math.PI/2.0,1,0,0);
+            this.red.apply();
             this.torus.display();
         this.scene.popMatrix();
 
+        //displays legs
+        this.scene.pushMatrix();
+            this.red.apply();
+            this.scene.translate(1,-0.8,1);
+            this.scene.rotate(Math.PI/2.0,1,1,0);
+            this.leg.display();
+        this.scene.popMatrix();
 
+        //displays legs
+        this.scene.pushMatrix();
+            this.red.apply();
+            this.scene.translate(1,-0.8,-0.8);
+            this.scene.rotate(Math.PI/2.0,1,1,0);
+            this.leg.display();
+        this.scene.popMatrix();
 
+        //displays legs
+        this.scene.pushMatrix();
+            this.red.apply();
+            this.scene.translate(1,-0.8,-0.8);
+            this.scene.rotate(Math.PI/2.0,1,1,0);
+            this.leg.display();
+        this.scene.popMatrix();
+
+        //displays legs
+        this.scene.pushMatrix();
+            this.red.apply();
+            this.scene.translate(-1,-0.88,-0.8);
+            this.scene.rotate(Math.PI/2.0,1,0,0);
+            this.scene.rotate(-Math.PI/3.0,0,1,0);
+            this.leg.display();
+        this.scene.popMatrix();
+
+        //displays legs
+        this.scene.pushMatrix();
+            this.red.apply();
+            this.scene.translate(-1,-0.88,1);
+            this.scene.rotate(Math.PI/2.0,1,0,0);
+            this.scene.rotate(-Math.PI/3.0,0,1,0);
+            this.leg.display();
+        this.scene.popMatrix();
     }
 }
