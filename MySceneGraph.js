@@ -1296,6 +1296,10 @@ class MySceneGraph {
                  this.scene.movingShader.push(prim);
               break;
 
+              case 'vehicle':
+                prim = new MyVehicle(this.scene);
+                break;
+
           }
       this.primitives[this.reader.getString(children[i],'id')] = prim;
       }
