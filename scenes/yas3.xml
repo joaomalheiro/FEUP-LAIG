@@ -102,7 +102,7 @@
         </primitive >
 
         <primitive id="waves">
-          <water idtexture="scenes/images/waterColor.jpg" idwavemap="scenes/images/waterWavesMap.png" parts="30" heightscale="1" texscale="1" />
+          <water idtexture="scenes/images/waterColor.jpg" idwavemap="scenes/images/waterWavesMap2.jpg" parts="20" heightscale="1.2" texscale="10" />
         </primitive >
 
         <primitive id="vehicle">
@@ -124,7 +124,7 @@
             <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
-                <primitiveref id="vehicle"/>
+                <primitiveref id="waves"/>
             </children>
             <!--
             <animations>

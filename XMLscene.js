@@ -14,6 +14,7 @@ class XMLscene extends CGFscene {
         this.interface = myinterface;
         this.lightValues = {};
         this.materialCounter = 0;
+        this.time = new Date().getTime();
     }
 
     /**
@@ -206,8 +207,10 @@ class XMLscene extends CGFscene {
     update(currTime){
 
         for(let i = 0; i < this.movingShader.length; i++){
-            if (this.movingShader[i] instanceof(MyWater))
-                this.movingShader[i].update(currTime);
+            if (this.movingShader[i] instanceof(MyWater)){
+                this.movingShader[i].update(currTime- this.time);
+                this.time = currTime;
+            }
         }
     }
 

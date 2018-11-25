@@ -31,7 +31,7 @@ class MyWater extends Plane {
     }
 
     update(currTime){
-        this.time = (currTime % 3000*0.0001);
+        this.time += currTime/30000;
         console.log(this.time);
         this.shader.setUniformsValues({timeFactor:this.time});
     }
