@@ -20,8 +20,8 @@ varying vec2 vTextureCoord;
 
 void main() {
 
-    vTextureCoord = aTextureCoord + timeFactor * 100;
-    vec4 heightMapC = texture2D(uSampler, aTextureCoord *texScale + timeFactor * 100); 
+    vTextureCoord = aTextureCoord + timeFactor;
+    vec4 heightMapC = texture2D(uSampler, aTextureCoord *texScale + timeFactor); 
     float height = heightScale* (heightMapC.r + heightMapC.g + heightMapC.b)/3.0; 
        
     vec4 vertex= vec4(aVertexPosition.x,aVertexPosition.y + height*0.3,aVertexPosition.z,1.0);
