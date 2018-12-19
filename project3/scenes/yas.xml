@@ -112,6 +112,10 @@
             <bishop/>
         </primitive>
 
+        <primitive id="board">
+            <board/>
+        </primitive>
+
     </primitives >
 
     <components>
@@ -128,6 +132,7 @@
 
             <children>
                 <primitiveref id="bishop"/>
+                <primitiveref id="board"/>
             </children>
 h
         </component>

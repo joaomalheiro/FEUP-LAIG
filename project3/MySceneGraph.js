@@ -1291,6 +1291,10 @@ class MySceneGraph {
                 prim = new Bishop(this.scene);
                 
             break;
+                case 'board':
+                    prim = new Board(this.scene);
+                    
+                break;
 
           }
       this.primitives[this.reader.getString(children[i],'id')] = prim;

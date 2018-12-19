@@ -1,7 +1,7 @@
 class Bishop extends CGFobject {
 
     /*
-    * Consctructor for the spaceship object
+    * Consctructor for the bishop game object
     */
     constructor(scene) {
         super(scene);
@@ -15,9 +15,9 @@ class Bishop extends CGFobject {
 
         this.base = new MyCylinder(this.scene, 0.2, 0.7, 0.7, 30, 30);
 
-        this.body = new MyCylinder(this.scene, 1, 0.25, 0.35, 30, 30);
+        this.body = new MyCylinder(this.scene, 1, 0.25, 0.5, 30, 30);
 
-        this.middle = new MySphere(this.scene, 0.25, 30, 30);
+        this.sphere = new MySphere(this.scene, 0.25, 30, 30);
 
         this.head = new Patch(this.scene, 50, 50, 2, // degree on U: 3 control vertexes U 
             2,  // degree on V: 3 control vertexes on V
@@ -63,7 +63,11 @@ class Bishop extends CGFobject {
 		this.glassAppearance.setSpecular(0.5,0.5,0.5,1);
         this.glassAppearance.setShininess(10.0);
     }
+
     display(){
+
+        this.scene.pushMatrix();
+            this.scene.translate(0,0.235,0);
 
         //display first base
         this.scene.pushMatrix();
@@ -92,34 +96,53 @@ class Bishop extends CGFobject {
 
         //display the lower body of the bishop
         this.scene.pushMatrix();
-            this.scene.translate(0,1.2,0);
+            this.scene.translate(0,1.7,0);
+            this.scene.scale(0.5,1.4,0.5);
             this.scene.rotate(Math.PI/2.0,1,0,0);
-            this.glassAppearance.apply();
+            this.woodenAppearance.apply();
             this.body.display();
         this.scene.popMatrix();
 
         //display the middle ring part
         this.scene.pushMatrix();
-            this.scene.translate(0,1.3,0);
-            this.scene.scale(1.75,0.75,1.75);
+            this.scene.translate(0,1.5,0);
+            this.scene.scale(1.4,0.4,1.4);
             this.woodenAppearance.apply();
-            this.middle.display();
+            this.sphere.display();
+            this.scene.translate(0,0.4,0);
+            this.scene.scale(0.85,1,0.85);
+            this.sphere.display();
+            this.scene.translate(0,0.4,0);
+            this.scene.scale(0.85,1,0.85);
+            this.sphere.display();
         this.scene.popMatrix();
 
          //display the upper body of the bishop
          this.scene.pushMatrix();
-            this.scene.translate(0,1.4,0);
-            this.scene.rotate(-Math.PI/2.0,1,0,0);
-            this.glassAppearance.apply();
+            this.scene.translate(0,1.9,0);
+            this.scene.scale(0.3,0.15,0.3);
+            this.scene.rotate(Math.PI/2.0,1,0,0);
+            this.scene.rotate(Math.PI,1,0,0);
+            this.woodenAppearance.apply();
             this.body.display();
          this.scene.popMatrix();
 
-         //display the upper body of the bishop
+        //display the upper body of the bishop
          this.scene.pushMatrix();
-            this.scene.translate(0,2.4,0);
-            this.scene.scale(0.4,0.4,0.4);
-            this.glassAppearance.apply();
+            this.scene.translate(0,2.05,0);
+            this.scene.scale(0.158, 0.158, 0.158);
+            this.woodenAppearance.apply();
             this.head.display();
+         this.scene.popMatrix();
+
+         //display the top sphere of the bishop
+         this.scene.pushMatrix();
+            this.scene.translate(0,2.35,0);
+            this.scene.scale(0.30, 0.20, 0.30);
+            this.woodenAppearance.apply();
+            this.sphere.display();
+         this.scene.popMatrix();
+
          this.scene.popMatrix();
     }
 }
