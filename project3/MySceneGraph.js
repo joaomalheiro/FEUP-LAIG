@@ -1287,6 +1287,11 @@ class MySceneGraph {
                  prim = new Cylinder2(this.scene, height, base, top, stacks, slices);
               break;
 
+                case 'bishop':
+                prim = new Bishop(this.scene);
+                
+            break;
+
           }
       this.primitives[this.reader.getString(children[i],'id')] = prim;
       }

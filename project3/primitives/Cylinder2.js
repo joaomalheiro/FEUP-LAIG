@@ -14,6 +14,8 @@ class Cylinder2 extends CGFobject{
         this.nrDivsV = stacks;
         this.degreeU = 3;
         this.degreeV = 1;
+
+        this.circle = new MyCircle(this.scene,30);
         
         this.createControlPoints();
         this.createSurface();
@@ -68,6 +70,20 @@ class Cylinder2 extends CGFobject{
 		this.scene.pushMatrix();
 		this.scene.rotate(Math.PI,0,0,1);
 		this.obj.display();
-		this.scene.popMatrix();
+        this.scene.popMatrix();
+        
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI,1,0,0);
+        this.scene.scale(this.baseRadius,this.baseRadius,1);
+        this.circle.display();
+        this.scene.popMatrix();
+
+       /* this.scene.pushMatrix();
+        this.scene.translate(0,this.height,0);
+        this.scene.scale(this.topRadius,this.topRadius,this.topRadius);
+        this.scene.rotate(Math.PI,1,0,0);
+        this.circle.display();
+        this.scene.popMatrix();
+        */
 	}
 };

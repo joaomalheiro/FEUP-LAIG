@@ -108,8 +108,8 @@
           <water idtexture="scenes/images/waterColor.jpg" idwavemap="scenes/images/waterWavesMap2.jpg" parts="20" heightscale="1.2" texscale="10" />
         </primitive >
 
-        <primitive id="vehicle">
-            <vehicle/>
+        <primitive id="bishop">
+            <bishop/>
         </primitive>
 
     </primitives >
@@ -127,7 +127,7 @@
             <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
-                <primitiveref id="plane"/>
+                <primitiveref id="bishop"/>
             </children>
 h
         </component>
