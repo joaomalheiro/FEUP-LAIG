@@ -16,6 +16,8 @@ class Board extends CGFobject {
         this.plane = new Plane(this.scene,10,10);
 
         this.square = new MyRectangle(this.scene,-0.5,-0.5,0.5,0.5);
+    
+        this.bishop = new Bishop(this.scene);
     }
     
     initTextures(){
@@ -65,6 +67,11 @@ class Board extends CGFobject {
             this.scene.scale(10, 1, 10);
             this.grid.apply();
             this.plane.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.scene.scale(0.55,0.70,0.55);
+            this.bishop.display();
         this.scene.popMatrix();
 
         this.registerPicking();

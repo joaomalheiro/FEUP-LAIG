@@ -131,7 +131,6 @@
             <texture id="none" length_s="1.0" length_t="1.0"/>
 
             <children>
-                <primitiveref id="bishop"/>
                 <primitiveref id="board"/>
             </children>
 h
