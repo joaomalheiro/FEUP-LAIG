@@ -10,6 +10,11 @@ class Board extends CGFobject {
         this.initComponents();
         this.initTextures();
         this.addBishops();
+        this.makeMove(0,1,1,2);
+        this.makeMove(2,1,3,2);
+        this.makeMove(4,5,3,4);
+        this.makeMove(1,0,3,2);
+        this.makeMove(3,2,4,3);
     }
 
     initComponents(){
@@ -19,6 +24,8 @@ class Board extends CGFobject {
         this.square = new MyRectangle(this.scene,-0.5,-0.5,0.5,0.5);
         this.whiteBishops = [];
         this.blackBishops = [];
+        this.deadBlackBishops = [];
+        this.deadWhiteBishops = [];
     }
     
     initTextures(){
@@ -97,8 +104,13 @@ class Board extends CGFobject {
         for(let i = 0; i < this.whiteBishops.length; i++){
             let x = this.whiteBishops[i].row;
             let z = this.whiteBishops[i].column;
+            let active = this.whiteBishops[i].active;
         this.scene.pushMatrix();
-            this.scene.translate(-4.5 + x ,0,-4.5 + z);
+            if(active){
+                this.scene.translate(-4.5 + x ,0,-4.5 + z);   
+            } else {
+                this.scene.translate(-6.5,0,-3.5 + this.whiteBishops[i].deadId);
+            }
             this.scene.scale(0.55,0.70,0.55);
             this.whiteBishops[i].display();
         this.scene.popMatrix();
@@ -110,11 +122,62 @@ class Board extends CGFobject {
         for(let i = 0; i < this.blackBishops.length; i++){
             let x = this.blackBishops[i].row;
             let z = this.blackBishops[i].column;
+            let active = this.blackBishops[i].active;
         this.scene.pushMatrix();
-            this.scene.translate(-4.5 + x ,0,-4.5 + z);
+            if(active){
+                this.scene.translate(-4.5 + x ,0,-4.5 + z);   
+            } else {
+                this.scene.translate(6,0,-4.5 + this.blackBishops[i].deadId);
+            }
             this.scene.scale(0.55,0.70,0.55);
             this.blackBishops[i].display();
         this.scene.popMatrix();
+        }
+    }
+
+    makeMove(startRow,startColumn,endRow,endColumn){
+        let movingBishop = null;
+        let deadBishop = null;
+        for(let i = 0; i < this.whiteBishops.length ; i++) {
+            if(startRow == this.whiteBishops[i].row && startColumn == this.whiteBishops[i].column
+                && this.whiteBishops[i].active){
+                movingBishop = this.whiteBishops[i];
+            }
+        }
+        if(movingBishop == null) {
+            for(let i = 0; i < this.blackBishops.length ; i++) {
+                if(startRow == this.blackBishops[i].row && startColumn == this.blackBishops[i].column
+                    && this.blackBishops[i].active){
+                    movingBishop = this.blackBishops[i];
+                }
+            }
+        }
+        for(let i = 0; i < this.whiteBishops.length ; i++) {
+            if(endRow == this.whiteBishops[i].row && endColumn == this.whiteBishops[i].column
+                && this.whiteBishops[i].active){
+                deadBishop = this.whiteBishops[i];
+            }
+        }
+        if(deadBishop == null) {
+            for(let i = 0; i < this.blackBishops.length ; i++) {
+                if(endRow == this.blackBishops[i].row && endColumn == this.blackBishops[i].column
+                    && this.blackBishops[i].active){
+                    deadBishop = this.blackBishops[i];
+                }
+            }
+        }
+        
+        if(movingBishop != null) {
+            movingBishop.move(endRow,endColumn);
+        }
+        if(deadBishop != null) {
+            if(deadBishop instanceof BlackBishop){
+                deadBishop.dead(this.deadBlackBishops.length);
+                this.deadBlackBishops.push(deadBishop);
+            } else  if(deadBishop instanceof WhiteBishop){
+                deadBishop.dead(this.deadWhiteBishops.length);
+                this.deadWhiteBishops.push(deadBishop);
+            }
         }
     }
 }

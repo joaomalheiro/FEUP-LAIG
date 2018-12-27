@@ -5,6 +5,8 @@ class Bishop extends CGFobject {
     */
     constructor(scene,row,column) {
         super(scene);
+        this.deadId = null;
+        this.active = true;
         this.scene = scene;
         this.row = row;
         this.column = column;
@@ -144,5 +146,15 @@ class Bishop extends CGFobject {
             this.sphere.display();
          this.scene.popMatrix();
          this.scene.popMatrix();
+    }
+
+    move(row,column) {
+        this.row = row;
+        this.column = column;
+    }
+
+    dead(deadId){
+        this.deadId = deadId;
+        this.active = false;
     }
 }
