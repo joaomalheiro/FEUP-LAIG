@@ -3,10 +3,11 @@ class Bishop extends CGFobject {
     /*
     * Consctructor for the bishop game object
     */
-    constructor(scene) {
+    constructor(scene,row,column) {
         super(scene);
         this.scene = scene;
-
+        this.row = row;
+        this.column = column;
         this.initComponents();
         this.initTextures();
     }
@@ -142,7 +143,6 @@ class Bishop extends CGFobject {
             this.woodenAppearance.apply();
             this.sphere.display();
          this.scene.popMatrix();
-
          this.scene.popMatrix();
     }
 }

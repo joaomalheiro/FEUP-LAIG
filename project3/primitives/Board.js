@@ -9,6 +9,7 @@ class Board extends CGFobject {
 
         this.initComponents();
         this.initTextures();
+        this.addBishops();
     }
 
     initComponents(){
@@ -16,8 +17,8 @@ class Board extends CGFobject {
         this.plane = new Plane(this.scene,10,10);
 
         this.square = new MyRectangle(this.scene,-0.5,-0.5,0.5,0.5);
-    
-        this.bishop = new Bishop(this.scene);
+        this.whiteBishops = [];
+        this.blackBishops = [];
     }
     
     initTextures(){
@@ -38,6 +39,20 @@ class Board extends CGFobject {
 		this.glassAppearance.setDiffuse(0.5,0.5,0.5,1);
 		this.glassAppearance.setSpecular(0.5,0.5,0.5,1);
         this.glassAppearance.setShininess(10.0);
+    }
+
+    addBishops(){
+        for(let i = 0; i < 10; i++) {
+            for(let j = 0; j < 10; j++){
+                if(i % 2 == 0 && j % 2 != 0){
+                    this.whiteBishops.push(new WhiteBishop(this.scene,i,j));
+                }
+
+                if(i % 2 !=0 && j % 2 == 0) {
+                    this.blackBishops.push(new BlackBishop(this.scene,i,j));
+                }
+            }
+        }
     }
 
     //register for picking
@@ -68,12 +83,38 @@ class Board extends CGFobject {
             this.grid.apply();
             this.plane.display();
         this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-            this.scene.scale(0.55,0.70,0.55);
-            this.bishop.display();
-        this.scene.popMatrix();
+        this.bishopsDisplay();
 
         this.registerPicking();
+    }
+
+    bishopsDisplay() {
+        this.whiteBishopsDisplay();
+        this.blackBishopsDisplay();
+    }
+
+    whiteBishopsDisplay() {
+        for(let i = 0; i < this.whiteBishops.length; i++){
+            let x = this.whiteBishops[i].row;
+            let z = this.whiteBishops[i].column;
+        this.scene.pushMatrix();
+            this.scene.translate(-4.5 + x ,0,-4.5 + z);
+            this.scene.scale(0.55,0.70,0.55);
+            this.whiteBishops[i].display();
+        this.scene.popMatrix();
+
+        }
+    }
+
+    blackBishopsDisplay() {
+        for(let i = 0; i < this.blackBishops.length; i++){
+            let x = this.blackBishops[i].row;
+            let z = this.blackBishops[i].column;
+        this.scene.pushMatrix();
+            this.scene.translate(-4.5 + x ,0,-4.5 + z);
+            this.scene.scale(0.55,0.70,0.55);
+            this.blackBishops[i].display();
+        this.scene.popMatrix();
+        }
     }
 }
