@@ -20,6 +20,8 @@ class Board extends CGFobject {
     initComponents(){
 
         this.plane = new Plane(this.scene,10,10);
+        
+        this.counter = new Counter(this.scene);
 
         this.square = new MyRectangle(this.scene,-0.5,-0.5,0.5,0.5);
         this.whiteBishops = [];
@@ -82,6 +84,55 @@ class Board extends CGFobject {
         }
     }
 
+    //register bishops for picking
+    bishopRegisterPicking(){
+        
+        for(let i = 0; i < this.whiteBishops.length; i++){
+            this.scene.pushMatrix();
+
+            this.scene.registerForPick(this.whiteBishops[i].row * 10 + this.whiteBishops[i].column, this.whiteBishops[i]);
+
+            if(this.scene.pickMode){
+                let x = this.whiteBishops[i].row;
+                let z = this.whiteBishops[i].column;
+                let active = this.whiteBishops[i].active;
+            this.scene.pushMatrix();
+                if(active){
+                    this.scene.translate(-4.5 + x ,0,-4.5 + z);   
+                } else {
+                    this.scene.translate(-6.5,0,-3.5 + this.whiteBishops[i].deadId);
+                }
+                this.scene.scale(0.55,0.70,0.55);
+                this.whiteBishops[i].display();
+            this.scene.popMatrix();
+    
+            }
+            this.scene.popMatrix();
+        }
+
+        for(let j = 0; j < this.blackBishops.length; j++){
+            this.scene.pushMatrix();
+
+            this.scene.registerForPick(this.blackBishops[j].row * 10 + this.blackBishops[j].column, this.blackBishops[j]);
+
+            if(this.scene.pickMode){
+                let x = this.blackBishops[i].row;
+            let z = this.blackBishops[i].column;
+            let active = this.blackBishops[i].active;
+        this.scene.pushMatrix();
+            if(active){
+                this.scene.translate(-4.5 + x ,0,-4.5 + z);   
+            } else {
+                this.scene.translate(6,0,-4.5 + this.blackBishops[i].deadId);
+            }
+            this.scene.scale(0.55,0.70,0.55);
+            this.blackBishops[i].display();
+        this.scene.popMatrix();
+            }
+            this.scene.popMatrix();
+        }
+    }
+
     display(){
 
         //display the top sphere of the bishop
@@ -92,7 +143,10 @@ class Board extends CGFobject {
         this.scene.popMatrix();
         this.bishopsDisplay();
 
+       // this.counter.display();
+
         this.registerPicking();
+        this.bishopRegisterPicking();
     }
 
     bishopsDisplay() {

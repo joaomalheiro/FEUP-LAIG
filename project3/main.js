@@ -18,7 +18,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.j
 							  'primitives/MyTorus.js','animations/Animation.js','primitives/Plane.js',
 							  'primitives/Patch.js','animations/LinearAnimation.js','animations/CircularAnimation.js',
                               'primitives/Cylinder2.js', 'primitives/Bishop.js','primitives/Board.js','primitives/BlackBishop.js',
-                              'primitives/WhiteBishop.js',
+                              'primitives/WhiteBishop.js', 'primitives/Counter.js', 'primitives/Clock.js',
 
 main=function()
 {
