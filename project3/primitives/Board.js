@@ -18,7 +18,6 @@ class Board extends CGFobject {
         
         this.counter = new Counter(this.scene);
 
-        this.square = new MyRectangle(this.scene,-0.5,-0.5,0.5,0.5);
         this.whiteBishops = [];
         this.blackBishops = [];
         this.deadBlackBishops = [];
@@ -65,14 +64,14 @@ class Board extends CGFobject {
             for (let j = 0; j < 10; j++) {
                 this.scene.pushMatrix();
                     //console.log(i*10 + j);
-                    this.scene.registerForPick( i * 10 + j, this.square);
+                    this.scene.registerForPick( i * 10 + j, this.plane);
                    
-                    this.scene.translate(-4.5,0,-4.5);
+                    this.scene.translate(-4.5,0.01,-4.5);
                     this.scene.translate(i, 0, j);
-                    this.scene.rotate(-Math.PI/2.0,1,0,0);
+                    //this.scene.rotate(-Math.PI/2.0,1,0,0);
                    
                     if(this.scene.pickMode){
-                        this.square.display();
+                        this.plane.display();
                     }
                 this.scene.popMatrix();
             }

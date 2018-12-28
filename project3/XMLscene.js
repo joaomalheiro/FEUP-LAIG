@@ -78,7 +78,7 @@ class XMLscene extends CGFscene {
             } else if (this.activeBishop instanceof BlackBishop && obj instanceof WhiteBishop){
                 this.board.makeMove(this.activeBishop.row,this.activeBishop.column,obj.row,obj.column);
             }
-        } else if (obj instanceof MyRectangle) {
+        } else if (obj instanceof Plane) {
             let endRow = Math.floor(customId / 10);
             let endColumn = customId % 10;
             if(this.activeBishop != null) {
