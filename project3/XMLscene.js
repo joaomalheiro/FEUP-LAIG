@@ -38,6 +38,8 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
 
         this.setPickEnabled(true);
+
+        this.board = new Board(this);
     }
 
     logPicking() {
@@ -274,7 +276,7 @@ class XMLscene extends CGFscene {
             }
 
             // Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
+            this.board.display();
         }
         else {
             // Draw axis
