@@ -158,7 +158,7 @@ class Board extends CGFobject {
             if(active){
                 this.scene.translate(-4.5 + x ,0,-4.5 + z);   
             } else {
-                this.scene.translate(-6.5,0,-4.5 + this.whiteBishops[i].deadId);
+                this.scene.translate(-5.5 - Math.floor(this.whiteBishops[i].deadId / 10),0,-4.5 + (this.whiteBishops[i].deadId % 10));
             }
             this.scene.scale(0.55,0.70,0.55);
             this.whiteBishops[i].display();
@@ -176,7 +176,7 @@ class Board extends CGFobject {
             if(active){
                 this.scene.translate(-4.5 + x ,0,-4.5 + z);   
             } else {
-               this.scene.translate(6,0,-4.5 + this.blackBishops[i].deadId);
+               this.scene.translate(5.5 + Math.floor(this.blackBishops[i].deadId / 10),0,-4.5 + (this.blackBishops[i].deadId % 10));
             }
             this.scene.scale(0.55,0.70,0.55);
             this.blackBishops[i].display();
