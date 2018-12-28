@@ -14,6 +14,7 @@ class XMLscene extends CGFscene {
         this.interface = myinterface;
         this.lightValues = {};
         this.materialCounter = 0;
+        this.activeBishop = null;
         this.time = new Date().getTime();
     }
 
@@ -48,13 +49,28 @@ class XMLscene extends CGFscene {
                 for (var i=0; i< this.pickResults.length; i++) {
                     var obj = this.pickResults[i][0];
                     if (obj)
-                    {
+                    {   
                         var customId = this.pickResults[i][1];				
                         console.log("Picked object: " + obj + ", with pick id " + customId);
+
+                        console.log(obj);
+                        this.handleClick(obj,customId);
                     }
                 }
                 this.pickResults.splice(0,this.pickResults.length);
             }		
+        }
+    }
+
+    handleClick(obj,customId) {
+        if(obj instanceof Bishop) {
+            this.activeBishop = obj;
+        } else if (obj instanceof MyRectangle) {
+            let endRow = Math.floor(customId / 10);
+            let endColumn = customId % 10;
+            if(this.activeBishop != null) {
+                this.board.makeMove(this.activeBishop.row,this.activeBishop.column,endRow,endColumn);
+            }
         }
     }
     /**
