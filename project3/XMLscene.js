@@ -66,6 +66,9 @@ class XMLscene extends CGFscene {
         if(obj instanceof Bishop) {
             if(this.activeBishop == null){
                 this.activeBishop = obj;
+            } else if(this.activeBishop == obj){
+                this.activeBishop = null;
+                console.log('thesame');
             } else if(this.activeBishop instanceof WhiteBishop && obj instanceof WhiteBishop){
                 this.activeBishop = obj;
             } else if(this.activeBishop instanceof WhiteBishop && obj instanceof BlackBishop) {
