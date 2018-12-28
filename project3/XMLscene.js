@@ -64,7 +64,17 @@ class XMLscene extends CGFscene {
 
     handleClick(obj,customId) {
         if(obj instanceof Bishop) {
-            this.activeBishop = obj;
+            if(this.activeBishop == null){
+                this.activeBishop = obj;
+            } else if(this.activeBishop instanceof WhiteBishop && obj instanceof WhiteBishop){
+                this.activeBishop = obj;
+            } else if(this.activeBishop instanceof WhiteBishop && obj instanceof BlackBishop) {
+                this.board.makeMove(this.activeBishop.row,this.activeBishop.column,obj.row,obj.column);
+            } else if (this.activeBishop instanceof BlackBishop && obj instanceof BlackBishop){
+                this.activeBishop = obj;
+            } else if (this.activeBishop instanceof BlackBishop && obj instanceof WhiteBishop){
+                this.board.makeMove(this.activeBishop.row,this.activeBishop.column,obj.row,obj.column);
+            }
         } else if (obj instanceof MyRectangle) {
             let endRow = Math.floor(customId / 10);
             let endColumn = customId % 10;
