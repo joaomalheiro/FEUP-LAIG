@@ -85,8 +85,6 @@ class Board extends CGFobject {
         for(let i = 0; i < this.whiteBishops.length; i++){
             this.scene.pushMatrix();
 
-            this.scene.registerForPick(this.whiteBishops[i].row * 10 + this.whiteBishops[i].column, this.whiteBishops[i]);
-
             if(this.scene.pickMode){
                 let x = this.whiteBishops[i].row;
                 let z = this.whiteBishops[i].column;
@@ -95,9 +93,11 @@ class Board extends CGFobject {
                 if(active){
                     this.scene.translate(-4.5 + x ,0,-4.5 + z);   
                 } else {
-                    this.scene.translate(-6.5,0,-3.5 + this.whiteBishops[i].deadId);
+                    this.scene.translate(-6.5,0,-4.5 + this.whiteBishops[i].deadId);
                 }
                 this.scene.scale(0.55,0.70,0.55);
+                if(active)
+                this.scene.registerForPick(this.whiteBishops[i].row * 10 + this.whiteBishops[i].column, this.whiteBishops[i]);
                 this.whiteBishops[i].display();
             this.scene.popMatrix();
     
@@ -108,8 +108,6 @@ class Board extends CGFobject {
         for(let i = 0; i < this.blackBishops.length; i++){
             this.scene.pushMatrix();
 
-            this.scene.registerForPick(this.blackBishops[i].row * 10 + this.blackBishops[i].column, this.blackBishops[i]);
-
             if(this.scene.pickMode){
                 let x = this.blackBishops[i].row;
                 let z = this.blackBishops[i].column;
@@ -118,9 +116,11 @@ class Board extends CGFobject {
                 if(active){
                     this.scene.translate(-4.5 + x ,0,-4.5 + z);   
                 } else {
-                    this.scene.translate(-6.5,0,-3.5 + this.blackBishops[i].deadId);
+                    this.scene.translate(6,0,-4.5 + this.blackBishops[i].deadId);
                 }
                 this.scene.scale(0.55,0.70,0.55);
+                if(active)
+                this.scene.registerForPick(this.blackBishops[i].row * 10 + this.blackBishops[i].column, this.blackBishops[i]);
                 this.blackBishops[i].display();
             this.scene.popMatrix();
     
@@ -177,7 +177,7 @@ class Board extends CGFobject {
             if(active){
                 this.scene.translate(-4.5 + x ,0,-4.5 + z);   
             } else {
-                this.scene.translate(6,0,-4.5 + this.blackBishops[i].deadId);
+               this.scene.translate(6,0,-4.5 + this.blackBishops[i].deadId);
             }
             this.scene.scale(0.55,0.70,0.55);
             this.blackBishops[i].display();

@@ -85,6 +85,8 @@ class XMLscene extends CGFscene {
                 this.board.makeMove(this.activeBishop.row,this.activeBishop.column,endRow,endColumn);
             }
         }
+
+        console.log(this.activeBishop);
     }
     /**
      * Initializes the scene cameras.
