@@ -10,11 +10,6 @@ class Board extends CGFobject {
         this.initComponents();
         this.initTextures();
         this.addBishops();
-        this.makeMove(0,1,1,2);
-        this.makeMove(2,1,3,2);
-        this.makeMove(4,5,3,4);
-        this.makeMove(1,0,3,2);
-        this.makeMove(3,2,4,3);
     }
 
     initComponents(){
