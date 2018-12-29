@@ -10,6 +10,7 @@ class Bishop extends CGFobject {
         this.scene = scene;
         this.row = row;
         this.column = column;
+        this.animation = null;
         this.initComponents();
         this.initTextures();
     }

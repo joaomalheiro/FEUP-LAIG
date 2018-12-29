@@ -6,7 +6,7 @@ class Board extends CGFobject {
     constructor(scene) {
         super(scene);
         this.scene = scene;
-
+        this.animationCounter = 0;
         this.initComponents();
         this.initTextures();
         this.addBishops();
@@ -166,6 +166,12 @@ class Board extends CGFobject {
             } else {
                 this.scene.translate(-5.5 - Math.floor(this.whiteBishops[i].deadId / 10),0,-4.5 + (this.whiteBishops[i].deadId % 10));
             }
+            if(this.whiteBishops[i].animation != null && !this.whiteBishops[i].animation.done){
+                this.whiteBishops[i].animation.update(Date.now());
+                this.whiteBishops[i].animation.apply();  
+                if(this.whiteBishops[i].animation.done)
+                    this.animationCounter--; 
+            }
             this.scene.scale(0.55,0.70,0.55);
             this.whiteBishops[i].display();
         this.scene.popMatrix();
@@ -183,6 +189,12 @@ class Board extends CGFobject {
                 this.scene.translate(-4.5 + x ,0,-4.5 + z);   
             } else {
                this.scene.translate(5.5 + Math.floor(this.blackBishops[i].deadId / 10),0,-4.5 + (this.blackBishops[i].deadId % 10));
+            }
+            if(this.blackBishops[i].animation != null && !this.blackBishops[i].animation.done){
+                this.blackBishops[i].animation.update(Date.now());
+                this.blackBishops[i].animation.apply();
+                if(this.blackBishops[i].animation.done)
+                    this.animationCounter--;   
             }
             this.scene.scale(0.55,0.70,0.55);
             this.blackBishops[i].display();
@@ -223,13 +235,24 @@ class Board extends CGFobject {
         }
         
         if(movingBishop != null) {
+            let controlPoints = [];
+                controlPoints[0] = vec3.fromValues(startRow - endRow,0,startColumn - endColumn);
+                controlPoints[1] = vec3.fromValues(startRow - endRow,1.5,startColumn - endColumn);
+                controlPoints[2] = vec3.fromValues(0,1.5,0);
+                controlPoints[3] = vec3.fromValues(0,0,0);
+
+            this.animationCounter++;   
+            movingBishop.animation = new LinearAnimation(this.scene,'moving',4,controlPoints);
             movingBishop.move(endRow,endColumn);
+            console.log('MOVING', movingBishop);
         }
         if(deadBishop != null) {
             if(deadBishop instanceof BlackBishop){
+                this.animationCounter++;   
                 deadBishop.dead(this.deadBlackBishops.length);
                 this.deadBlackBishops.push(deadBishop);
             } else  if(deadBishop instanceof WhiteBishop){
+                this.animationCounter++;   
                 deadBishop.dead(this.deadWhiteBishops.length);
                 this.deadWhiteBishops.push(deadBishop);
             }
