@@ -263,12 +263,10 @@ class XMLscene extends CGFscene {
                 this.time = currTime;
             }
         }
-<<<<<<< HEAD
       
         this.deltaTime = currTime - this.time;
         this.time = currTime;
         this.board.update(this.deltaTime);
-=======
 
         if(this.board.animationCounter > 0) {
             this.pause = true;
@@ -287,7 +285,7 @@ class XMLscene extends CGFscene {
                 this.board.blackBishops[i].animation.update(currTime - this.time);
             }
         }*/
->>>>>>> 7450a4aa192d4b3b7f1eeb826228751a42f9597a
+
     }
 
     /**
