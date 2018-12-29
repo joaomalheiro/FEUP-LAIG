@@ -6,7 +6,7 @@ class Board extends CGFobject {
     constructor(scene) {
         super(scene);
         this.scene = scene;
-
+        this.animationCounter = 0;
         this.initComponents();
         this.initTextures();
         this.addBishops();
@@ -162,7 +162,9 @@ class Board extends CGFobject {
             }
             if(this.whiteBishops[i].animation != null && !this.whiteBishops[i].animation.done){
                 this.whiteBishops[i].animation.update(Date.now());
-                this.whiteBishops[i].animation.apply();   
+                this.whiteBishops[i].animation.apply();  
+                if(this.whiteBishops[i].animation.done)
+                    this.animationCounter--; 
             }
             this.scene.scale(0.55,0.70,0.55);
             this.whiteBishops[i].display();
@@ -184,7 +186,9 @@ class Board extends CGFobject {
             }
             if(this.blackBishops[i].animation != null && !this.blackBishops[i].animation.done){
                 this.blackBishops[i].animation.update(Date.now());
-                this.blackBishops[i].animation.apply();   
+                this.blackBishops[i].animation.apply();
+                if(this.blackBishops[i].animation.done)
+                    this.animationCounter--;   
             }
             this.scene.scale(0.55,0.70,0.55);
             this.blackBishops[i].display();
@@ -231,15 +235,18 @@ class Board extends CGFobject {
                 controlPoints[2] = vec3.fromValues(0,1.5,0);
                 controlPoints[3] = vec3.fromValues(0,0,0);
 
+            this.animationCounter++;   
             movingBishop.animation = new LinearAnimation(this.scene,'moving',4,controlPoints);
             movingBishop.move(endRow,endColumn);
             console.log('MOVING', movingBishop);
         }
         if(deadBishop != null) {
             if(deadBishop instanceof BlackBishop){
+                this.animationCounter++;   
                 deadBishop.dead(this.deadBlackBishops.length);
                 this.deadBlackBishops.push(deadBishop);
             } else  if(deadBishop instanceof WhiteBishop){
+                this.animationCounter++;   
                 deadBishop.dead(this.deadWhiteBishops.length);
                 this.deadWhiteBishops.push(deadBishop);
             }

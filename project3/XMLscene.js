@@ -264,6 +264,12 @@ class XMLscene extends CGFscene {
             }
         }
 
+        if(this.board.animationCounter > 0) {
+            this.pause = true;
+        } else {
+            this.pause = false;
+        }
+
         /*for(let i = 0; i < this.board.whiteBishops.length; i++) {
             if(this.board.whiteBishops[i].animation != null){
                 this.board.whiteBishops[i].animation.update(currTime - this.time);
