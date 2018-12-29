@@ -18,7 +18,7 @@ class LinearAnimation extends Animation {
             this.previousUpdate = time;
         }
         let deltaTime = time - this.previousUpdate;
-        this.previousUpdate = time;        
+        this.previousUpdate = time;      
         this.currentTime += deltaTime;
         if(this.currentTime > this.time) {
             this.currentTime = this.time;

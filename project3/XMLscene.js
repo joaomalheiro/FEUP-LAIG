@@ -15,6 +15,7 @@ class XMLscene extends CGFscene {
         this.lightValues = {};
         this.materialCounter = 0;
         this.activeBishop = null;
+        this.pause = false;
         this.time = new Date().getTime();
     }
 
@@ -54,7 +55,8 @@ class XMLscene extends CGFscene {
                         console.log("Picked object: " + obj + ", with pick id " + customId);
 
                         console.log(obj);
-                        this.handleClick(obj,customId);
+                        if(!this.pause)
+                            this.handleClickBoard(obj,customId);
                     }
                 }
                 this.pickResults.splice(0,this.pickResults.length);
@@ -62,7 +64,7 @@ class XMLscene extends CGFscene {
         }
     }
 
-    handleClick(obj,customId) {
+    handleClickBoard(obj,customId) {
         if(obj instanceof Bishop) {
             if(this.activeBishop == null){
                 this.activeBishop = obj;
@@ -238,7 +240,7 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = true;
 
-        this.setUpdatePeriod(60);
+        this.setUpdatePeriod(1000/120);
 
     }
     /**
@@ -261,6 +263,18 @@ class XMLscene extends CGFscene {
                 this.time = currTime;
             }
         }
+
+        /*for(let i = 0; i < this.board.whiteBishops.length; i++) {
+            if(this.board.whiteBishops[i].animation != null){
+                this.board.whiteBishops[i].animation.update(currTime - this.time);
+            }
+        }
+
+        for(let i = 0; i < this.board.blackBishops.length; i++) {
+            if(this.board.blackBishops[i].animation != null){
+                this.board.blackBishops[i].animation.update(currTime - this.time);
+            }
+        }*/
     }
 
     /**
