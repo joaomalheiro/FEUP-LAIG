@@ -134,11 +134,14 @@ class Board extends CGFobject {
         this.scene.pushMatrix();
             this.scene.scale(10, 1, 10);
             this.grid.apply();
-           // this.plane.display();
+            this.plane.display();
         this.scene.popMatrix();
-        //this.bishopsDisplay();
+        this.bishopsDisplay();
 
-       this.counter.display();
+        this.scene.pushMatrix();
+            this.scene.translate(0,0,-10);
+            this.counter.display();
+        this.scene.popMatrix();
 
         this.registerPicking();
         this.bishopRegisterPicking();

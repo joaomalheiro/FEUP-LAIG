@@ -102,15 +102,14 @@ print_header_line(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Require your Prolog Files here
+:-include('src/madbishops.pl').
 
 parse_input(handshake, handshake).
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
 
-parte_input(valid_play(B, Player, PFrom, PTo), Var):-
-	(valid_play(B,Player, PFrom, PTo),
-	Var is 1 );
-	Var is 2.
+parse_input(initial_state, [B, PiecesP1, PiecesP2, Player]):-
+	initial_state(state(board(B,PiecesP1,PiecesP2),Player)).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
