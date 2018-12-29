@@ -29,6 +29,21 @@ class Clock extends CGFobject {
 		this.clockAppearance.setDiffuse(0.5,0.5,0.5,1);
 		this.clockAppearance.setSpecular(0.5,0.5,0.5,1);
         this.clockAppearance.setShininess(10.0);
+
+        this.numbers = [];
+
+        for(let i = 0; i < 10; i++) {
+            
+            let appearance = new CGFappearance(this.scene);
+            appearance.loadTexture("scenes/images/numbers/" + i + ".jpg");
+            appearance.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
+        	appearance.setAmbient(1,1,1,1);
+		    appearance.setDiffuse(0.5,0.5,0.5,1);
+	        appearance.setSpecular(0.5,0.5,0.5,1);
+            appearance.setShininess(10.0);
+
+            this.numbers.push(appearance);
+        }
     }
 
     decTime(){
@@ -38,23 +53,54 @@ class Clock extends CGFobject {
                 //PLAY CLOCK IS OVER
             } else {
                 this.seconds--;
+                this.updateSecondsText();
             }
         } else if(this.seconds == 0){
             this.seconds = 59;
             this.minutes--;
+            this.updateSecondsText();
+            this.updateMinutesText();
         } else {
             this.seconds--;
+            this.updateSecondsText();
         }
+    }
 
-        console.log(this.minutes);
-        console.log(this.seconds);
+    updateSecondsText(){
+
+        this.secondsNum1 = Math.floor(this.seconds / 10);
+        this.secondsNum2 = this.seconds % 10;
+
+        console.log(this.secondsNum1);
+
+        this.secondsTex1 = this.numbers[this.secondsNum1];
+        this.secondsTex2 = this.numbers[this.secondsNum2];
+
+    }
+
+    updateMinutesText(){
+
+        this.minutesTex1 = this.numbers[this.minutes];
+
     }
 
     display(){
 
-        this.clockAppearance.apply();
+        this.scene.pushMatrix();
+            this.minutesTex1.apply();
+            this.scene.translate(1,0,0);
+            this.plane.display();
+        this.scene.popMatrix();
 
         this.scene.pushMatrix();
+            this.secondsTex1.apply();
+            this.scene.translate(-1,0,0);
+            this.plane.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.secondsTex2.apply();
+            this.scene.translate(-2,0,0);
             this.plane.display();
         this.scene.popMatrix();
     }

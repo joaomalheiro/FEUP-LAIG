@@ -145,9 +145,7 @@ class Board extends CGFobject {
     }
 
     update(deltaTime){
-
-        let time = deltaTime/1000;
-        this.counter.update();
+        this.counter.update(deltaTime);
       }
 
     bishopsDisplay() {
