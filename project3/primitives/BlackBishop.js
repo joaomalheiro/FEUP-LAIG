@@ -19,4 +19,14 @@ class BlackBishop extends Bishop {
         this.woodenAppearance.setShininess(10.0);
     }
 
+    dead(deadId){
+    let controlPoints = [];
+        controlPoints[0] = vec3.fromValues(-10 - Math.floor(deadId / 10) + this.row,0,-(deadId % 10) + this.column);
+        controlPoints[1] = vec3.fromValues(-10 - Math.floor(deadId / 10) + this.row,1.5,-(deadId % 10) + this.column);
+        controlPoints[2] = vec3.fromValues(0,1.5,0);
+        controlPoints[3] = vec3.fromValues(0,0,0);
+    super.animation = new LinearAnimation(this.scene,'dead',4,controlPoints);
+    super.dead(deadId);
+    }
+
 }

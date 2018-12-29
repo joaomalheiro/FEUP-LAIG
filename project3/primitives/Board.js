@@ -226,10 +226,10 @@ class Board extends CGFobject {
         
         if(movingBishop != null) {
             let controlPoints = [];
-            controlPoints[0] = vec3.fromValues(startRow - endRow,0,startColumn - endColumn);
-            controlPoints[1] = vec3.fromValues(startRow - endRow,1.5,startColumn - endColumn);
-            controlPoints[2] = vec3.fromValues(0,1.5,0);
-            controlPoints[3] = vec3.fromValues(0,0,0);
+                controlPoints[0] = vec3.fromValues(startRow - endRow,0,startColumn - endColumn);
+                controlPoints[1] = vec3.fromValues(startRow - endRow,1.5,startColumn - endColumn);
+                controlPoints[2] = vec3.fromValues(0,1.5,0);
+                controlPoints[3] = vec3.fromValues(0,0,0);
 
             movingBishop.animation = new LinearAnimation(this.scene,'moving',4,controlPoints);
             movingBishop.move(endRow,endColumn);
