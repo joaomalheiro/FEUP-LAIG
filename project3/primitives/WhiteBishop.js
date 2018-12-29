@@ -22,8 +22,8 @@ class WhiteBishop extends Bishop {
     dead(deadId){
         let controlPoints = [];
             controlPoints[0] = vec3.fromValues(1 + Math.floor(deadId / 10) + this.row,0,-(deadId % 10) + this.column);
-            controlPoints[1] = vec3.fromValues(1 + Math.floor(deadId / 10) + this.row,1.5,-(deadId % 10) + this.column);
-            controlPoints[2] = vec3.fromValues(0,1.5,0);
+            controlPoints[1] = vec3.fromValues(1 + Math.floor(deadId / 10) + this.row,3.5,-(deadId % 10) + this.column);
+            controlPoints[2] = vec3.fromValues(0,3.5,0);
             controlPoints[3] = vec3.fromValues(0,0,0);
         super.animation = new LinearAnimation(this.scene,'dead',4,controlPoints);
         super.dead(deadId);
