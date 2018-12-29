@@ -14,34 +14,32 @@ class XMLscene extends CGFscene {
         this.interface = myinterface;
         this.lightValues = {};
         this.materialCounter = 0;
-        this.activeBishop = null;
-        this.pause = false;
         this.time = new Date().getTime();
     }
-
+    
     /**
      * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
      * @param {CGFApplication} application
      */
     init(application) {
         super.init(application);
-
+        
         this.sceneInited = false;
-
+        
         this.initInitialCamera();
-
+        
         this.enableTextures(true);
-
+        
         this.gl.clearDepth(100.0);
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
-
+        
         this.axis = new CGFaxis(this);
-
+        
+        this.madBishops = new MadBishops(this);
         this.setPickEnabled(true);
 
-        this.board = new Board(this);
     }
 
     logPicking() {
@@ -56,39 +54,12 @@ class XMLscene extends CGFscene {
 
                         console.log(obj);
                         if(!this.pause)
-                            this.handleClickBoard(obj,customId);
+                            this.madBishops.handleClickBoard(obj,customId);
                     }
                 }
                 this.pickResults.splice(0,this.pickResults.length);
             }		
         }
-    }
-
-    handleClickBoard(obj,customId) {
-        if(obj instanceof Bishop) {
-            if(this.activeBishop == null){
-                this.activeBishop = obj;
-            } else if(this.activeBishop == obj){
-                this.activeBishop = null;
-                console.log('thesame');
-            } else if(this.activeBishop instanceof WhiteBishop && obj instanceof WhiteBishop){
-                this.activeBishop = obj;
-            } else if(this.activeBishop instanceof WhiteBishop && obj instanceof BlackBishop) {
-                this.board.makeMove(this.activeBishop.row,this.activeBishop.column,obj.row,obj.column);
-            } else if (this.activeBishop instanceof BlackBishop && obj instanceof BlackBishop){
-                this.activeBishop = obj;
-            } else if (this.activeBishop instanceof BlackBishop && obj instanceof WhiteBishop){
-                this.board.makeMove(this.activeBishop.row,this.activeBishop.column,obj.row,obj.column);
-            }
-        } else if (obj instanceof Plane) {
-            let endRow = Math.floor(customId / 10);
-            let endColumn = customId % 10;
-            if(this.activeBishop != null) {
-                this.board.makeMove(this.activeBishop.row,this.activeBishop.column,endRow,endColumn);
-            }
-        }
-
-        console.log(this.activeBishop);
     }
     /**
      * Initializes the scene cameras.
@@ -253,7 +224,7 @@ class XMLscene extends CGFscene {
         console.log(camera);
     }
     /**
-    * Auxiliary function that sets up the movement of the waves
+    * 
     */
     update(currTime){
 
@@ -266,13 +237,14 @@ class XMLscene extends CGFscene {
       
         this.deltaTime = currTime - this.time;
         this.time = currTime;
-        this.board.update(this.deltaTime);
+        this.madBishops.update(this.deltaTime);
 
-        if(this.board.animationCounter > 0) {
+       /* if(this.board.animationCounter > 0) {
             this.pause = true;
         } else {
             this.pause = false;
         }
+        */
 
         /*for(let i = 0; i < this.board.whiteBishops.length; i++) {
             if(this.board.whiteBishops[i].animation != null){
@@ -332,7 +304,7 @@ class XMLscene extends CGFscene {
             }
 
             // Displays the scene (MySceneGraph function).
-            this.board.display();
+            this.madBishops.display();
         }
         else {
             // Draw axis
