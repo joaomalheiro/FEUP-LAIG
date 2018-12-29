@@ -3,24 +3,27 @@ class Clock extends CGFobject {
     /*
     * Constructor for the clock game object
     */
-    constructor(scene) {
+    constructor(scene , minutes, seconds) {
         super(scene);
         this.scene = scene;
+        
+        this.minutes = minutes;
+        this.seconds = seconds;
+
         this.initComponents();
         this.initTextures();
+
     }
 
     initComponents(){
 
-        this.circle = new MyCircle(this.scene, 30);
-
-        this.timePointer = new MyCylinder(this.scene, 1 , 0.1,0.1, 30 , 30);
+        this.plane = new Plane(this.scene, 1, 1);
     }
     
     initTextures(){
         //wooden appearance
         this.clockAppearance = new CGFappearance(this.scene);
-        this.clockAppearance.loadTexture("scenes/images/clock.jpg");
+        this.clockAppearance.loadTexture("scenes/images//numbers/2.jpg");
 		this.clockAppearance.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
     	this.clockAppearance.setAmbient(1,1,1,1);
 		this.clockAppearance.setDiffuse(0.5,0.5,0.5,1);
@@ -28,16 +31,31 @@ class Clock extends CGFobject {
         this.clockAppearance.setShininess(10.0);
     }
 
+    decTime(){
+        
+        if(this.minutes == 0){
+            if(this.seconds == 0){
+                //PLAY CLOCK IS OVER
+            } else {
+                this.seconds--;
+            }
+        } else if(this.seconds == 0){
+            this.seconds = 59;
+            this.minutes--;
+        } else {
+            this.seconds--;
+        }
+
+        console.log(this.minutes);
+        console.log(this.seconds);
+    }
+
     display(){
 
-        this.scene.pushMatrix();
-            this.circle.display();
-        this.scene.popMatrix();
-
         this.clockAppearance.apply();
-        
+
         this.scene.pushMatrix();
-            this.timePointer.display();
+            this.plane.display();
         this.scene.popMatrix();
     }
 }

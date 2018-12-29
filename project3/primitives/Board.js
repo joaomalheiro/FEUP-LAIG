@@ -134,15 +134,21 @@ class Board extends CGFobject {
         this.scene.pushMatrix();
             this.scene.scale(10, 1, 10);
             this.grid.apply();
-            this.plane.display();
+           // this.plane.display();
         this.scene.popMatrix();
-        this.bishopsDisplay();
+        //this.bishopsDisplay();
 
-       // this.counter.display();
+       this.counter.display();
 
         this.registerPicking();
         this.bishopRegisterPicking();
     }
+
+    update(deltaTime){
+
+        let time = deltaTime/1000;
+        this.counter.update();
+      }
 
     bishopsDisplay() {
         this.whiteBishopsDisplay();

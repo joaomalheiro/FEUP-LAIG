@@ -22,7 +22,7 @@ class Counter extends CGFobject {
 
         this.top_sphere = new MySphere(this.scene, 0.2, 30, 30);
 
-        this.clock = new Clock(this.scene);
+        this.clock = new Clock(this.scene, 1, 0);
     }
     
     initTextures(){
@@ -54,9 +54,13 @@ class Counter extends CGFobject {
         this.blackAppearance.setShininess(10.0);
     }
 
+    update(){
+        this.clock.decTime();
+    }
+
     display(){
 
-        /*this.woodenAppearance.apply();
+        this.woodenAppearance.apply();
 
         this.scene.pushMatrix();
             this.scene.rotate(Math.PI/2.0,1,0,0);
@@ -106,8 +110,12 @@ class Counter extends CGFobject {
             this.scene.scale(1,0.2,1);
             this.top_sphere.display();
         this.scene.popMatrix();
-        */
-
-        this.clock.display();
+        
+        this.scene.pushMatrix();
+            this.scene.translate(0,0,2);
+            this.scene.rotate(Math.PI,0,1,0);
+            this.scene.rotate(-Math.PI/2.0,1,0,0);
+            this.clock.display();
+        this.scene.popMatrix();
     }
 }

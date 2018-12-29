@@ -238,7 +238,7 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = true;
 
-        this.setUpdatePeriod(60);
+        this.setUpdatePeriod(100);
 
     }
     /**
@@ -261,6 +261,10 @@ class XMLscene extends CGFscene {
                 this.time = currTime;
             }
         }
+      
+        this.deltaTime = currTime - this.time;
+        this.time = currTime;
+        this.board.update(this.deltaTime);
     }
 
     /**
