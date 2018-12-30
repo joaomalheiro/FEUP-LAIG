@@ -26,10 +26,12 @@
         + JSON.stringify(fromX) + ',' + JSON.stringify(fromY) + ','
         + JSON.stringify(toX) + ',' + JSON.stringify(toY) + ')';
 
-        makeRequest(requestString, validPlayHandler());
+        makeRequest(requestString, data => validPlayHandler(data));
 
     }
 
-    function validPlayHandler(){
-        console.log("We up in this bitch !");
+    function validPlayHandler(data){
+
+        this.valid = JSON.parse(data.target.response);
+        console.log(this.valid);
     }

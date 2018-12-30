@@ -23,12 +23,13 @@ class MadBishops extends CGFobject {
 
         console.log(this.boardState);
 
-        //this.checkValidPlay();
+        this.checkValidPlay();
     }
     
     handleClickBoard(obj,customId) {
         if(obj instanceof Bishop) {
             if(this.activeBishop == null){
+                obj.changeMaterial();
                 this.activeBishop = obj;
             } else if(this.activeBishop == obj){
                 this.activeBishop = null;

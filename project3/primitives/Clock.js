@@ -71,8 +71,6 @@ class Clock extends CGFobject {
         this.secondsNum1 = Math.floor(this.seconds / 10);
         this.secondsNum2 = this.seconds % 10;
 
-        console.log(this.secondsNum1);
-
         this.secondsTex1 = this.numbers[this.secondsNum1];
         this.secondsTex2 = this.numbers[this.secondsNum2];
 
