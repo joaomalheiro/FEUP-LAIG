@@ -225,6 +225,11 @@ class XMLscene extends CGFscene {
         console.log('Camera has changed to');
         console.log(camera);
     }
+
+    rotateCamera() {
+        this.rotating = true;
+        this.interface.setActiveCamera(null);
+    }
     /**
     * 
     */
@@ -248,10 +253,10 @@ class XMLscene extends CGFscene {
         }
 
         if(this.angle > Math.PI){
+            this.interface.setActiveCamera(this.camera);
             this.rotating = false;
             this.angle = 0;
         }
-        console.log(this.angle);
 
         if(this.rotating){
             this.camera.orbit([1,0,0], 0.01);
