@@ -13,7 +13,7 @@ class MadBishops extends CGFobject {
     }
 
     checkValidPlay(){
-        validPlay(this.boardState, this.playerTurn, 1, 1, 1, 1);
+        validPlay(this.boardState, this.playerTurn, 0, 1, 1, 0, data => this.validPlayHandler(data));
     }
         
     initializeBoard(data) {
@@ -24,6 +24,12 @@ class MadBishops extends CGFobject {
         console.log(this.boardState);
 
         this.checkValidPlay();
+    }
+
+    validPlayHandler(data){
+
+        this.valid = JSON.parse(data.target.response);
+        console.log(this.valid);
     }
     
     handleClickBoard(obj,customId) {

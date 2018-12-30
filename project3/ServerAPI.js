@@ -15,10 +15,10 @@
 
     function makeRequest(requestString, handleReply) {			 
             // Make Request
-            this.getPrologRequest(requestString, handleReply);
+            getPrologRequest(requestString, handleReply);
     }
 
-    function validPlay(b, player, fromX, fromY, toX, toY){
+    function validPlay(b, player, fromX, fromY, toX, toY, callback){
         console.log(b);
         let requestString = 'valid_play('
         + JSON.stringify(b) + ','
@@ -26,12 +26,8 @@
         + JSON.stringify(fromX) + ',' + JSON.stringify(fromY) + ','
         + JSON.stringify(toX) + ',' + JSON.stringify(toY) + ')';
 
-        makeRequest(requestString, data => validPlayHandler(data));
+        makeRequest(requestString, callback);
 
     }
 
-    function validPlayHandler(data){
-
-        this.valid = JSON.parse(data.target.response);
-        console.log(this.valid);
-    }
+    
