@@ -30,7 +30,7 @@
 
     }
 
-    function serverMove(fromX, fromY, toX, toY,oldBoard,piecesP1,piecesP2,newBoard,newP1,newP2,player,callback){
+    function serverMove(fromX, fromY, toX, toY,oldBoard,piecesP1,piecesP2,player,callback){
         let requestString = 'make_move('
         + JSON.stringify(fromX) + ','
         + JSON.stringify(fromY) + ','
@@ -39,9 +39,6 @@
         + JSON.stringify(oldBoard) + ','
         + JSON.stringify(piecesP1) + ','
         + JSON.stringify(piecesP2) + ','   
-        + JSON.stringify(newBoard) + ','
-        + JSON.stringify(newP1) + ','
-        + JSON.stringify(newP2) + ','  
         + JSON.stringify(player) + ')';
 
         makeRequest(requestString, callback);
