@@ -115,6 +115,9 @@ parse_input(valid_play(B, Player, FromX, FromY, ToX, ToY), 1):-
 	valid_play(B, Player, point(FromX, FromY), point(ToX, ToY)).
 parse_input(valid_play(B, Player, FromX, FromY, ToX, ToY), 2).
 
+parse_input(make_move(FromX, FromY, ToX, ToY,OldBoard,PiecesP1,PiecesP2,NewBoard,NewP1,NewP2,Player):-
+	move(move(point(FromX, FromY),point(ToX,ToY)),board(OldBoard,PiecesP1,PiecesP2),board(NewBoard,NewP1,NewP2),Player).
+
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
