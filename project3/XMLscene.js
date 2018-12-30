@@ -38,6 +38,8 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
         
         this.madBishops = new MadBishops(this);
+
+        this.angle = 0;
         this.setPickEnabled(true);
 
     }
@@ -243,6 +245,17 @@ class XMLscene extends CGFscene {
             this.pause = true;
         } else {
             this.pause = false;
+        }
+
+        if(this.angle > Math.PI){
+            this.rotating = false;
+            this.angle = 0;
+        }
+        console.log(this.angle);
+
+        if(this.rotating){
+            this.camera.orbit([1,0,0], 0.01);
+            this.angle+= 0.01;
         }
 
         /*for(let i = 0; i < this.board.whiteBishops.length; i++) {
