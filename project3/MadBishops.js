@@ -10,8 +10,8 @@ class MadBishops extends CGFobject {
         this.board = new Board(scene);
 
         this.boardState = null;
-        this.whitePieces = null;
-        this.blackPieces = null;
+        this.whitePieces = 25;
+        this.blackPieces = 25;
         this.playerTurn = null;
 
         makeRequest("initial_state", data => this.initializeBoard(data));
@@ -19,11 +19,6 @@ class MadBishops extends CGFobject {
 
     checkValidPlay(startRow,startColumn,endRow,endColumn){
         validPlay(this.boardState, this.playerTurn, startRow,startColumn,endRow,endColumn, data => this.validPlayHandler(data,startRow,startColumn,endRow,endColumn));
-        /*let newBoard;
-        let newP1;
-        let newP2;
-        serverMove(startRow,startColumn,endRow,endColumn,this.boardState,this.whitePieces,this.blackPieces,newBoard,newP1,newP2,player);*/
-
     }
         
     initializeBoard(data) {
@@ -43,8 +38,16 @@ class MadBishops extends CGFobject {
         if(this.valid == 1){
             this.board.makeMove(startRow,startColumn,endRow,endColumn);
             this.playerTurn = (this.playerTurn % 2) + 1;
+            let newBoard;
+            let newP1;
+            let newP2;
+            serverMove(startRow,startColumn,endRow,endColumn,this.boardState,this.whitePieces,this.blackPieces,newBoard,newP1,newP2,this.playerTurn,data => this.serverMoveHandler(data));
         } else 
             console.log('Invalid Move',startRow,startColumn,endRow,endColumn);
+    }
+
+    serverMoveHandler(data) {
+        console.log(JSON.parse(data.target.response));
     }
     
     handleClickBoard(obj,customId) {
