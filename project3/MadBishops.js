@@ -42,6 +42,7 @@ class MadBishops extends CGFobject {
         this.valid = JSON.parse(data.target.response);
         if(this.valid == 1){
             this.board.makeMove(startRow,startColumn,endRow,endColumn);
+            this.playerTurn = (this.playerTurn % 2) + 1;
         } else 
             console.log('Invalid Move',startRow,startColumn,endRow,endColumn);
     }
