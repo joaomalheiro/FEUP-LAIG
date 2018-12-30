@@ -239,12 +239,11 @@ class XMLscene extends CGFscene {
         this.time = currTime;
         this.madBishops.update(this.deltaTime);
 
-       /* if(this.board.animationCounter > 0) {
+        if(this.madBishops.board.animationCounter > 0) {
             this.pause = true;
         } else {
             this.pause = false;
         }
-        */
 
         /*for(let i = 0; i < this.board.whiteBishops.length; i++) {
             if(this.board.whiteBishops[i].animation != null){
