@@ -111,6 +111,12 @@ parse_input(quit, goodbye).
 parse_input(initial_state, [B, PiecesP1, PiecesP2, Player]):-
 	initial_state(state(board(B,PiecesP1,PiecesP2),Player)).
 
+parse_input(valid_play(B, Player, FromX, FromY, ToX, ToY)):-
+	(valid_play(B, Player, point(FromX, FromY), point(ToX, ToY)),
+	Var is 1);
+	Var is 2.
+
+
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 

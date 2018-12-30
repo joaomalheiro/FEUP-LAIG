@@ -1,11 +1,6 @@
-class ServerAPI extends CGFobject {
 
-	constructor(scene){
-        super(scene);
-        this.scene = scene;
-    }
     
-    getPrologRequest(requestString, onSuccess, onError, port) {
+    function getPrologRequest(requestString, onSuccess, onError, port) {
         var requestPort = port || 8081;
         var request = new XMLHttpRequest();
         request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
@@ -18,8 +13,23 @@ class ServerAPI extends CGFobject {
         request.send();
     }
 
-    makeRequest(requestString, handleReply) {			 
+    function makeRequest(requestString, handleReply) {			 
             // Make Request
             this.getPrologRequest(requestString, handleReply);
-	}
-}
+    }
+
+    function validPlay(b, player, fromX, fromY, toX, toY){
+        console.log(b);
+        let requestString = 'valid_play('
+        + JSON.stringify(b) + ','
+        + JSON.stringify(player) + ','
+        + JSON.stringify(fromX) + ',' + JSON.stringify(fromY) + ','
+        + JSON.stringify(toX) + ',' + JSON.stringify(toY) + ')';
+
+        makeRequest(requestString, validPlayHandler());
+
+    }
+
+    function validPlayHandler(){
+        console.log("We up in this bitch !");
+    }

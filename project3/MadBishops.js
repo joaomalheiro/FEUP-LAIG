@@ -9,16 +9,21 @@ class MadBishops extends CGFobject {
         
         this.board = new Board(scene);
 
-        this.api = new ServerAPI(scene);
+        makeRequest("initial_state", data => this.initializeBoard(data));
+    }
 
-        this.api.makeRequest("initial_state", data => this.initializeBoard(data));
+    checkValidPlay(){
+        validPlay(this.boardState, this.playerTurn, 1, 1, 1, 1);
     }
         
     initializeBoard(data) {
+        
         this.boardState = JSON.parse(data.target.response)[0];
         this.playerTurn = JSON.parse(data.target.response)[3];
-        
+
         console.log(this.boardState);
+
+        //this.checkValidPlay();
     }
     
     handleClickBoard(obj,customId) {
