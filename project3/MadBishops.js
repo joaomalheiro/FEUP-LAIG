@@ -18,7 +18,9 @@ class MadBishops extends CGFobject {
     }
 
     checkValidPlay(startRow,startColumn,endRow,endColumn){
-        validPlay(this.boardState, this.playerTurn, startRow,startColumn,endRow,endColumn, data => this.validPlayHandler(data,startRow,startColumn,endRow,endColumn));
+        console.log(this.playerTurn);
+        console.log('Valid Play ? ',startColumn,startRow,endColumn,endRow);
+        validPlay(this.boardState, this.playerTurn, startColumn,startRow,endColumn, endRow, data => this.validPlayHandler(data,startRow,startColumn,endRow,endColumn));
     }
         
     initializeBoard(data) {
@@ -41,7 +43,7 @@ class MadBishops extends CGFobject {
             console.log(this.playerTurn);
             serverMove(startColumn,startRow,endColumn,endRow,this.boardState,this.whitePieces,this.blackPieces,this.playerTurn, data2 => this.serverMoveHandler(data2));
         } else 
-            console.log('Invalid Move',startRow,startColumn,endRow,endColumn);
+            console.log('Invalid Move',startColumn,startRow,endColumn,endRow);
     }
 
     serverMoveHandler(data) {
