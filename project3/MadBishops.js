@@ -34,7 +34,10 @@ class MadBishops extends CGFobject {
 
     isGameOver(data){
         let gameOver = JSON.parse(data.target.response);
-        console.log(gameOver);
+        if(gameOver == 1)
+            console.log('Player 1 WONNERED ! :)');
+        else if(gameOver == 2)
+            console.log('Player 2 WONNERED ! :)');
     }
 
     validPlayHandler(data,startRow,startColumn,endRow,endColumn){
