@@ -40,8 +40,8 @@ class MadBishops extends CGFobject {
         if(this.valid == 1){
             this.board.makeMove(startRow,startColumn,endRow,endColumn);
             this.playerTurn = (this.playerTurn % 2) + 1;
-            console.log(this.playerTurn);
             serverMove(startColumn,startRow,endColumn,endRow,this.boardState,this.whitePieces,this.blackPieces,this.playerTurn, data2 => this.serverMoveHandler(data2));
+            this.activeBishop = null;
         } else 
             console.log('Invalid Move',startColumn,startRow,endColumn,endRow);
     }
@@ -56,7 +56,8 @@ class MadBishops extends CGFobject {
     
     handleClickBoard(obj,customId) {
         if(obj instanceof Bishop) {
-            if(this.activeBishop == null){
+            if((this.activeBishop == null && obj instanceof WhiteBishop && this.playerTurn == 1)
+                || (this.activeBishop == null && obj instanceof BlackBishop && this.playerTurn == 2)){
                 this.activeBishop = obj;
             } else if(this.activeBishop == obj){
                 this.activeBishop = null;
