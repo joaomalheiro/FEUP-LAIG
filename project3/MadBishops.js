@@ -46,6 +46,10 @@ class MadBishops extends CGFobject {
 
     serverMoveHandler(data) {
         console.log(JSON.parse(data.target.response));
+        this.boardState = JSON.parse(data.target.response)[0];
+        this.whitePieces = JSON.parse(data.target.response)[1];
+        this.blackPieces = JSON.parse(data.target.response)[2];
+        console.log(this.boardState,this.whitePieces,this.blackPieces)
     }
     
     handleClickBoard(obj,customId) {
