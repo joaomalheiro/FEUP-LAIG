@@ -18,8 +18,6 @@ class MadBishops extends CGFobject {
     }
 
     checkValidPlay(startRow,startColumn,endRow,endColumn){
-        console.log(this.playerTurn);
-        console.log('Valid Play ? ',startColumn,startRow,endColumn,endRow);
         validPlay(this.boardState, this.playerTurn, startColumn,startRow,endColumn, endRow, data => this.validPlayHandler(data,startRow,startColumn,endRow,endColumn));
     }
         
@@ -34,6 +32,11 @@ class MadBishops extends CGFobject {
 
     }
 
+    isGameOver(data){
+        let gameOver = JSON.parse(data.target.response);
+        console.log(gameOver);
+    }
+
     validPlayHandler(data,startRow,startColumn,endRow,endColumn){
 
         this.valid = JSON.parse(data.target.response);
@@ -42,12 +45,13 @@ class MadBishops extends CGFobject {
             this.playerTurn = (this.playerTurn % 2) + 1;
             serverMove(startColumn,startRow,endColumn,endRow,this.boardState,this.whitePieces,this.blackPieces,this.playerTurn, data2 => this.serverMoveHandler(data2));
             this.activeBishop = null;
+            gameOver(this.boardState,this.whitePieces,this.blackPieces, data3 => this.isGameOver(data3));
         } else 
             console.log('Invalid Move',startColumn,startRow,endColumn,endRow);
     }
 
     serverMoveHandler(data) {
-        console.log(JSON.parse(data.target.response));
+    	
         this.boardState = JSON.parse(data.target.response)[0];
         this.whitePieces = JSON.parse(data.target.response)[1];
         this.blackPieces = JSON.parse(data.target.response)[2];

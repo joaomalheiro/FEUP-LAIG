@@ -19,12 +19,21 @@
     }
 
     function validPlay(b, player, fromX, fromY, toX, toY, callback){
-        console.log(b);
         let requestString = 'valid_play('
         + JSON.stringify(b) + ','
         + JSON.stringify(player) + ','
         + JSON.stringify(fromX) + ',' + JSON.stringify(fromY) + ','
         + JSON.stringify(toX) + ',' + JSON.stringify(toY) + ')';
+
+        makeRequest(requestString, callback);
+
+    }
+
+    function gameOver(b, piecesP1, piecesP2, callback){
+        let requestString = 'gameOver('
+        + JSON.stringify(b) + ','
+        + JSON.stringify(piecesP1) + ','
+        + JSON.stringify(piecesP2) + ')';
 
         makeRequest(requestString, callback);
 

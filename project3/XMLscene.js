@@ -91,7 +91,7 @@ class XMLscene extends CGFscene {
         //Setting up the default camera, if there is one that matches the default given
         if (def != null){
             this.camera = this.views.get(def);
-            this.interface.setActiveCamera(this.views.get(def));
+            //this.interface.setActiveCamera(this.views.get(def));
         } else {
             console.log('The default ID for the views did not match any parsed camera of the XML file')
         }
@@ -228,7 +228,6 @@ class XMLscene extends CGFscene {
 
     rotateCamera() {
         this.rotating = true;
-        this.interface.setActiveCamera(null);
     }
     /**
     * 
@@ -253,7 +252,7 @@ class XMLscene extends CGFscene {
         }
 
         if(this.angle > Math.PI){
-            this.interface.setActiveCamera(this.camera);
+            //this.interface.setActiveCamera(this.camera);
             this.rotating = false;
             this.angle = 0;
         }
