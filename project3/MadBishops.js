@@ -40,6 +40,30 @@ class MadBishops extends CGFobject {
             console.log('Player 2 WONNERED ! :)');
     }
 
+    aiEasyPickHandler(data) {
+        this.aiEasyMoveFromX = JSON.parse(data.target.response)[0];
+        this.aiEasyMoveFromY = JSON.parse(data.target.response)[1];
+        this.aiEasyMoveToX = JSON.parse(data.target.response)[2];
+        this.aiEasyMoveToY = JSON.parse(data.target.response)[3];
+
+        console.log(this.aiEasyMoveFromX);
+        console.log(this.aiEasyMoveFromY);
+        console.log(this.aiEasyMoveToX);
+        console.log(this.aiEasyMoveToY);
+    }
+
+    aiMediumPickHandler(data) {
+        this.aiMediumMoveFromX = JSON.parse(data.target.response)[0];
+        this.aiMediumMoveFromY = JSON.parse(data.target.response)[1];
+        this.aiMediumMoveToX = JSON.parse(data.target.response)[2];
+        this.aiMediumMoveToY = JSON.parse(data.target.response)[3];
+
+        console.log(this.aiMediumMoveFromX);
+        console.log(this.aiMediumMoveFromY);
+        console.log(this.aiMediumMoveToX);
+        console.log(this.aiMediumMoveToY);
+    }
+
     validPlayHandler(data,startRow,startColumn,endRow,endColumn){
 
         this.valid = JSON.parse(data.target.response);
@@ -49,6 +73,7 @@ class MadBishops extends CGFobject {
             serverMove(startColumn,startRow,endColumn,endRow,this.boardState,this.whitePieces,this.blackPieces,this.playerTurn, data2 => this.serverMoveHandler(data2));
             this.activeBishop = null;
             gameOver(this.boardState,this.whitePieces,this.blackPieces, data3 => this.isGameOver(data3));
+            aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
         } else 
             console.log('Invalid Move',startColumn,startRow,endColumn,endRow);
     }
