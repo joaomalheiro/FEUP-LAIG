@@ -6,6 +6,7 @@ class WhiteBishop extends Bishop {
     constructor(scene,row,column) {
         super(scene,row,column);
         this.scene = scene;
+        this.selected = false;
         this.initTextures();
     }
     initTextures(){
@@ -27,6 +28,15 @@ class WhiteBishop extends Bishop {
             controlPoints[3] = vec3.fromValues(0,0,0);
         super.animation = new LinearAnimation(this.scene,'dead',4,controlPoints);
         super.dead(deadId);
+    }
+
+    isSelected(){
+        if(this.selected){
+            this.woodenAppearance.setAmbient(0.85,0.85,0.85,1);
+        } else {
+            this.woodenAppearance.setAmbient(1,1,1,1);
         }
+    }
+
 
 }

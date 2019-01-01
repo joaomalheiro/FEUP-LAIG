@@ -91,7 +91,24 @@ class MadBishops extends CGFobject {
 
     update(deltaTime){
         this.board.update(deltaTime);
-    }
+        for(let i = 0; i < this.board.whiteBishops.length; i++){
+            if(this.activeBishop == this.board.whiteBishops[i]){
+                this.board.whiteBishops[i].selected = true;
+            } else {
+                this.board.whiteBishops[i].selected = false;
+            }
+            this.board.whiteBishops[i].isSelected();
+        }
+        for(let i = 0; i < this.board.blackBishops.length; i++){
+            if(this.activeBishop == this.board.blackBishops[i]){
+                this.board.blackBishops[i].selected = true;
+            } else {
+                this.board.blackBishops[i].selected = false;
+                }
+            this.board.blackBishops[i].isSelected();
+            }
+
+        }
 
 	display() {
 		this.board.display();
