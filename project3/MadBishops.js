@@ -1,14 +1,14 @@
 class MadBishops extends CGFobject {
 
-	constructor(scene){
+	constructor(scene,player1,player2){
         super(scene);
         this.scene = scene;
 
         this.activeBishop = null;
         this.pause = false;
-        
         this.board = new Board(scene);
-
+        this.player1 = player1;
+        this.player2 = player2;
         this.boardState = null;
         this.previousBoardState = null;
         this.previousBishops = [];
@@ -59,27 +59,25 @@ class MadBishops extends CGFobject {
     }
 
     aiEasyPickHandler(data) {
-        this.aiEasyMoveFromX = JSON.parse(data.target.response)[0];
-        this.aiEasyMoveFromY = JSON.parse(data.target.response)[1];
-        this.aiEasyMoveToX = JSON.parse(data.target.response)[2];
-        this.aiEasyMoveToY = JSON.parse(data.target.response)[3];
+        this.aiEasyMoveFromX = Number(JSON.parse(data.target.response)[0]);
+        this.aiEasyMoveFromY = Number(JSON.parse(data.target.response)[1]);
+        this.aiEasyMoveToX = Number(JSON.parse(data.target.response)[2]);
+        this.aiEasyMoveToY = Number(JSON.parse(data.target.response)[3]);
 
-        console.log(this.aiEasyMoveFromX);
-        console.log(this.aiEasyMoveFromY);
-        console.log(this.aiEasyMoveToX);
-        console.log(this.aiEasyMoveToY);
+        this.board.makeMove(this.aiEasyMoveFromX,this.aiEasyMoveFromY,this.aiEasyMoveToX,this.aiEasyMoveToY);
+        this.gameMoves.push([this.aiEasyMoveFromX,this.aiEasyMoveFromY,this.aiEasyMoveToX,this.aiEasyMoveToY]);
+        serverMove(this.aiEasyMoveFromX,this.aiEasyMoveFromY,this.aiEasyMoveToX,this.aiEasyMoveToY,this.boardState,this.whitePieces,this.blackPieces,this.playerTurn, data2 => this.serverMoveHandler(data2));
     }
 
     aiMediumPickHandler(data) {
-        this.aiMediumMoveFromX = data.target.response[5];
-        this.aiMediumMoveFromY = data.target.response[7];
-        this.aiMediumMoveToX = data.target.response[9]
-        this.aiMediumMoveToY = data.target.response[11];
+        this.aiMediumMoveFromX = Number(data.target.response[5]);
+        this.aiMediumMoveFromY = Number(data.target.response[7]);
+        this.aiMediumMoveToX = Number(data.target.response[9]);
+        this.aiMediumMoveToY = Number(data.target.response[11]);
 
-        console.log(this.aiMediumMoveFromX);
-        console.log(this.aiMediumMoveFromY);
-        console.log(this.aiMediumMoveToX);
-        console.log(this.aiMediumMoveToY);
+        this.board.makeMove(this.aiMediumMoveFromX,this.aiMediumMoveFromY,this.aiMediumMoveToX,this.aiMediumMoveToY);
+        this.gameMoves.push([this.aiMediumMoveFromX,this.aiMediumMoveFromY,this.aiMediumMoveToX,this.aiMediumMoveToY]);
+        serverMove(this.aiMediumMoveFromX,this.aiMediumMoveFromY,this.aiMediumMoveToX,this.aiMediumMoveToY,this.boardState,this.whitePieces,this.blackPieces,this.playerTurn, data2 => this.serverMoveHandler(data2));
     }
 
     validPlayHandler(data,startRow,startColumn,endRow,endColumn){
@@ -93,7 +91,6 @@ class MadBishops extends CGFobject {
             this.activeBishop = null;
             console.log('Moves',this.gameMoves);
             gameOver(this.boardState,this.whitePieces,this.blackPieces, data3 => this.isGameOver(data3));
-            aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
             this.board.counter.updateNumberPieces();
         } else 
             console.log('Invalid Move',startColumn,startRow,endColumn,endRow);
@@ -108,6 +105,8 @@ class MadBishops extends CGFobject {
     }
     
     handleClickBoard(obj,customId) {
+        console.log('p',this.playerTurn,this.player1,this.player2)
+        if((this.playerTurn == 1 && this.player1 == 'Human') || (this.playerTurn == 2 && this.player2 == 'Human')){
         if(obj instanceof Bishop) {
             if((this.activeBishop == null && obj instanceof WhiteBishop && this.playerTurn == 1)
                 || (this.activeBishop == null && obj instanceof BlackBishop && this.playerTurn == 2)){
@@ -145,7 +144,59 @@ class MadBishops extends CGFobject {
         }
 
         console.log(this.activeBishop);
+    } else  {
+        if(this.playerTurn == 1){
+            switch(this.player1){
+                case 'Random':
+                    aiMedium(this.boardState, this.playerTurn, data5 => this.aiEasyPickHandler(data5));
+                case 'Smart':
+                    aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
+                default:
+                break;
+            }
+        } else if(this.playerTurn == 2){
+            switch(this.player2){
+                case 'Random':
+                    aiMedium(this.boardState, this.playerTurn, data5 => this.aiEasyPickHandler(data5));
+                case 'Smart':
+                    aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
+                default:
+                break;
+            }
+        }
+        this.playerTurn = (this.playerTurn % 2) + 1;
+        this.activeBishop = null;
+        gameOver(this.boardState,this.whitePieces,this.blackPieces, data3 => this.isGameOver(data3));
+        this.board.counter.updateNumberPieces();
+
+    } 
     }
+
+    /*handleAI(){
+        if(this.playerTurn == 1){
+            switch(this.player1){
+                case 'Random':
+                    aiMedium(this.boardState, this.playerTurn, data5 => this.aiEasyPickHandler(data5));
+                case 'Smart':
+                    aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
+                default:
+                return;
+            }
+        } else if(this.playerTurn == 2){
+            switch(this.player2){
+                case 'Random':
+                    aiMedium(this.boardState, this.playerTurn, data5 => this.aiEasyPickHandler(data5));
+                case 'Smart':
+                    aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
+                default:
+                return;
+            }
+        }
+        this.playerTurn = (this.playerTurn % 2) + 1;
+        this.activeBishop = null;
+        gameOver(this.boardState,this.whitePieces,this.blackPieces, data3 => this.isGameOver(data3));
+        this.board.counter.updateNumberPieces();
+    }*/
 
     update(deltaTime){
         this.board.update(deltaTime);
