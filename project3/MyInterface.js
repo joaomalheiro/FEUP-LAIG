@@ -21,7 +21,6 @@ class MyInterface extends CGFinterface {
         this.gui = new dat.GUI();
 
        this.initKeys();
-       this.addUndoButton();
 
         // add a group of controls (and open/expand by defult)
 
@@ -103,8 +102,32 @@ class MyInterface extends CGFinterface {
         });
 
     }
+    
+    addGameGroup(){
 
-    addUndoButton(){
-        this.gui.add(this.scene, 'undoMove');
+        var group = this.gui.addFolder("Game");
+        group.open();
+
+        this.addUndoButton(group);
+        this.addTypeOfPlayer(1,group);
+        this.addTypeOfPlayer(2,group);
+
+        this.addNewGame(group);
+
+    }
+
+    addTypeOfPlayer(player, group){
+
+        this.gameTypes = ['Human Player', 'Random AI', 'Hard AI'];
+        group.add(this.scene, 'playerType' + player, this.gameTypes);
+
+    }
+
+    addNewGame(group){
+        group.add(this.scene,'newGame');
+    }
+
+    addUndoButton(group){
+        group.add(this.scene, 'undoMove');
     }
 }

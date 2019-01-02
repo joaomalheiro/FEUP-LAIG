@@ -68,6 +68,12 @@ class XMLscene extends CGFscene {
         if(!this.pause)
             this.madBishops.undoMove();
     }
+
+    newGame() {
+        this.madBishops = new MadBishops(this);
+
+        
+    }
     /**
      * Initializes the scene cameras.
      */
@@ -202,6 +208,9 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this, this.graph.axisLength);
         this.selectedCamera = this.graph.defaultViewID;
 
+        this.playerType1 = 'Human Player';
+        this.playerType2 = 'Human Player';
+
         this.initMaterials();
         this.initTextures();
         this.initCameras();
@@ -215,6 +224,8 @@ class XMLscene extends CGFscene {
         this.interface.addLightsGroup(this.graph.lights);
         //adds cameras group to the interface
         this.interface.addCamerasGroup(this.views);
+
+        this.interface.addGameGroup();
 
         this.sceneInited = true;
 
