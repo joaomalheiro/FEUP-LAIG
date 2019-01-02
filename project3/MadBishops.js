@@ -53,10 +53,10 @@ class MadBishops extends CGFobject {
     }
 
     aiMediumPickHandler(data) {
-        this.aiMediumMoveFromX = JSON.parse(data.target.response)[0];
-        this.aiMediumMoveFromY = JSON.parse(data.target.response)[1];
-        this.aiMediumMoveToX = JSON.parse(data.target.response)[2];
-        this.aiMediumMoveToY = JSON.parse(data.target.response)[3];
+        this.aiMediumMoveFromX = data.target.response[5];
+        this.aiMediumMoveFromY = data.target.response[7];
+        this.aiMediumMoveToX = data.target.response[9]
+        this.aiMediumMoveToY = data.target.response[11];
 
         console.log(this.aiMediumMoveFromX);
         console.log(this.aiMediumMoveFromY);

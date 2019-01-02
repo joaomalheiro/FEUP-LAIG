@@ -124,8 +124,8 @@ parse_input(gameOver(Board,PiecesP1,PiecesP2), Winner):-
 parse_input(ai_easy(Board, Player), [FromX, FromY, ToX, ToY]):-	
 	ai_easy(Board, Player, move(point(FromX,FromY),point(ToX,ToY))).
 
-parse_input(ai_medium(Board, Player, PiecesP1, PiecesP2), [FromX, FromY, ToX, ToY]):-	
-	ai_medium(state(board(Board,PiecesP1,PiecesP2),Player), move(point(FromX,FromY),point(ToX,ToY))).
+parse_input(ai_medium(Board, Player, PiecesP1, PiecesP2), Move):-	
+	ai_medium(state(board(Board,PiecesP1,PiecesP2),Player), Move).
 
 
 test(_,[],N) :- N =< 0.
