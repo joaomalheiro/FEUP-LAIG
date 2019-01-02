@@ -39,6 +39,25 @@
 
     }
 
+    function aiEasy(b, player, callback){
+        let requestString = 'ai_easy('
+        + JSON.stringify(b) + ','
+        + JSON.stringify(player) + ')';
+
+        makeRequest(requestString, callback);
+    }
+
+    function aiMedium(b, player, piecesP1, piecesP2, callback){
+        console.log('hey');
+        let requestString = 'ai_medium('
+        + JSON.stringify(b) + ','
+        + JSON.stringify(player) + ','
+        + JSON.stringify(piecesP1) + ','
+        + JSON.stringify(piecesP2) + ')';
+
+        makeRequest(requestString, callback);
+    }
+
     function serverMove(fromX, fromY, toX, toY,oldBoard,piecesP1,piecesP2,player,callback){
         let requestString = 'make_move('
         + JSON.stringify(fromX) + ','
