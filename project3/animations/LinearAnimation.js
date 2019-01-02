@@ -3,6 +3,7 @@ class LinearAnimation extends Animation {
         super(scene,id,time);
         this.controlPoints = controlPoints;
         this.totalDist = 0;
+        this.previousUpdateReverse = 0;
         //The increasing distance between control points
         this.vecDists = [];
         for(let i = 0; i < controlPoints.length - 1 ; i++) {
@@ -17,9 +18,29 @@ class LinearAnimation extends Animation {
         if(this.previousUpdate == 0) {
             this.previousUpdate = time;
         }
-        let deltaTime = time - this.previousUpdate;
-        this.previousUpdate = time;      
-        this.currentTime += deltaTime;
+        if(this.previousUpdateReverse == 0 && this.reverse){
+            this.previousUpdateReverse = time;
+        }
+        let deltaTime;
+        if(this.reverse){
+            deltaTime = time - this.previousUpdateReverse;
+            this.previousUpdateReverse = time;
+        } else {
+            deltaTime = time - this.previousUpdate;
+            this.previousUpdate = time;
+        } 
+        if(this.reverse){
+            console.log('REVERSING',this.currentTime,deltaTime,this.previousUpdate);
+            this.currentTime -= deltaTime;
+        } else {
+            this.currentTime += deltaTime;
+        }
+        console.log('2',this.previousUpdate,this.previousUpdateReverse,this.reverse,time);      
+        if(this.currentTime < 0 && this.reverse) {
+            this.currentTime = 0;
+            this.done = true;
+            this.reverseDone = true;
+        }
         if(this.currentTime > this.time) {
             this.currentTime = this.time;
             this.done = true;

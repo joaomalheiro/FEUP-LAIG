@@ -21,6 +21,7 @@ class MyInterface extends CGFinterface {
         this.gui = new dat.GUI();
 
        this.initKeys();
+       this.addUndoButton();
 
         // add a group of controls (and open/expand by defult)
 
@@ -101,6 +102,9 @@ class MyInterface extends CGFinterface {
            this.scene.setCamera(cameras.get(value));
         });
 
+    }
 
+    addUndoButton(){
+        this.gui.add(this.scene, 'undoMove');
     }
 }

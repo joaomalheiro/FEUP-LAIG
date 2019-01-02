@@ -63,6 +63,11 @@ class XMLscene extends CGFscene {
             }		
         }
     }
+
+    undoMove() {
+        if(!this.pause)
+            this.madBishops.undoMove();
+    }
     /**
      * Initializes the scene cameras.
      */
@@ -227,6 +232,7 @@ class XMLscene extends CGFscene {
     }
 
     rotateCamera() {
+        this.madBishops.board.animationCounter++;
         this.rotating = true;
     }
     /**
@@ -255,6 +261,7 @@ class XMLscene extends CGFscene {
             //this.interface.setActiveCamera(this.camera);
             this.rotating = false;
             this.angle = 0;
+            this.madBishops.board.animationCounter--;
         }
 
         if(this.rotating){
@@ -275,6 +282,7 @@ class XMLscene extends CGFscene {
         }*/
 
     }
+
 
     /**
      * Displays the scene.

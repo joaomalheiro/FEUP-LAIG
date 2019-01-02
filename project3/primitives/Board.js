@@ -203,6 +203,16 @@ class Board extends CGFobject {
         }
     }
 
+    reactivate(bishop){
+        bishop.active = true;
+        bishop.deadId = null;
+        if(this.deadBlackBishops[this.deadBlackBishops.length-1] === bishop){
+            this.deadBlackBishops.pop();
+        } else if(this.deadWhiteBishops[this.deadWhiteBishops.length-1] === bishop){
+            this.deadWhiteBishops.pop();
+        }
+    }
+
     makeMove(startRow,startColumn,endRow,endColumn){
 
         this.scene.rotateCamera();

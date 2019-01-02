@@ -158,4 +158,5 @@ class Bishop extends CGFobject {
         this.deadId = deadId;
         this.active = false;
     }
+
 }
