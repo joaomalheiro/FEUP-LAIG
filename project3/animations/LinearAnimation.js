@@ -30,12 +30,10 @@ class LinearAnimation extends Animation {
             this.previousUpdate = time;
         } 
         if(this.reverse){
-            console.log('REVERSING',this.currentTime,deltaTime,this.previousUpdate);
             this.currentTime -= deltaTime;
         } else {
             this.currentTime += deltaTime;
         }
-        console.log('2',this.previousUpdate,this.previousUpdateReverse,this.reverse,time);      
         if(this.currentTime < 0 && this.reverse) {
             this.currentTime = 0;
             this.done = true;

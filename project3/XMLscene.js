@@ -37,7 +37,7 @@ class XMLscene extends CGFscene {
         
         this.axis = new CGFaxis(this);
         
-        this.madBishops = new MadBishops(this);
+        this.madBishops = new MadBishops(this,'Human','Human');
 
         this.angle = 0;
         this.setPickEnabled(true);
@@ -279,6 +279,9 @@ class XMLscene extends CGFscene {
             this.camera.orbit([2,0,0], Math.PI/157.0);
             this.angle+= Math.PI/157.0;
         }
+
+        //if(!this.pause)
+            //this.madBishops.handleAI();
 
         /*for(let i = 0; i < this.board.whiteBishops.length; i++) {
             if(this.board.whiteBishops[i].animation != null){
