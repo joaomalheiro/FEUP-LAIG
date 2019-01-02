@@ -141,7 +141,8 @@ class Board extends CGFobject {
         this.bishopsDisplay();
 
         this.scene.pushMatrix();
-            this.scene.translate(0,0,-10);
+            this.scene.translate(-8,0,-3);
+            this.scene.rotate(Math.PI/2.0,0,1,0);
             this.counter.display();
         this.scene.popMatrix();
 
