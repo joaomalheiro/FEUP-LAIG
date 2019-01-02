@@ -265,8 +265,8 @@ class XMLscene extends CGFscene {
         }
 
         if(this.rotating){
-            this.camera.orbit([1,0,0], 0.01);
-            this.angle+= 0.01;
+            this.camera.orbit([2,0,0], 0.02);
+            this.angle+= 0.02;
         }
 
         /*for(let i = 0; i < this.board.whiteBishops.length; i++) {
