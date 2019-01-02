@@ -3,12 +3,14 @@ class Clock extends CGFobject {
     /*
     * Constructor for the clock game object
     */
-    constructor(scene , minutes, seconds) {
+    constructor(scene , minutes, seconds, numbers) {
         super(scene);
         this.scene = scene;
         
         this.minutes = minutes;
         this.seconds = seconds;
+
+        this.numbers = numbers;
 
         this.initComponents();
         this.initTextures();
@@ -29,21 +31,6 @@ class Clock extends CGFobject {
 		this.clockAppearance.setDiffuse(0.5,0.5,0.5,1);
 		this.clockAppearance.setSpecular(0.5,0.5,0.5,1);
         this.clockAppearance.setShininess(10.0);
-
-        this.numbers = [];
-
-        for(let i = 0; i < 10; i++) {
-            
-            let appearance = new CGFappearance(this.scene);
-            appearance.loadTexture("scenes/images/numbers/" + i + ".jpg");
-            appearance.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
-        	appearance.setAmbient(1,1,1,1);
-		    appearance.setDiffuse(0.5,0.5,0.5,1);
-	        appearance.setSpecular(0.5,0.5,0.5,1);
-            appearance.setShininess(10.0);
-
-            this.numbers.push(appearance);
-        }
     }
 
     decTime(){

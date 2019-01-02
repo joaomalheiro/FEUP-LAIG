@@ -94,6 +94,7 @@ class MadBishops extends CGFobject {
             console.log('Moves',this.gameMoves);
             gameOver(this.boardState,this.whitePieces,this.blackPieces, data3 => this.isGameOver(data3));
             aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
+            this.board.counter.updateNumberPieces();
         } else 
             console.log('Invalid Move',startColumn,startRow,endColumn,endRow);
     }

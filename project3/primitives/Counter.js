@@ -3,13 +3,20 @@ class Counter extends CGFobject {
     /*
     * Constructor for the counter game object
     */
-    constructor(scene) {
+    constructor(scene, board) {
         super(scene);
+        this.board = board;
         this.scene = scene;
-        this.initComponents();
         this.initTextures();
+        this.initComponents();
+       // this.updateNumberPieces();
 
-        this.time = 0;
+       this.blackPiecesText1 = this.numbers[2];
+       this.blackPiecesText2 = this.numbers[5];
+       this.whitePiecesText1 = this.numbers[2];
+       this.whitePiecesText2 = this.numbers[5];
+
+       this.time = 0;
     }
 
     initComponents(){
@@ -24,7 +31,32 @@ class Counter extends CGFobject {
 
         this.top_sphere = new MySphere(this.scene, 0.2, 30, 30);
 
-        this.clock = new Clock(this.scene, 1, 0);
+        this.clock = new Clock(this.scene, 1, 0, this.numbers);
+
+        this.plane = new Plane(this.scene,1,1);
+
+        this.whitePieces1 = 2;
+        this.whitePieces2 = 5;
+
+        this.blackPieces1 = 2;
+        this.blackPieces2 = 5;
+    }
+
+    updateNumberPieces() {
+
+        let blackHelper = this.board.blackBishops.length - this.board.deadBlackBishops.length;
+        let whiteHelper = this.board.whiteBishops.length - this.board.deadWhiteBishops.length;
+
+        this.blackPieces1 = Math.floor(blackHelper / 10);
+        this.blackPieces2 = blackHelper % 10;
+
+        this.whitePieces1 = Math.floor(whiteHelper / 10);
+        this.whitePieces2 = whiteHelper % 10;
+
+        this.blackPiecesText1 = this.numbers[this.blackPieces1];
+        this.blackPiecesText2 = this.numbers[this.blackPieces2];
+        this.whitePiecesText1 = this.numbers[this.whitePieces1];
+        this.whitePiecesText2 = this.numbers[this.whitePieces2];
     }
     
     initTextures(){
@@ -54,6 +86,21 @@ class Counter extends CGFobject {
 		this.blackAppearance.setDiffuse(0.8,0.8,0.8,1);
 		this.blackAppearance.setSpecular(0.8,0.8,0.8,1);
         this.blackAppearance.setShininess(10.0);
+
+        this.numbers = [];
+
+        for(let i = 0; i < 10; i++) {
+            
+            let appearance = new CGFappearance(this.scene);
+            appearance.loadTexture("scenes/images/numbers/" + i + ".jpg");
+            appearance.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
+        	appearance.setAmbient(1,1,1,1);
+		    appearance.setDiffuse(0.5,0.5,0.5,1);
+	        appearance.setSpecular(0.5,0.5,0.5,1);
+            appearance.setShininess(10.0);
+
+            this.numbers.push(appearance);
+        }
     }
 
     update(deltaTime){
@@ -65,7 +112,6 @@ class Counter extends CGFobject {
             this.clock.decTime();
             this.time = 0;
         }
-       
     }
 
     display(){
@@ -80,20 +126,18 @@ class Counter extends CGFobject {
 
         this.scene.pushMatrix();
             this.scene.translate(0,2.4,0);
-            this.scene.scale(1.3,1,0.4);
+            this.scene.scale(3.5,1.8,0.4);
             this.scene.rotate(Math.PI/2.0,1,0,0);
             this.scene.rotate(Math.PI/4.0,0,0,1);    
             this.body.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-            this.glassAppearance.apply();
-            this.scene.scale(4.5, 2.0, 1.0);
-            this.scene.translate(0, 0.6, 0.9);
+            this.blackAppearance.apply();
+            this.scene.scale(12, 3.0, 1.0);
+            this.scene.translate(0, 0.2, 0.9);
             this.square.display();
         this.scene.popMatrix();
-
-        this.blackAppearance.apply();
 
         this.scene.pushMatrix();
             this.scene.translate(-2.0,2.7,0);
@@ -122,10 +166,43 @@ class Counter extends CGFobject {
         this.scene.popMatrix();
         
         this.scene.pushMatrix();
-            this.scene.translate(-0.4,1.2,1);
+            this.scene.scale(1,2.3,1);
+            this.scene.translate(-0.4,0.3,1);
             this.scene.rotate(Math.PI,0,1,0);
             this.scene.rotate(-Math.PI/2.0,1,0,0);
             this.clock.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.blackPiecesText1.apply();
+            this.scene.translate(-4,0.8,1);
+            this.scene.rotate(Math.PI,0,1,0);
+            this.scene.rotate(-Math.PI/2.0,1,0,0);
+            this.plane.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.blackPiecesText2.apply();
+            this.scene.translate(-2.8,0.8,1);
+            this.scene.rotate(Math.PI,0,1,0);
+            this.scene.rotate(-Math.PI/2.0,1,0,0);
+            this.plane.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.whitePiecesText1.apply();
+            this.scene.translate(2.8,0.8,1);
+            this.scene.rotate(Math.PI,0,1,0);
+            this.scene.rotate(-Math.PI/2.0,1,0,0);
+            this.plane.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.whitePiecesText2.apply();
+            this.scene.translate(4,0.8,1);
+            this.scene.rotate(Math.PI,0,1,0);
+            this.scene.rotate(-Math.PI/2.0,1,0,0);
+            this.plane.display();
         this.scene.popMatrix();
     }
 }

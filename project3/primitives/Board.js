@@ -15,13 +15,15 @@ class Board extends CGFobject {
     initComponents(){
 
         this.plane = new Plane(this.scene,10,10);
-        
-        this.counter = new Counter(this.scene);
 
         this.whiteBishops = [];
         this.blackBishops = [];
         this.deadBlackBishops = [];
         this.deadWhiteBishops = [];
+        
+        this.counter = new Counter(this.scene, this);
+
+       
     }
     
     initTextures(){
