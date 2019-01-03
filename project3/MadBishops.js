@@ -52,6 +52,7 @@ class MadBishops extends CGFobject {
 
     isGameOver(data){
         let gameOver = JSON.parse(data.target.response);
+        console.log(gameOver);
         if(gameOver == 1)
             console.log('Player 1 WONNERED ! :)');
         else if(gameOver == 2)
@@ -74,7 +75,7 @@ class MadBishops extends CGFobject {
         this.aiMediumMoveToY = Number(data.target.response[11]);
 
         this.checkValidPlay(this.aiMediumMoveFromY,this.aiMediumMoveFromX,this.aiMediumMoveToY,this.aiMediumMoveToX);
-    }
+    }  
 
     validPlayHandler(data,startRow,startColumn,endRow,endColumn){
 
@@ -86,8 +87,8 @@ class MadBishops extends CGFobject {
             this.gameMoves.push([startRow,startColumn,endRow,endColumn]);
             this.activeBishop = null;
             console.log('Moves',this.gameMoves);
-            gameOver(this.boardState,this.whitePieces,this.blackPieces, data3 => this.isGameOver(data3));
             this.board.counter.updateNumberPieces();
+            console.log(this.whitePieces, this.blackPieces);
         } else 
             console.log('Invalid Move',startColumn,startRow,endColumn,endRow);
     }
@@ -97,7 +98,8 @@ class MadBishops extends CGFobject {
         this.boardState = JSON.parse(data.target.response)[0];
         this.whitePieces = JSON.parse(data.target.response)[1];
         this.blackPieces = JSON.parse(data.target.response)[2];
-        console.log(this.boardState,this.whitePieces,this.blackPieces)
+
+        gameOver(this.boardState,this.whitePieces,this.blackPieces, data2 => this.isGameOver(data2));
     }
     
     handleClickBoard(obj,customId) {
@@ -115,6 +117,7 @@ class MadBishops extends CGFobject {
                 this.activeBishop = obj;
             } else if(this.activeBishop instanceof WhiteBishop && obj instanceof BlackBishop) {
                 this.checkValidPlay(this.activeBishop.row,this.activeBishop.column,obj.row,obj.column);
+                
                 let bishops = [];
                 bishops.push(this.activeBishop);
                 bishops.push(obj);

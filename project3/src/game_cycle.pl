@@ -71,7 +71,6 @@ game_over(board(_B,PiecesP1,_PiecesP2), Winner):-
 
 game_over(board(_B,_PiecesP1,PiecesP2), Winner):-
     PiecesP2 is 0, Winner is 1.
-    
 game_over(board(_B,_PiecesP1, _PiecesP2), 0).
 
 
