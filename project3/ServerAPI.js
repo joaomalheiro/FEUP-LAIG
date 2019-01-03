@@ -25,6 +25,8 @@
         + JSON.stringify(fromX) + ',' + JSON.stringify(fromY) + ','
         + JSON.stringify(toX) + ',' + JSON.stringify(toY) + ')';
 
+        console.log(fromX, fromY, toX, toY);
+
         makeRequest(requestString, callback);
 
     }
@@ -68,6 +70,10 @@
         + JSON.stringify(piecesP1) + ','
         + JSON.stringify(piecesP2) + ','   
         + JSON.stringify(player) + ')';
+
+        console.log(fromX, fromY, toX, toY);
+
+
 
         makeRequest(requestString, callback);
 
