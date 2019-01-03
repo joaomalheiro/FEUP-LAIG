@@ -207,6 +207,7 @@ class MadBishops extends CGFobject {
             this.board.whiteBishops[i].isSelected();
             if(this.board.whiteBishops[i].animation != null && this.board.whiteBishops[i].animation.reverseDone){
                 this.handleUndo();
+                this.board.counter.updateNumberPieces();
             }
         }
         for(let i = 0; i < this.board.blackBishops.length; i++){
@@ -218,6 +219,7 @@ class MadBishops extends CGFobject {
             this.board.blackBishops[i].isSelected();
             if(this.board.blackBishops[i].animation != null && this.board.blackBishops[i].animation.reverseDone){
                 this.handleUndo();
+                this.board.counter.updateNumberPieces();
             }
             }
             
