@@ -177,7 +177,7 @@ class Board extends CGFobject {
         this.bishopRegisterPicking();
 
         this.scene.pushMatrix();
-        this.scene.translate(10,0.01,0);
+        this.scene.translate(11,0.01,0);
         this.scene.scale(0.4,0.7,0.4);
         this.holder.display();
         this.scene.popMatrix();
