@@ -72,7 +72,13 @@ class XMLscene extends CGFscene {
     }
 
     newGame() {
-        this.madBishops = new MadBishops(this, this.playerType1, this.playerType2, this.timePerPlay);
+        if(!this.pause)
+            this.madBishops = new MadBishops(this, this.playerType1, this.playerType2, this.timePerPlay);
+    }
+
+    showMovie(){
+        if(!this.pause)
+            this.madBishops.showMovie();
     }
 
     pauseGame() {

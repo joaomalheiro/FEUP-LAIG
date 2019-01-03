@@ -115,6 +115,7 @@ class MyInterface extends CGFinterface {
 
         this.addNewGame(group);
         this.addPause(group);
+        this.addShowMovie(group)
 
     }
 
@@ -139,5 +140,9 @@ class MyInterface extends CGFinterface {
 
     addTimeSlider(group){
         group.add(this.scene, 'timePerPlay', 10, 59).step(1);
+    }
+
+    addShowMovie(group){
+        group.add(this.scene, 'showMovie');
     }
 }

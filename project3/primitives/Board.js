@@ -257,9 +257,9 @@ class Board extends CGFobject {
         }
     }
 
-    makeMove(startRow,startColumn,endRow,endColumn){
-
-        this.scene.rotateCamera();
+    makeMove(startRow,startColumn,endRow,endColumn,rotate = true){
+        if(rotate)
+            this.scene.rotateCamera();
         
         let movingBishop = null;
         let deadBishop = null;

@@ -16,8 +16,15 @@ class MadBishops extends CGFobject {
         this.whitePieces = 25;
         this.blackPieces = 25;
         this.playerTurn = 2;
+        this.displayMovie = false;
+        this.tempGameMoves = [];
 
         makeRequest("initial_state", data => this.initializeBoard(data));
+    }
+
+    showMovie(){
+        this.board = new Board(this.scene);
+        this.displayMovie = true;
     }
 
     undoMove(){
@@ -224,8 +231,25 @@ class MadBishops extends CGFobject {
                 this.board.counter.updateNumberPieces();
             }
             }
+            if(this.displayMovie){
+                if(this.gameMoves.length > 0) {
+                    if(this.board.animationCounter < 2){
+                        let move = this.gameMoves[0];
+                        let startRow = move[0];
+                        let startColumn = move[1];
+                        let endRow = move[2];
+                        let endColumn = move[3];
+                        this.board.makeMove(startRow,startColumn,endRow,endColumn,false);
+                        this.tempGameMoves.push(move);
+                        this.gameMoves.shift();
+                    }
+                } else {
+                    this.displayMovie = false;
+                    this.gameMoves = this.tempGameMoves;
+                    this.tempGameMoves = [];
+                }
+            }
             
-
         }
 
     handleUndo(){
