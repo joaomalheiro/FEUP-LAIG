@@ -37,7 +37,7 @@ class XMLscene extends CGFscene {
         
         this.axis = new CGFaxis(this);
         
-        this.madBishops = new MadBishops(this,'Human','Human');
+        this.madBishops = new MadBishops(this,'Human Player','Human Player');
 
         this.angle = 0;
         this.setPickEnabled(true);
