@@ -207,7 +207,7 @@ class Board extends CGFobject {
             if(active){
                 this.scene.translate(-4.5 + x ,0,-4.5 + z);   
             } else {
-                this.scene.translate(-5.5 - Math.floor(this.whiteBishops[i].deadId / 10),0,-4.5 + (this.whiteBishops[i].deadId % 10));
+                this.scene.translate(-10 - Math.floor(this.whiteBishops[i].deadId / 13),1.4,-6 + (this.whiteBishops[i].deadId % 13));
             }
             if(this.whiteBishops[i].animation != null && !this.whiteBishops[i].animation.done){
                 this.whiteBishops[i].animation.update(Date.now());
@@ -231,7 +231,7 @@ class Board extends CGFobject {
             if(active){
                 this.scene.translate(-4.5 + x ,0,-4.5 + z);   
             } else {
-               this.scene.translate(5.5 + Math.floor(this.blackBishops[i].deadId / 10),0,-4.5 + (this.blackBishops[i].deadId % 10));
+               this.scene.translate(10 + Math.floor(this.blackBishops[i].deadId / 13),1.4,-6 + (this.blackBishops[i].deadId % 13));
             }
             if(this.blackBishops[i].animation != null && !this.blackBishops[i].animation.done){
                 this.blackBishops[i].animation.update(Date.now());
