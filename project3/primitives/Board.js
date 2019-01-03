@@ -24,6 +24,8 @@ class Board extends CGFobject {
         this.counter = new Counter(this.scene, this);
 
         this.body = new MyCylinder(this.scene, 1, 1, 1, 4, 4);
+
+        this.holder = new Holder(this.scene);
     }
     
     initTextures(){
@@ -141,6 +143,7 @@ class Board extends CGFobject {
 
     display(){
 
+        
         //display the top sphere of the bishop
         this.scene.pushMatrix();
             this.scene.scale(10, 1, 10);
@@ -172,6 +175,18 @@ class Board extends CGFobject {
 
         this.registerPicking();
         this.bishopRegisterPicking();
+
+        this.scene.pushMatrix();
+        this.scene.translate(10,0.01,0);
+        this.scene.scale(1,0.7,0.4);
+        this.holder.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(-10,0.01,0);
+        this.scene.scale(0.4,0.7,0.4);
+        this.holder.display();
+        this.scene.popMatrix();
     }
 
     update(deltaTime){
