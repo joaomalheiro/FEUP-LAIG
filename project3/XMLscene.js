@@ -70,7 +70,7 @@ class XMLscene extends CGFscene {
     }
 
     newGame() {
-        this.madBishops = new MadBishops(this);
+        this.madBishops = new MadBishops(this, this.playerType1, this.playerType2);
 
         
     }

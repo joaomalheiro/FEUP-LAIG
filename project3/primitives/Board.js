@@ -23,7 +23,7 @@ class Board extends CGFobject {
         
         this.counter = new Counter(this.scene, this);
 
-       
+        this.body = new MyCylinder(this.scene, 1, 1, 1, 4, 4);
     }
     
     initTextures(){
@@ -44,6 +44,15 @@ class Board extends CGFobject {
 		this.glassAppearance.setDiffuse(0.5,0.5,0.5,1);
 		this.glassAppearance.setSpecular(0.5,0.5,0.5,1);
         this.glassAppearance.setShininess(10.0);
+
+        //glass appearance
+        this.woodenAppearance = new CGFappearance(this.scene);
+        this.woodenAppearance.loadTexture("scenes/images/wood.jpg");
+		this.woodenAppearance.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
+    	this.woodenAppearance.setAmbient(1,1,1,1);
+		this.woodenAppearance.setDiffuse(0.5,0.5,0.5,1);
+		this.woodenAppearance.setSpecular(0.5,0.5,0.5,1);
+        this.woodenAppearance.setShininess(10.0);
     }
 
     addBishops(){
@@ -141,9 +150,24 @@ class Board extends CGFobject {
         this.bishopsDisplay();
 
         this.scene.pushMatrix();
-            this.scene.translate(-8,0,-3);
-            this.scene.rotate(Math.PI/2.0,0,1,0);
+            this.scene.translate(0,0,-10);
+            //this.scene.rotate(Math.PI/2.0,0,1,0);
             this.counter.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.scene.translate(0,0,10);
+            this.scene.rotate(Math.PI,0,1,0);
+            this.counter.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.scene.translate(0,-0.1,0);
+            this.scene.scale(8,1,8);
+            this.scene.rotate(Math.PI/2.0,1,0,0);
+            this.scene.rotate(Math.PI/4.0,0,0,1);
+            this.woodenAppearance.apply();
+            this.body.display();
         this.scene.popMatrix();
 
         this.registerPicking();
