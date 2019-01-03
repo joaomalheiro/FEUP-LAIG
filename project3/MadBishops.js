@@ -102,8 +102,8 @@ class MadBishops extends CGFobject {
     
     handleClickBoard(obj,customId) {
         console.log('p',this.playerTurn,this.player1,this.player2)
-        if((this.playerTurn == 1 && this.player1 == 'Human') || (this.playerTurn == 2 && this.player2 == 'Human')){
-            console.log('entered human')
+        if((this.playerTurn == 1 && this.player1 == 'Human Player') || (this.playerTurn == 2 && this.player2 == 'Human Player')){
+            console.log('entered Human Player')
         if(obj instanceof Bishop) {
             if((this.activeBishop == null && obj instanceof WhiteBishop && this.playerTurn == 1)
                 || (this.activeBishop == null && obj instanceof BlackBishop && this.playerTurn == 2)){
@@ -144,10 +144,10 @@ class MadBishops extends CGFobject {
     } else  {
         if(this.playerTurn == 1){
             switch(this.player1){
-                case 'Random':
+                case 'Random AI':
                     aiEasy(this.boardState, this.playerTurn, data5 => this.aiEasyPickHandler(data5));
                     break;
-                case 'Smart':
+                case 'Hard AI':
                     aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
                     break;                
                 default:
@@ -155,7 +155,7 @@ class MadBishops extends CGFobject {
             }
         } else if(this.playerTurn == 2){
             switch(this.player2){
-                case 'Random':
+                case 'Random AI':
                     aiEasy(this.boardState, this.playerTurn, data5 => this.aiEasyPickHandler(data5));
                     break;
                 case 'Smart':
@@ -173,7 +173,7 @@ class MadBishops extends CGFobject {
     /*handleAI(){
         if(this.playerTurn == 1){
             switch(this.player1){
-                case 'Random':
+                case 'Random AI':
                     aiMedium(this.boardState, this.playerTurn, data5 => this.aiEasyPickHandler(data5));
                 case 'Smart':
                     aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
@@ -182,7 +182,7 @@ class MadBishops extends CGFobject {
             }
         } else if(this.playerTurn == 2){
             switch(this.player2){
-                case 'Random':
+                case 'Random AI':
                     aiMedium(this.boardState, this.playerTurn, data5 => this.aiEasyPickHandler(data5));
                 case 'Smart':
                     aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
