@@ -15,6 +15,9 @@ class Clock extends CGFobject {
         this.initComponents();
         this.initTextures();
 
+        this.updateMinutesText();
+        this.updateSecondsText();
+
     }
 
     initComponents(){
@@ -31,6 +34,11 @@ class Clock extends CGFobject {
 		this.clockAppearance.setDiffuse(0.5,0.5,0.5,1);
 		this.clockAppearance.setSpecular(0.5,0.5,0.5,1);
         this.clockAppearance.setShininess(10.0);
+    }
+    
+    reset() {
+        this.minutes = 0;
+        this.seconds = 59;
     }
 
     decTime(){

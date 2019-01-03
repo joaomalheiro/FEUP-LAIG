@@ -40,6 +40,7 @@ class XMLscene extends CGFscene {
         this.madBishops = new MadBishops(this,'Human Player','Human Player');
 
         this.angle = 0;
+        this.pause = false;
         this.setPickEnabled(true);
 
     }
@@ -71,8 +72,21 @@ class XMLscene extends CGFscene {
 
     newGame() {
         this.madBishops = new MadBishops(this, this.playerType1, this.playerType2);
+    }
 
+    pauseGame() {
         
+        console.log(this.pause);
+
+        if(this.pause == true){
+             console.log('duriola');
+             this.pause = false;
+        } else {
+            console.log('sabini');
+            this.pause = true;
+        }
+
+        console.log(this.pause);
     }
     /**
      * Initializes the scene cameras.
@@ -271,6 +285,7 @@ class XMLscene extends CGFscene {
         if(this.angle > Math.PI){
             //this.interface.setActiveCamera(this.camera);
             this.rotating = false;
+            this.madBishops.board.counter.clock.reset();
             this.angle = 0;
             this.madBishops.board.animationCounter--;
         }

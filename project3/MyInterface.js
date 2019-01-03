@@ -113,6 +113,7 @@ class MyInterface extends CGFinterface {
         this.addTypeOfPlayer(2,group);
 
         this.addNewGame(group);
+        this.addPause(group);
 
     }
 
@@ -125,6 +126,10 @@ class MyInterface extends CGFinterface {
 
     addNewGame(group){
         group.add(this.scene,'newGame');
+    }
+
+    addPause(group){
+        group.add(this.scene,'pauseGame');
     }
 
     addUndoButton(group){

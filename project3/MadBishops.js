@@ -88,7 +88,6 @@ class MadBishops extends CGFobject {
             this.activeBishop = null;
             console.log('Moves',this.gameMoves);
             this.board.counter.updateNumberPieces();
-            console.log(this.whitePieces, this.blackPieces);
         } else 
             console.log('Invalid Move',startColumn,startRow,endColumn,endRow);
     }
