@@ -158,7 +158,7 @@ class MadBishops extends CGFobject {
                 case 'Random AI':
                     aiEasy(this.boardState, this.playerTurn, data5 => this.aiEasyPickHandler(data5));
                     break;
-                case 'Smart':
+                case 'Hard AI':
                     aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
                     break;                
                 default:
