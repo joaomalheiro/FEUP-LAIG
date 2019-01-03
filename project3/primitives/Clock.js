@@ -3,19 +3,17 @@ class Clock extends CGFobject {
     /*
     * Constructor for the clock game object
     */
-    constructor(scene , minutes, seconds, numbers) {
+    constructor(scene, numbers, timePerPlay) {
         super(scene);
         this.scene = scene;
-        
-        this.minutes = minutes;
-        this.seconds = seconds;
+
+        this.seconds = timePerPlay;
 
         this.numbers = numbers;
 
         this.initComponents();
         this.initTextures();
 
-        this.updateMinutesText();
         this.updateSecondsText();
 
     }
@@ -37,28 +35,17 @@ class Clock extends CGFobject {
     }
     
     reset() {
-        this.minutes = 0;
         this.seconds = 59;
     }
 
     decTime(){
         
-        if(this.minutes == 0){
             if(this.seconds == 0){
                 //PLAY CLOCK IS OVER
             } else {
                 this.seconds--;
                 this.updateSecondsText();
             }
-        } else if(this.seconds == 0){
-            this.seconds = 59;
-            this.minutes--;
-            this.updateSecondsText();
-            this.updateMinutesText();
-        } else {
-            this.seconds--;
-            this.updateSecondsText();
-        }
     }
 
     updateSecondsText(){
@@ -71,29 +58,17 @@ class Clock extends CGFobject {
 
     }
 
-    updateMinutesText(){
-
-        this.minutesTex1 = this.numbers[this.minutes];
-
-    }
-
     display(){
 
         this.scene.pushMatrix();
-            this.minutesTex1.apply();
-            this.scene.translate(1,0,0);
-            this.plane.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
             this.secondsTex1.apply();
-            this.scene.translate(-1,0,0);
+            this.scene.translate(0,0,0);
             this.plane.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
             this.secondsTex2.apply();
-            this.scene.translate(-2,0,0);
+            this.scene.translate(-1,0,0);
             this.plane.display();
         this.scene.popMatrix();
     }

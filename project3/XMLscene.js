@@ -37,9 +37,10 @@ class XMLscene extends CGFscene {
         
         this.axis = new CGFaxis(this);
         
-        this.madBishops = new MadBishops(this,'Human Player','Human Player');
+        this.madBishops = new MadBishops(this,'Human Player','Human Player', 59);
 
         this.angle = 0;
+        this.timePerPlay = 59;
         this.pause = false;
         this.setPickEnabled(true);
 
@@ -71,7 +72,7 @@ class XMLscene extends CGFscene {
     }
 
     newGame() {
-        this.madBishops = new MadBishops(this, this.playerType1, this.playerType2);
+        this.madBishops = new MadBishops(this, this.playerType1, this.playerType2, this.timePerPlay);
     }
 
     pauseGame() {

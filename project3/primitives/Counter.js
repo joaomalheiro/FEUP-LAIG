@@ -3,8 +3,9 @@ class Counter extends CGFobject {
     /*
     * Constructor for the counter game object
     */
-    constructor(scene, board) {
+    constructor(scene, board, timePerPlay) {
         super(scene);
+        this.timePerPlay = timePerPlay;
         this.board = board;
         this.scene = scene;
         this.initTextures();
@@ -31,7 +32,7 @@ class Counter extends CGFobject {
 
         this.top_sphere = new MySphere(this.scene, 0.2, 30, 30);
 
-        this.clock = new Clock(this.scene, 1, 0, this.numbers);
+        this.clock = new Clock(this.scene, this.numbers, this.timePerPlay);
 
         this.plane = new Plane(this.scene,1,1);
 

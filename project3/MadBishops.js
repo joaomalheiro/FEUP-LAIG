@@ -1,12 +1,12 @@
 class MadBishops extends CGFobject {
 
-	constructor(scene,player1,player2){
+	constructor(scene,player1,player2, timePerPlay){
         super(scene);
         this.scene = scene;
 
         this.activeBishop = null;
         this.pause = false;
-        this.board = new Board(scene);
+        this.board = new Board(scene, timePerPlay);
         this.player1 = player1;
         this.player2 = player2;
         this.boardState = null;

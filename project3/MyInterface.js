@@ -109,6 +109,7 @@ class MyInterface extends CGFinterface {
         group.open();
 
         this.addUndoButton(group);
+        this.addTimeSlider(group);
         this.addTypeOfPlayer(1,group);
         this.addTypeOfPlayer(2,group);
 
@@ -134,5 +135,9 @@ class MyInterface extends CGFinterface {
 
     addUndoButton(group){
         group.add(this.scene, 'undoMove');
+    }
+
+    addTimeSlider(group){
+        group.add(this.scene, 'timePerPlay', 10, 59).step(1);
     }
 }

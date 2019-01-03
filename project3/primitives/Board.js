@@ -3,9 +3,10 @@ class Board extends CGFobject {
     /*
     * Consctructor for the board object
     */
-    constructor(scene) {
+    constructor(scene, timePerPlay) {
         super(scene);
         this.scene = scene;
+        this.timePerPlay = timePerPlay;
         this.animationCounter = 0;
         this.initComponents();
         this.initTextures();
@@ -21,7 +22,7 @@ class Board extends CGFobject {
         this.deadBlackBishops = [];
         this.deadWhiteBishops = [];
         
-        this.counter = new Counter(this.scene, this);
+        this.counter = new Counter(this.scene, this, this.timePerPlay);
 
         this.body = new MyCylinder(this.scene, 1, 1, 1, 4, 4);
 
@@ -177,8 +178,9 @@ class Board extends CGFobject {
         this.bishopRegisterPicking();
 
         this.scene.pushMatrix();
-        this.scene.translate(11,0.01,0);
+        this.scene.translate(10,0.01,0);
         this.scene.scale(0.4,0.7,0.4);
+        this.scene.rotate(Math.PI,0,1,0);
         this.holder.display();
         this.scene.popMatrix();
 
