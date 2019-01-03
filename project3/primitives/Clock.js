@@ -61,12 +61,14 @@ class Clock extends CGFobject {
     display(){
 
         this.scene.pushMatrix();
+            if(this.secondsTex1 != null)
             this.secondsTex1.apply();
             this.scene.translate(0,0,0);
             this.plane.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
+        if(this.secondsTex2 != null)
             this.secondsTex2.apply();
             this.scene.translate(-1,0,0);
             this.plane.display();
