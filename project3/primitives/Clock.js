@@ -8,7 +8,7 @@ class Clock extends CGFobject {
         this.scene = scene;
 
         this.seconds = timePerPlay;
-
+        this.pause = false;
         this.numbers = numbers;
 
         this.initComponents();
@@ -39,13 +39,14 @@ class Clock extends CGFobject {
     }
 
     decTime(){
-        
+        if(!this.pause){
             if(this.seconds == 0){
                 //PLAY CLOCK IS OVER
             } else {
                 this.seconds--;
                 this.updateSecondsText();
             }
+        }
     }
 
     updateSecondsText(){

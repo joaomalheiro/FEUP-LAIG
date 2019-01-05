@@ -41,6 +41,7 @@ class XMLscene extends CGFscene {
 
         this.angle = 0;
         this.timePerPlay = 59;
+        this.preventClick = false;
         this.pause = false;
         this.setPickEnabled(true);
 
@@ -57,7 +58,7 @@ class XMLscene extends CGFscene {
                         console.log("Picked object: " + obj + ", with pick id " + customId);
 
                         console.log(obj);
-                        if(!this.pause)
+                        if(!this.preventClick && !this.pause)
                             this.madBishops.handleClickBoard(obj,customId);
                     }
                 }
@@ -67,33 +68,24 @@ class XMLscene extends CGFscene {
     }
 
     undoMove() {
-        if(!this.pause)
+        if(!this.preventClick && !this.pause)
             this.madBishops.undoMove();
     }
 
     newGame() {
-        if(!this.pause)
+        if(!this.preventClick && !this.pause)
             this.madBishops = new MadBishops(this, this.playerType1, this.playerType2, this.timePerPlay);
     }
 
     showMovie(){
-        if(!this.pause)
+        if(!this.preventClick && !this.pause)
             this.madBishops.showMovie();
     }
 
     pauseGame() {
+        this.pause = !this.pause;
+        this.madBishops.board.counter.clock.pause = this.pause;
         
-        console.log(this.pause);
-
-        if(this.pause == true){
-             console.log('duriola');
-             this.pause = false;
-        } else {
-            console.log('sabini');
-            this.pause = true;
-        }
-
-        console.log(this.pause);
     }
     /**
      * Initializes the scene cameras.
@@ -284,9 +276,9 @@ class XMLscene extends CGFscene {
         this.madBishops.update(this.deltaTime);
 
         if(this.madBishops.board.animationCounter > 0) {
-            this.pause = true;
+            this.preventClick = true;
         } else {
-            this.pause = false;
+            this.preventClick = false;
         }
 
         if(this.angle > Math.PI){
