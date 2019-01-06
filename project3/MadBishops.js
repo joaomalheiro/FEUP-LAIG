@@ -68,9 +68,9 @@ class MadBishops extends CGFobject {
         let gameOver = JSON.parse(data.target.response);
         console.log(gameOver);
         if(gameOver == 1)
-            console.log('Player 1 WONNERED ! :)');
+            alert('Player 1 Wins (White), Press New Game to play again');
         else if(gameOver == 2)
-            console.log('Player 2 WONNERED ! :)');
+            alert('Player 2 Wins (Black), Press New Game to play again')
     }
 
     aiEasyPickHandler(data) {
