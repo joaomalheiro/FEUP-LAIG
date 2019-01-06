@@ -265,6 +265,10 @@ class MadBishops extends CGFobject {
     }
 
 	display() {
-		this.board.display();
+        this.scene.pushMatrix();
+        this.scene.translate(10.8,1.7,9.2);
+        this.scene.scale(0.1,0.1,0.1);
+        this.board.display();
+        this.scene.popMatrix();
 	}
 }

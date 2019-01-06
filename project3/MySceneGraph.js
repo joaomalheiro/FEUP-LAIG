@@ -1286,7 +1286,10 @@ class MySceneGraph {
 
                  prim = new Cylinder2(this.scene, height, base, top, stacks, slices);
               break;
-
+                case 'vehicle':
+              prim = new MyVehicle(this.scene);
+              
+            break;
                 case 'bishop':
                 prim = new Bishop(this.scene);
                 
@@ -1295,6 +1298,16 @@ class MySceneGraph {
                     prim = new Board(this.scene);
                     
                 break;
+                case 'torustower':
+                    prim = new TorusTower(this.scene);
+                    
+                break;
+
+                case 'linetable':
+                    prim = new LineTable(this.scene);
+                    
+                break;
+
 
           }
       this.primitives[this.reader.getString(children[i],'id')] = prim;
@@ -1530,6 +1543,7 @@ applyAnimations(componentID) {
 
 displayComponent(componentID) {
     //console.log(`For material with id ${componentID} the stack is `, this.auxStack);
+    //console.log(componentID);
     const current_component = this.components[componentID];
     this.scene.pushMatrix();
 

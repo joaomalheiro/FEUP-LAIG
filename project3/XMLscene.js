@@ -46,6 +46,10 @@ class XMLscene extends CGFscene {
 
     }
 
+    changeGraph(filename) {
+        this.graph = new MySceneGraph(filename, this)
+    }
+
     logPicking() {
         if (this.pickMode == false) {
             if (this.pickResults != null && this.pickResults.length > 0) {
@@ -123,7 +127,7 @@ class XMLscene extends CGFscene {
         //Setting up the default camera, if there is one that matches the default given
         if (def != null){
             this.camera = this.views.get(def);
-            //this.interface.setActiveCamera(this.views.get(def));
+            this.interface.setActiveCamera(this.views.get(def));
         } else {
             console.log('The default ID for the views did not match any parsed camera of the XML file')
         }
@@ -231,6 +235,8 @@ class XMLscene extends CGFscene {
 
         this.playerType1 = 'Human Player';
         this.playerType2 = 'Human Player';
+
+        this.difAmbients = 'Poker';
 
         this.initMaterials();
         this.initTextures();
@@ -364,6 +370,7 @@ class XMLscene extends CGFscene {
             }
 
             // Displays the scene (MySceneGraph function).
+            this.graph.displayScene();
             this.madBishops.display();
         }
         else {

@@ -75,7 +75,6 @@ class MyInterface extends CGFinterface {
                 group.add(this.scene.lightValues, key);
             }
         }
-        console.log(group);
     }
 
     /**
@@ -84,9 +83,11 @@ class MyInterface extends CGFinterface {
      */
     addCamerasGroup(cameras) {
 
-        var group = this.gui.addFolder("Views")
-        group.open();
+        if(!this.views){
+        this.views = this.gui.addFolder("Views");
+        this.views.open();
 
+        this.cameras = cameras;
         this.camerasID = [];
 
        for(const [k,v] of cameras.entries()){
@@ -95,54 +96,87 @@ class MyInterface extends CGFinterface {
             this.camerasID.push(k);
         }
 
-        var views = group.add(this.scene,'selectedCamera',this.camerasID);
+        var views = this.views.add(this.scene,'selectedCamera',this.camerasID);
 
         views.onChange(value =>{
            this.scene.setCamera(cameras.get(value));
         });
-
+    }
     }
     
     addGameGroup(){
 
-        var group = this.gui.addFolder("Game");
-        group.open();
+        if(!this.game){
+        this.game = this.gui.addFolder("Game");
+        this.game.open();
 
-        this.addUndoButton(group);
-        this.addTimeSlider(group);
-        this.addTypeOfPlayer(1,group);
-        this.addTypeOfPlayer(2,group);
+        this.addScenes();
 
-        this.addNewGame(group);
-        this.addPause(group);
-        this.addShowMovie(group)
+        this.addUndoButton();
+        this.addTimeSlider();
+        this.addTypeOfPlayer(1);
+        this.addTypeOfPlayer(2);
+
+        this.addNewGame();
+        this.addPause();
+        this.addShowMovie();
+        }
 
     }
 
-    addTypeOfPlayer(player, group){
+    addTypeOfPlayer(player){
 
         this.gameTypes = ['Human Player', 'Random AI', 'Hard AI'];
-        group.add(this.scene, 'playerType' + player, this.gameTypes);
+        this.game.add(this.scene, 'playerType' + player, this.gameTypes);
 
     }
 
-    addNewGame(group){
-        group.add(this.scene,'newGame');
+    addScenes(){
+
+        this.scenes = this.gui.addFolder("Scenes");
+  	    this.scenes.open();
+  	    this.gui.scene = 'Poker';
+  	    this.gui.sceneList = this.scenes.add(this.gui, 'scene', ['Poker', 'Simplistic']);
+        this.gui.sceneList.onFinishChange(function(){
+            this.removeFolder("Lights",this.gui);
+            this.scene.changeGraph(this.gui.scene + '.xml');
+            //this.scene.setCamera(this.cameras.get(value));
+  	    }.bind(this))
     }
 
-    addPause(group){
-        group.add(this.scene,'pauseGame');
+    removeFolder(name,parent) {
+        console.log('heeeeeeeeeeey');
+        if(!parent)
+            parent = this.gui;
+      var folder = parent.__folders[name];
+      if (!folder) {
+        return;
+      }
+      folder.close();
+      parent.__ul.removeChild(folder.domElement.parentNode);
+      delete parent.__folders[name];
+      parent.onResize();
+    }
+    
+
+    addNewGame(){
+        this.game.add(this.scene,'newGame');
     }
 
-    addUndoButton(group){
-        group.add(this.scene, 'undoMove');
+    addPause(){
+        this.game.add(this.scene,'pauseGame');
     }
 
-    addTimeSlider(group){
-        group.add(this.scene, 'timePerPlay', 10, 59).step(1);
+    addUndoButton(){
+        this.game.add(this.scene, 'undoMove');
     }
 
-    addShowMovie(group){
-        group.add(this.scene, 'showMovie');
+    addTimeSlider(){
+        this.game.add(this.scene, 'timePerPlay', 10, 59).step(1);
     }
+
+    addShowMovie(){
+        this.game.add(this.scene, 'showMovie');
+    }
+
 }
