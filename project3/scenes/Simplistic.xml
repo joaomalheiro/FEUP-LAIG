@@ -9,7 +9,7 @@
 
         <perspective id="camera-Game" near="0.1" far="500" angle="90">
             <from x="10.5" y="3" z="10.5"/>
-            <to x="10.5" y="2" z="10"/>
+            <to x="10.5" y="2" z="9.5"/>
         </perspective>
 
     </views>
