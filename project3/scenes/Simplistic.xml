@@ -30,9 +30,11 @@
     </lights>
 
     <textures>
-       <texture id="tex-wall-triangle" file="scenes/images/wall-triangle.jpg"/>
+        <texture id="tex-wall-triangle" file="scenes/images/wall-triangle.jpg"/>
         <texture id="tex-floor" file="scenes/images/black_plastic.jpg"/>
-         <texture id="tex-metalKnob" file="scenes/images/metal-knob.jpg"/>
+        <texture id="tex-metalKnob" file="scenes/images/metal-knob.jpg"/>
+        <texture id="tex-rug" file="scenes/images/rug.jpg"/>
+         <texture id="tex-painting" file="scenes/images/painting2.jpg"/>
     </textures>
 
     <materials>
@@ -58,6 +60,18 @@
             <translate x="0" y="0" z="1"/>
             <rotate axis="y" angle="90"/>
             <scale x="1" y="1" z="1"/>
+        </transformation>
+
+        <transformation id="paintingT">
+            <translate x="0.05" y="3" z="9"/>
+            <rotate axis="y" angle="90"/>
+            <scale x="6" y="3" z="1"/>
+        </transformation>
+
+        <transformation id="rugT">
+            <translate x="5" y="0.05" z="5"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="6" y="1" z="6"/>
         </transformation>
 
         <transformation id="rotateSide2">
@@ -132,6 +146,10 @@
           <torustower />
         </primitive >
 
+        <primitive id="plane">
+          <plane npartsU="10" npartsV="10" />
+        </primitive >
+
         <primitive id="linetable">
           <linetable />
         </primitive >
@@ -172,6 +190,41 @@
                 <componentref id="walls"/>
                 <componentref id="torustower"/>
                 <componentref id="linetable"/>
+                <componentref id="rug"/>
+                <componentref id="painting"/>
+            </children>
+        </component>
+
+         <component id = "painting">
+          <transformation>
+            <transformationref id="paintingT"/>
+          </transformation>
+
+          <materials>
+            <material id="material-wall"/>
+          </materials>
+
+          <texture id="tex-painting" length_s="1.0" length_t="1.0"/>
+
+          <children>
+            <primitiveref id="rectangle"/>
+          </children>
+       </component>
+
+
+        <component id = "rug">
+            <transformation>
+                <transformationref id="rugT"/>
+            </transformation>
+
+            <materials>
+                <material id="material-wall"/>
+            </materials>
+
+            <texture id="tex-rug" length_s="1.0" length_t="1.0"/>
+
+            <children>
+                <primitiveref id="plane"/>
             </children>
         </component>
 
