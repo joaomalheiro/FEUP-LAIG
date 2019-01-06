@@ -27,8 +27,15 @@ class MadBishops extends CGFobject {
         this.displayMovie = true;
     }
 
+    loseTurn(){
+        this.playerTurn = (this.playerTurn % 2) + 1;
+        this.scene.rotateCamera();
+        this.previousBishops = ['LostTurn'];
+        this.activeBishop = null;
+    }
+
     undoMove(){
-        if(this.boardState != this.previousBoardState && this.previousBoardState != null && this.previousBishops[0] != 'AI'){
+        if(this.boardState != this.previousBoardState && this.previousBoardState != null && this.previousBishops[0] != 'AI' && this.previousBishops[0] != 'LostTurn'){
             this.boardState = this.previousBoardState;
             console.log('prev',this.previousBishops);
             for(let i = 0; i < this.previousBishops.length; i++){
@@ -206,7 +213,10 @@ class MadBishops extends CGFobject {
     }*/
 
     update(deltaTime){
-        this.board.update(deltaTime);
+        let timeOver = this.board.update(deltaTime);
+        //console.log(timeOver);
+        if(timeOver && !this.pause)
+            this.loseTurn();
         for(let i = 0; i < this.board.whiteBishops.length; i++){
             if(this.activeBishop == this.board.whiteBishops[i]){
                 this.board.whiteBishops[i].selected = true;
@@ -249,7 +259,6 @@ class MadBishops extends CGFobject {
                     this.tempGameMoves = [];
                 }
             }
-            
         }
 
     handleUndo(){

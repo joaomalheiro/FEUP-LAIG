@@ -192,7 +192,8 @@ class Board extends CGFobject {
     }
 
     update(deltaTime){
-        this.counter.update(deltaTime);
+        let isOver = this.counter.update(deltaTime);
+        return isOver;
       }
 
     bishopsDisplay() {
@@ -315,5 +316,6 @@ class Board extends CGFobject {
                 this.deadWhiteBishops.push(deadBishop);
             }
         }
+        this.counter.clock.reset();
     }
 }

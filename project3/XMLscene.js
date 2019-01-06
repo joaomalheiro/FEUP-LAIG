@@ -294,7 +294,7 @@ class XMLscene extends CGFscene {
         if(this.angle > Math.PI){
             //this.interface.setActiveCamera(this.camera);
             this.rotating = false;
-            this.madBishops.board.counter.clock.reset();
+            //this.madBishops.board.counter.clock.reset();
             this.angle = 0;
             this.madBishops.board.animationCounter--;
         }

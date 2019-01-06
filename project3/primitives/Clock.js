@@ -42,10 +42,12 @@ class Clock extends CGFobject {
     decTime(){
         if(!this.pause){
             if(this.seconds == 0){
-                //PLAY CLOCK IS OVER
+                this.reset();
+                return true;
             } else {
                 this.seconds--;
                 this.updateSecondsText();
+                return false;
             }
         }
     }
