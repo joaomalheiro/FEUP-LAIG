@@ -32,7 +32,7 @@ class WhiteBishop extends Bishop {
 
     isSelected(){
         if(this.selected){
-            this.woodenAppearance.setAmbient(0.85,0.85,0.85,1);
+            this.woodenAppearance.setAmbient(0.5,0.5,0.5,1);
         } else {
             this.woodenAppearance.setAmbient(1,1,1,1);
         }
