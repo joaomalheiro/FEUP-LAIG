@@ -77,8 +77,12 @@ class XMLscene extends CGFscene {
     }
 
     newGame() {
-        if(!this.preventClick && !this.pause)
+        if(!this.preventClick && !this.pause){
+            if(this.madBishops.playerTurn == 1)
+                this.rotateCamera();
             this.madBishops = new MadBishops(this, this.playerType1, this.playerType2, this.timePerPlay);
+        }
+            
     }
 
     showMovie(){
@@ -290,7 +294,7 @@ class XMLscene extends CGFscene {
         if(this.angle > Math.PI){
             //this.interface.setActiveCamera(this.camera);
             this.rotating = false;
-            this.madBishops.board.counter.clock.reset();
+            //this.madBishops.board.counter.clock.reset();
             this.angle = 0;
             this.madBishops.board.animationCounter--;
         }

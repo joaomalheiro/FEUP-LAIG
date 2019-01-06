@@ -105,14 +105,15 @@ class Counter extends CGFobject {
     }
 
     update(deltaTime){
-
+        let isOver = false;
         this.time = this.time + deltaTime;
 
         if(this.time >= 1000) {
 
-            this.clock.decTime();
+            isOver = this.clock.decTime();
             this.time = 0;
         }
+        return isOver;
     }
 
     display(){
