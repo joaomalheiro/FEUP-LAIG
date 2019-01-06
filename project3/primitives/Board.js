@@ -342,5 +342,6 @@ class Board extends CGFobject {
             }
         }
         this.counter.clock.reset();
+        this.counter.updateNumberPieces();
     }
 }
