@@ -120,13 +120,14 @@ class Counter extends CGFobject {
         this.woodenAppearance.apply();
 
         this.scene.pushMatrix();
+            this.scene.translate(0,0.5,0);
             this.scene.rotate(Math.PI/2.0,1,0,0);
             this.scene.rotate(Math.PI/4.0,0,0,1);       
             this.base.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-            this.scene.translate(0,2.4,0);
+            this.scene.translate(0,2.9,0);
             this.scene.scale(3.5,1.8,0.4);
             this.scene.rotate(Math.PI/2.0,1,0,0);
             this.scene.rotate(Math.PI/4.0,0,0,1);    
@@ -135,33 +136,33 @@ class Counter extends CGFobject {
 
         this.scene.pushMatrix();
             this.blackAppearance.apply();
-            this.scene.scale(12, 3.0, 1.0);
-            this.scene.translate(0, 0.2, 0.9);
+            this.scene.scale(12, 2.5, 1.0);
+            this.scene.translate(0, 0.3, 0.9);
             this.square.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-            this.scene.translate(-2.0,2.7,0);
+            this.scene.translate(-2.0,3.2,0);
             this.scene.rotate(Math.PI/2.0,1,0,0);
             this.scene.rotate(Math.PI/4.0,0,0,1);      
             this.top_cylinder.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-            this.scene.translate(2.0,2.7,0);
+            this.scene.translate(2.0,3.2,0);
             this.scene.rotate(Math.PI/2.0,1,0,0);
             this.scene.rotate(Math.PI/4.0,0,0,1);      
             this.top_cylinder.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-            this.scene.translate(2.0,2.7,0);
+            this.scene.translate(2.0,3.2,0);
             this.scene.scale(1,0.2,1);
             this.top_sphere.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-            this.scene.translate(-2.0,2.7,0);
+            this.scene.translate(-2.0,3.2,0);
             this.scene.scale(1,0.2,1);
             this.top_sphere.display();
         this.scene.popMatrix();

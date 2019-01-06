@@ -16,6 +16,8 @@ class Holder extends CGFobject {
 
         this.support = new MyCylinder(this.scene, 2, 0.1, 0.1, 30, 30);
         this.top = new MyCylinder(this.scene, 0.2, 0.5, 0.5, 30, 30);
+
+        this.leg = new MyCylinder(this.scene, 0.3, 0.2,0.2,30,30);
     }
     
     initTextures(){
@@ -112,6 +114,38 @@ class Holder extends CGFobject {
             this.scene.rotate(Math.PI/4.0,1,0,0);
             this.scene.rotate(Math.PI/2.0,0,1,0);
             this.base.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.scene.translate(2,-1,18);
+            this.scene.scale(1,4,1);
+            this.scene.rotate(Math.PI/4.0,1,0,0);
+            this.scene.rotate(Math.PI/2.0,0,1,0);
+            this.leg.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.scene.translate(2,-1,-18);
+            this.scene.scale(1,4,1);
+            this.scene.rotate(Math.PI/4.0,1,0,0);
+            this.scene.rotate(Math.PI/2.0,0,1,0);
+            this.leg.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.scene.translate(-2,-1,-18);
+            this.scene.scale(1,4,1);
+            this.scene.rotate(Math.PI/4.0,1,0,0);
+            this.scene.rotate(Math.PI/2.0,0,1,0);
+            this.leg.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.scene.translate(-2,-1,18);
+            this.scene.scale(1,4,1);
+            this.scene.rotate(Math.PI/4.0,1,0,0);
+            this.scene.rotate(Math.PI/2.0,0,1,0);
+            this.leg.display();
         this.scene.popMatrix();
 
 

@@ -1488,6 +1488,7 @@ class MySceneGraph {
   displayScene() {
     
     this.pushMaterial("default");
+    if(this.root != null)
     this.displayComponent(this.root);
     return null;
 }
@@ -1543,7 +1544,6 @@ applyAnimations(componentID) {
 
 displayComponent(componentID) {
     //console.log(`For material with id ${componentID} the stack is `, this.auxStack);
-    //console.log(componentID);
     const current_component = this.components[componentID];
     this.scene.pushMatrix();
 

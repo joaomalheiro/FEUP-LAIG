@@ -1,13 +1,13 @@
 <yas>
     <scene root="room" axis_length="10.0"/>
 
-    <views default="camera-perspective-0">
+    <views default="camera-Game">
        <perspective id="camera-perspective-0" near="0.1" far="500" angle="45">
             <from x="15" y="7.0" z="17.0"/>
             <to x="0.0" y="1.0" z="0.0"/>
         </perspective>
 
-        <perspective id="camera-Game" near="0.1" far="30" angle="90">
+        <perspective id="camera-Poker" near="0.1" far="30" angle="90">
             <from x="7" y="4.0" z="6.0"/>
             <to x="6" y="3.0" z="6.0"/>
         </perspective>
@@ -22,9 +22,9 @@
             <to x="0.0" y="4.0" z="6.0"/>
         </perspective>
 
-         <perspective id="camera-Shaders" near="0.1" far="500" angle="90">
-            <from x="10" y="5" z="10"/>
-            <to x="10" y="2" z="9"/>
+         <perspective id="camera-Game" near="0.1" far="500" angle="90">
+            <from x="10.5" y="3" z="10.5"/>
+            <to x="10.5" y="2" z="10"/>
         </perspective>
 
         <ortho id="camera-ortho-0" near="0.1" far ="500"

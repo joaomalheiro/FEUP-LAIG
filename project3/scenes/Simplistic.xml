@@ -1,10 +1,15 @@
 <yas>
     <scene root="room" axis_length="10.0"/>
 
-    <views default="camera-perspective-0">
+    <views default="camera-Game">
        <perspective id="camera-perspective-0" near="0.1" far="500" angle="45">
             <from x="15" y="7.0" z="17.0"/>
             <to x="0.0" y="1.0" z="0.0"/>
+        </perspective>
+
+        <perspective id="camera-Game" near="0.1" far="500" angle="90">
+            <from x="10.5" y="3" z="10.5"/>
+            <to x="10.5" y="2" z="10"/>
         </perspective>
 
     </views>
@@ -77,6 +82,12 @@
             <translate x="2" y="0.3" z="10"/>
             <rotate axis="y" angle="0"/>
             <scale x="1" y="0.7" z="1"/>
+        </transformation>
+
+        <transformation id="table">
+            <translate x="9.0" y="0" z="7.7"/>
+            <rotate axis="y" angle="0"/>
+            <scale x="0.7" y="0.73" z="0.7"/>
         </transformation>
 
     </transformations>
@@ -182,6 +193,7 @@
 
         <component id = "linetable">
             <transformation>
+                 <transformationref id="table"/>
             </transformation>
 
             <materials>
