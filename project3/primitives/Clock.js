@@ -7,6 +7,7 @@ class Clock extends CGFobject {
         super(scene);
         this.scene = scene;
 
+        this.originalTime = timePerPlay;
         this.seconds = timePerPlay;
         this.pause = false;
         this.numbers = numbers;
@@ -35,7 +36,7 @@ class Clock extends CGFobject {
     }
     
     reset() {
-        this.seconds = 59;
+        this.seconds = this.originalTime;
     }
 
     decTime(){
