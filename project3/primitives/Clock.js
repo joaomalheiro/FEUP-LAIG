@@ -34,11 +34,15 @@ class Clock extends CGFobject {
 		this.clockAppearance.setSpecular(0.5,0.5,0.5,1);
         this.clockAppearance.setShininess(10.0);
     }
-    
+    /**
+     * Resets the clock after a play or the time as passed
+     */
     reset() {
         this.seconds = this.originalTime;
     }
-
+    /**
+     * Responsible for ticking down the time every second
+     */
     decTime(){
         if(!this.pause){
             if(this.seconds == 0){
@@ -51,7 +55,9 @@ class Clock extends CGFobject {
             }
         }
     }
-
+    /**
+     * Updates the second texture based on the number of seconds left on the play clock
+     */
     updateSecondsText(){
 
         this.secondsNum1 = Math.floor(this.seconds / 10);
@@ -61,16 +67,18 @@ class Clock extends CGFobject {
         this.secondsTex2 = this.numbers[this.secondsNum2];
 
     }
-
+    /**
+     * Display function
+     */
     display(){
-
+        //First digit of the clock
         this.scene.pushMatrix();
             if(this.secondsTex1 != null)
             this.secondsTex1.apply();
             this.scene.translate(0,0,0);
             this.plane.display();
         this.scene.popMatrix();
-
+        // second digit of the clock
         this.scene.pushMatrix();
         if(this.secondsTex2 != null)
             this.secondsTex2.apply();

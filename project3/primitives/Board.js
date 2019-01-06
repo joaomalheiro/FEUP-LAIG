@@ -12,7 +12,9 @@ class Board extends CGFobject {
         this.initTextures();
         this.addBishops();
     }
-
+    /**
+     * Inits all the components that make a board, including the counter, the body, the grid and the holders
+     */
     initComponents(){
 
         this.plane = new Plane(this.scene,10,10);
@@ -57,7 +59,9 @@ class Board extends CGFobject {
 		this.woodenAppearance.setSpecular(0.5,0.5,0.5,1);
         this.woodenAppearance.setShininess(10.0);
     }
-
+    /**
+     * Creates the bishops(both black and white), and push them into the board array of alive bishops
+     */
     addBishops(){
         for(let i = 0; i < 10; i++) {
             for(let j = 0; j < 10; j++){
@@ -142,6 +146,9 @@ class Board extends CGFobject {
         }
     }
 
+    /**
+     * Display function
+     */
     display(){
 
         
@@ -190,12 +197,18 @@ class Board extends CGFobject {
         this.holder.display();
         this.scene.popMatrix();
     }
-
+    /**
+     * Function that updates the board
+     * @param {*} deltaTime 
+     */
     update(deltaTime){
         let isOver = this.counter.update(deltaTime);
         return isOver;
       }
-
+    
+    /**
+     * Responsible for display both of the game bishops array
+     */
     bishopsDisplay() {
         this.whiteBishopsDisplay();
         this.blackBishopsDisplay();
@@ -248,6 +261,10 @@ class Board extends CGFobject {
         }
     }
 
+    /**
+     * Called after a undoMove call. Reactivates a certain bishop
+     * @param {*} bishop 
+     */
     reactivate(bishop){
         bishop.active = true;
         bishop.deadId = null;
@@ -258,6 +275,14 @@ class Board extends CGFobject {
         }
     }
 
+    /**
+     * Board function that makes a move, calling animations and changes in the bishop object and array
+     * @param {*} startRow 
+     * @param {*} startColumn 
+     * @param {*} endRow 
+     * @param {*} endColumn 
+     * @param {*} rotate 
+     */
     makeMove(startRow,startColumn,endRow,endColumn,rotate = true){
         if(rotate)
             this.scene.rotateCamera();
