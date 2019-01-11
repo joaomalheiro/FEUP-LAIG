@@ -289,6 +289,7 @@ class Board extends CGFobject {
         
         let movingBishop = null;
         let deadBishop = null;
+        //Determines movingBishop
         for(let i = 0; i < this.whiteBishops.length ; i++) {
             if(startRow == this.whiteBishops[i].row && startColumn == this.whiteBishops[i].column
                 && this.whiteBishops[i].active){
@@ -303,6 +304,7 @@ class Board extends CGFobject {
                 }
             }
         }
+        //Determines deadBishop if there is one
         for(let i = 0; i < this.whiteBishops.length ; i++) {
             if(endRow == this.whiteBishops[i].row && endColumn == this.whiteBishops[i].column
                 && this.whiteBishops[i].active){
@@ -317,7 +319,7 @@ class Board extends CGFobject {
                 }
             }
         }
-        
+        //Adds Animation to the bishops
         if(movingBishop != null) {
             let controlPoints = [];
                 controlPoints[0] = vec3.fromValues(startRow - endRow,0,startColumn - endColumn);
@@ -328,7 +330,7 @@ class Board extends CGFobject {
             this.animationCounter++;   
             movingBishop.animation = new LinearAnimation(this.scene,'moving',4,controlPoints);
             movingBishop.move(endRow,endColumn);
-            console.log('MOVING', movingBishop);
+
         }
         if(deadBishop != null) {
             if(deadBishop instanceof BlackBishop){
@@ -341,7 +343,9 @@ class Board extends CGFobject {
                 this.deadWhiteBishops.push(deadBishop);
             }
         }
+        this.counter.clock.pause = false;
         this.counter.clock.reset();
+        this.counter.clock.updateSecondsText();
         this.counter.updateNumberPieces();
     }
 }

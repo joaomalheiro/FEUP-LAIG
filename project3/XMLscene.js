@@ -60,8 +60,6 @@ class XMLscene extends CGFscene {
                     {   
                         var customId = this.pickResults[i][1];				
                         console.log("Picked object: " + obj + ", with pick id " + customId);
-
-                        console.log(obj);
                         if(!this.preventClick && !this.pause)
                             this.madBishops.handleClickBoard(obj,customId);
                     }
@@ -70,12 +68,17 @@ class XMLscene extends CGFscene {
             }		
         }
     }
-
+     /**
+     * Function resposible for undoing a move
+     */
     undoMove() {
         if(!this.preventClick && !this.pause)
             this.madBishops.undoMove();
     }
 
+     /**
+     * Function resposible for creating a new game
+     */
     newGame() {
         if(!this.preventClick && !this.pause){
             if(this.madBishops.playerTurn == 1)
@@ -84,12 +87,17 @@ class XMLscene extends CGFscene {
         }
             
     }
-
+     /**
+     * Function resposible for showing the movie of the plays made up until that point
+     */
     showMovie(){
         if(!this.preventClick && !this.pause)
             this.madBishops.showMovie();
     }
 
+     /**
+     * Function resposible for pausing the game
+     */
     pauseGame() {
         this.pause = !this.pause;
         this.madBishops.board.counter.clock.pause = this.pause;
@@ -270,7 +278,7 @@ class XMLscene extends CGFscene {
         this.rotating = true;
     }
     /**
-    * 
+    * updates the scene
     */
     update(currTime){
 
@@ -303,21 +311,6 @@ class XMLscene extends CGFscene {
             this.camera.orbit([0,1,0], Math.PI/157.0);
             this.angle+= Math.PI/157.0;
         }
-
-        //if(!this.pause)
-            //this.madBishops.handleAI();
-
-        /*for(let i = 0; i < this.board.whiteBishops.length; i++) {
-            if(this.board.whiteBishops[i].animation != null){
-                this.board.whiteBishops[i].animation.update(currTime - this.time);
-            }
-        }
-
-        for(let i = 0; i < this.board.blackBishops.length; i++) {
-            if(this.board.blackBishops[i].animation != null){
-                this.board.blackBishops[i].animation.update(currTime - this.time);
-            }
-        }*/
 
     }
 

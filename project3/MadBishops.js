@@ -9,18 +9,25 @@ class MadBishops extends CGFobject {
 	constructor(scene,player1,player2, timePerPlay){
         super(scene);
         this.scene = scene;
-
+        //Currently selected bishop
         this.activeBishop = null;
         this.pause = false;
         this.board = new Board(scene, timePerPlay);
+        //The type of players (Human/AI/Random)
         this.player1 = player1;
         this.player2 = player2;
+        //Current boardState in PROLOG list
         this.boardState = null;
+        //Previous State that would be implemented if a play was undone
         this.previousBoardState = null;
+        //Previous Bishops in the last play that would revert the animations
         this.previousBishops = [];
+        //Array of all the moves done in the game
         this.gameMoves = [];
+        //Piece count
         this.whitePieces = 25;
         this.blackPieces = 25;
+
         this.playerTurn = 2;
         this.displayMovie = false;
         this.tempGameMoves = [];
@@ -52,7 +59,7 @@ class MadBishops extends CGFobject {
     undoMove(){
         if(this.boardState != this.previousBoardState && this.previousBoardState != null && this.previousBishops[0] != 'AI' && this.previousBishops[0] != 'LostTurn'){
             this.boardState = this.previousBoardState;
-            console.log('prev',this.previousBishops);
+            //Revert the animation
             for(let i = 0; i < this.previousBishops.length; i++){
                 this.previousBishops[i].animation.done = false;
                 this.previousBishops[i].animation.reverse = true;
@@ -60,7 +67,6 @@ class MadBishops extends CGFobject {
             this.playerTurn = (this.playerTurn % 2) + 1;
             this.scene.rotateCamera();
             console.log('Undoing Move',this.previousBoardState,this.boardState);
-            console.log(this.gameMoves,'Now moves');
         }
     }
 
@@ -80,7 +86,6 @@ class MadBishops extends CGFobject {
         this.blackPieces = JSON.parse(data.target.response)[2];
         this.playerTurn = JSON.parse(data.target.response)[3];
 
-        console.log(this.boardState);
 
     }
     /*
@@ -88,7 +93,6 @@ class MadBishops extends CGFobject {
     */
     isGameOver(data){
         let gameOver = JSON.parse(data.target.response);
-        console.log(gameOver);
         if(gameOver == 1)
             alert('Player 1 Wins (White), Press New Game to play again');
         else if(gameOver == 2)
@@ -130,7 +134,6 @@ class MadBishops extends CGFobject {
             this.playerTurn = (this.playerTurn % 2) + 1;
             this.gameMoves.push([startRow,startColumn,endRow,endColumn]);
             this.activeBishop = null;
-            console.log('Moves',this.gameMoves);
             this.board.counter.updateNumberPieces();
         } else 
             console.log('Invalid Move',startColumn,startRow,endColumn,endRow);
@@ -154,16 +157,14 @@ class MadBishops extends CGFobject {
      * @param {*} customId 
      */
     handleClickBoard(obj,customId) {
-        console.log('p',this.playerTurn,this.player1,this.player2)
+        //State machine for dealing with the click
         if((this.playerTurn == 1 && this.player1 == 'Human Player') || (this.playerTurn == 2 && this.player2 == 'Human Player')){
-            console.log('entered Human Player')
         if(obj instanceof Bishop) {
             if((this.activeBishop == null && obj instanceof WhiteBishop && this.playerTurn == 1)
                 || (this.activeBishop == null && obj instanceof BlackBishop && this.playerTurn == 2)){
                 this.activeBishop = obj;
             } else if(this.activeBishop == obj){
                 this.activeBishop = null;
-                console.log('thesame');
             } else if(this.activeBishop instanceof WhiteBishop && obj instanceof WhiteBishop){
                 this.activeBishop = obj;
             } else if(this.activeBishop instanceof WhiteBishop && obj instanceof BlackBishop) {
@@ -181,7 +182,6 @@ class MadBishops extends CGFobject {
                 bishops.push(this.activeBishop);
                 bishops.push(obj);
                 this.previousBishops = bishops;
-                console.log(bishops,this.previousBishops);
             }
         } else if (obj instanceof Plane) {
             let endRow = Math.floor(customId / 10);
@@ -194,7 +194,6 @@ class MadBishops extends CGFobject {
             }
         }
 
-        console.log(this.activeBishop);
     } else  {
         if(this.playerTurn == 1){
             switch(this.player1){
@@ -223,32 +222,6 @@ class MadBishops extends CGFobject {
 
     } 
     }
-
-    /*handleAI(){
-        if(this.playerTurn == 1){
-            switch(this.player1){
-                case 'Random AI':
-                    aiMedium(this.boardState, this.playerTurn, data5 => this.aiEasyPickHandler(data5));
-                case 'Smart':
-                    aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
-                default:
-                return;
-            }
-        } else if(this.playerTurn == 2){
-            switch(this.player2){
-                case 'Random AI':
-                    aiMedium(this.boardState, this.playerTurn, data5 => this.aiEasyPickHandler(data5));
-                case 'Smart':
-                    aiMedium(this.boardState, this.playerTurn, this.whitePieces, this.blackPieces, data4 => this.aiMediumPickHandler(data4));
-                default:
-                return;
-            }
-        }
-        this.playerTurn = (this.playerTurn % 2) + 1;
-        this.activeBishop = null;
-        gameOver(this.boardState,this.whitePieces,this.blackPieces, data3 => this.isGameOver(data3));
-        this.board.counter.updateNumberPieces();
-    }*/
 
     update(deltaTime){
         let timeOver = this.board.update(deltaTime);
