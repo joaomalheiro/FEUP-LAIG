@@ -27,6 +27,7 @@ class MadBishops extends CGFobject {
         //Piece count
         this.whitePieces = 25;
         this.blackPieces = 25;
+        this.timePerPlay = timePerPlay;
 
         this.playerTurn = 2;
         this.displayMovie = false;
